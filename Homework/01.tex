@@ -1,0 +1,119 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper]{geometry}
+\usepackage{MATH561}
+
+\begin{document}
+\noindent \textbf{\Large{Caleb Logemann \\
+MATH 561 Numerical Analysis I \\
+Homework 1
+}}
+
+\begin{enumerate}
+    \item % #1
+        Let $f(x) = \sqrt{1 + x^2} - 1$
+        \begin{enumerate}
+            \item[(a)]
+                For small values of $\abs{x}$, $f(x)$ can be difficult to compute
+                becuase $x^2 \approx 0$ and $\sqrt{1 + x^2} \approx 1$.
+                This causes $f(x)$ to be taking the difference to two numbers
+                that are approximately equal, which can cause a loss of accuracy.
+                This can be circumvented by noting that $f(x)$ can be
+                expressed as follows.
+                \begin{align*}
+                    f(x) &= \sqrt{1 + x^2} - 1 \\
+                         &= \sqrt{1 + x^2} - 1 \times \frac{\sqrt{1 + x^2} + 1}{\sqrt{1 + x^2} + 1} \\
+                         &= \frac{x^2}{\sqrt{1 + x^2} + 1} \\
+                \end{align*}
+
+            \item[(b)]
+                The condition number of $f(x)$ can be determined as follows
+                \begin{align*}
+                    (cond f)(x) &= \abs{\frac{x f'(x)}{f(x)}} \\
+                                &= \abs{\frac{x^2}{\sqrt{1+x^2}\p{\sqrt{1 + x^2} - 1}}} \\
+                                &= \abs{\frac{x^2}{1 + x^2 - \sqrt{1 + x^2}}} \\
+                \end{align*}
+                As $\abs{x} \to 0$, the use of L'Hopital's rule is necessary.
+                \begin{align*}
+                    \lim{x \to 0}{(cond\, f)(x)} = \abs{}
+                \end{align*}
+
+            \item[(c)]
+                The condition number of $f(x)$ doesn't take into account taking
+                the difference of two numbers that are approximately equal.
+        \end{enumerate}
+
+    \item % #2
+        Let $f(x) = (1 - \cos{x})/x$, $x \neq 0$.
+        \begin{enumerate}
+            \item[(a)]
+
+            \item[(b)]
+            \item[(c)]
+        \end{enumerate}
+
+    \item % #3
+        Let $f(x) = x^n + ax - 1$, $a > 0$, $n \ge 2$
+        \begin{enumerate}
+            \item[(a)]
+                Show that $f(x)$ has exactly one positive root $\xi(a)$.
+                First note that $f(0) = -1$ and $f(1) = a > 0$.
+                Since $f$ is a polynomial and is continuous, by the
+                Intermediate Value Theorem, there must exist $c \in (0, 1)$,
+                such that $f(c) = 0$.
+                Therefore $f$ has at least on root in the interval $(0, 1)$.
+                Also $f'(x) = nx^{n-1} + a$, for $x \ge 0$, $f'(x) > 0$, so
+                $f$ is a strictly increasing function on the interval
+                $[0, \infty)$.
+                Therefore there is only one positive root of $f(x)$ and it is
+                in the interval $(0, 1)$.
+                Let $\xi(a)$ be this root.
+
+            \item[(b)]
+                Obtain a formula for $(cond\,\xi)(a)$.
+                The derivitive of $\xi(a)$ can be found by implicit
+                differentiation of $f(\xi(a))$.
+                \begin{align*}
+                    f(\xi(a)) &= 0 \\
+                    \xi(a)^n + a \xi(a) - 1 &= 0
+                    \intertext{By differentiating with respect to $a$}
+                    n \xi(a)^{n-1} \xi'(a) + a \xi'(a) + \xi(a) &= 0 \\
+                    \xi'(a) &= \frac{-\xi(a)}{n \xi(a)^{n-1} + a} \\
+                    \intertext{Also it can be noted that}
+                    \xi(a)^n + a \xi(a) - 1 &= 0 \\
+                    \xi(a)^n &= 1 - a \xi(a) \\
+                    \xi(a)^{n-1} &= \frac{1 - a \xi(a)}{\xi(a)}
+                    \intertext{Then $\xi'(a)$ can be expressed as}
+                    \xi'(a) &= \frac{-\xi(a)}{n \frac{1 - a \xi(a)}{\xi(a)} + a} \\
+                    \xi'(a) &= \frac{-\xi(a)^2}{n - an\xi(a) + a\xi(a)} \\
+                \end{align*}
+                The condition number of $\xi(a)$ can then be found
+                \begin{align*}
+                    (cond\,\xi)(a) &= \abs{\frac{a \xi'(a)}{\xi(a)}} \\
+                    &= \abs{\frac{a \frac{-\xi(a)^2}{n - an\xi(a) + a\xi(a)}}{\xi(a)}} \\
+                    &= \abs{\frac{-a\xi(a)}{n - an\xi(a) + a\xi(a)}} \\
+                    &= \frac{a\xi(a)}{n + (1-n)a\xi(a)} \\
+                \end{align*}
+
+            \item[(c)]
+                Since $0 < \xi(a) < 1$, bounds for the condition number of
+                $\xi(a)$ can be found.
+                \begin{align*}
+                    \lim{\xi(a) \to 0}{\frac{a\xi(a)}{n + (1-n)a\xi(a)}} &= 0 \\
+                    \lim{\xi(a) \to 1}{\frac{a\xi(a)}{n + (1-n)a\xi(a)}} &= \frac{a}{n + (1-n)a} \\
+                \end{align*}
+                Therefore $0 < (cond\,\xi)(a) < \frac{a}{n + (1-n)a}$.
+        \end{enumerate}
+
+    \item % #4
+        \begin{enumerate}
+            \item[(a)]
+
+            \item[(b)]
+                
+        \end{enumerate}
+
+    \item % #5
+
+    \item % #6
+\end{enumerate}
+\end{document}
