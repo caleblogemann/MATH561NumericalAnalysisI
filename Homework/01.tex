@@ -34,9 +34,14 @@ Homework 1
                 \end{align*}
                 As $\abs{x} \to 0$, the use of L'Hopital's rule is necessary.
                 \begin{align*}
-                    \lim{x \to 0}{(cond\, f)(x)} = \abs{}
+                    \lim{x \to 0}{(cond\, f)(x)} &= \abs{\frac{2x}{2x - \frac{x}{\sqrt{1 + x^2}}}} \Big|_{x=0}
+                    \intertext{L'Hopital's rule can be applied again}
+                    &= \abs{\frac{2}{2 - \frac{\sqrt{1 + x^2} - x^2}{(1 + x^2)\sqrt{1 + x^2}}}} \Big|_{x=0} \\
+                    &= \abs{\frac{2}{2 - \frac{\sqrt{1}}{(1)\sqrt{1}}}} \\
+                    &= 2
                 \end{align*}
-
+                Therefore for small $x$ the $(cond\, f)(x) \approx 2$.
+%
             \item[(c)]
                 The condition number of $f(x)$ doesn't take into account taking
                 the difference of two numbers that are approximately equal.
@@ -46,9 +51,37 @@ Homework 1
         Let $f(x) = (1 - \cos{x})/x$, $x \neq 0$.
         \begin{enumerate}
             \item[(a)]
+                \begin{align*}
+                    fl(f(x)) &= fl\p{\frac{1 - fl(\cos{x})}{x}} \\
+                    &= fl\p{\frac{1 - (1 + \epsilon_r)\cos{x}}{x}} \\
+                    &= fl\p{\frac{fl(1 - (1 + \epsilon_r)\cos{x})}{fl(x)}} \\
+                    &= fl\p{\frac{\p{1 - \cos{x}}\p{1 - \frac{\cos{x}}{1 - \cos{x}} \epsilon_r}}{x(1 + \epsilon_x)}} \\
+                    &= \p{\frac{1 - \cos{x}}{x}}\p{1 - \frac{\cos{x}}{1 - \cos{x}} \epsilon_r - \epsilon_x} \\
+                \epsilon_f &= -\frac{\cos{x}}{1 - \cos{x}} \epsilon_r - \epsilon_x \\
+                \lim{x \to 0}{\abs{\epsilon_f}} &= \abs{-\frac{\cos{0}}{1 - \cos{0}} \epsilon_r - \epsilon_x} \\
+                    &= \infty
+                \end{align*}
 
             \item[(b)]
+                \begin{align*}
+                    fl(f(x)) &= fl\p{\frac{fl(\sin{x})^2}{fl(x(1 + fl(\cos{x})))}} \\
+                    &= fl\p{\frac{((1 + \epsilon_s)\sin{x})^2}{fl(x(1 + (1 + \epsilon_c)\cos{x}))}} \\
+                    &= fl\p{\frac{(1 + 2\epsilon_s)\sin{x}^2}{fl(x(1 + \cos{x})(1 + \frac{\cos{x}}{1 + \cos{x}}\epsilon_c)}} \\
+                    &= fl\p{\frac{(1 + 2\epsilon_s)\sin{x}^2}{x(1 + \cos{x})(1 + \frac{\cos{x}}{1 + \cos{x}}\epsilon_c + \epsilon_x)}} \\
+                    &= \p{\frac{\sin{x}^2}{x(1 + \cos{x})}(1 + 2\epsilon_s - \frac{\cos{x}}{1 + \cos{x}}\epsilon_c - \epsilon_x)} \\
+                    \epsilon_f &= 2\epsilon_s - \frac{\cos{x}}{1 + \cos{x}}\epsilon_c - \epsilon_x \\
+                    \lim{x \to 0}{\abs{\epsilon_f}} &= \abs{2\epsilon_s - \frac{1}{2}\epsilon_c - \epsilon_x}
+                \end{align*}
+
             \item[(c)]
+                \begin{align*}
+                    (cond\, f)(x) &= \abs{\frac{xf'(x)}{f(x)}} \\
+                    &= \abs{\frac{\frac{x\sin{x} - (1 - \cos{x})}{x}}{\frac{(1 - \cos{x})}{x}}} \\
+                    &= \abs{\frac{x\sin{x} - (1 - \cos{x})}{(1 - \cos{x})}}
+                    \intertext{As $x \to 0$, both the numerator and the denominator go to 0 so L'Hopital's rule must be used}
+                    \lim{x \to 0}{(cond\, f)(x)} &= \abs{\frac{\sin{x} + x\cos{x} - \sin{x}}{\sin{x}}} \Big|_{x = 0}
+                    &= \abs{\frac{1 + 0 - 1}{1}} = 0 
+                \end{align*}
         \end{enumerate}
 
     \item % #3
@@ -107,6 +140,21 @@ Homework 1
     \item % #4
         \begin{enumerate}
             \item[(a)]
+                Let $x = \frac{k\pi}{2n + 1}$, then the terms of the summation
+                are $f(x) = \frac{1}{x} \tan{x}$ to a positive constant.
+                Note that $xf(x) = tan(x)$ and $[xf(x)]' = \sec{x}^2 = \frac{1}{\cos{x}^2}$.
+                Also by the product rule $[xf(x)]' = xf'(x) + f(x)$.
+                Therefore
+                \begin{align*}
+                    xf'(x) &= \frac{1}{\cos{x}^2} - f(x) \\
+                    &= \frac{1}{\cos{x}^2} - \frac{\sin{x}}{x \cos{x}} \\
+                    &= \frac{1}{\cos{x}^2} \p{1 - \frac{\sin{x}\cos{x}}{x}} \\
+                    &= \frac{1}{\cos{x}^2} \p{1 - \frac{\sin{2x}}{2x}} \\
+                    \intertext{for $0 \le x \le \pi/2$}
+                    xf'(x) > 0
+                \end{align*}
+                Therefore the $f(x)$ is monotonically increasing and the terms of the
+                sum are monotonically increasing.
                 When $n$ is large and $k$ approaches $n$,
                 $\tan{\frac{k\pi}{2n + 1}} \to \tan{\frac{\pi}{2}}$.
                 So the terms of the sum become very large and dominate the overall
@@ -122,8 +170,8 @@ Homework 1
  10000   5.00338697  5.0031838616315740   2.0311e-04
 100000   5.93930912  5.9363682124964559   2.9409e-03
                 \end{verbatim}
-                \lstinputlisting[Language=Matlab]{calculateLebesgueConstant.m}
-                \lstinputlisting[Language=Matlab, firstline=1, lastline=9]{H01.m}
+                \lstinputlisting[language=Matlab]{calculateLebesgueConstant.m}
+                \lstinputlisting[language=Matlab, firstline=1, lastline=9]{H01.m}
         \end{enumerate}
 
     \item % #5
@@ -135,7 +183,7 @@ Homework 1
         \begin{proof}
             Let $p = p_n(f;\cdot) + \omega_n q$, where $p_n(f;\cdot)$ is the
             Lagrange interpolation of $f$ at $x_1, x_2, \ldots, x_n$,
-            $\omega_n = \product{i=0}{n}{x - x_i}$, and $q$ is some polynomial.
+            $\omega_n = \prod{i=0}{n}{x - x_i}$, and $q$ is some polynomial.
             Firstly note that $p(x_i) = p_n(x_i) + 0 q = f(x_i)$, so the condition
             of equality at the points $x_i$ is met.
             Secondly note $\norm[\infty]{f - p} =
@@ -153,9 +201,9 @@ Homework 1
             Remember that $f \in C^1\br{a, b}$, so $f$ is differentiable, and
             $p_n$ is trivially differentiable.
             Also $\omega_n$ is differentiable and $\omega_n'(x) =
-            \sum{i = 1}{n}{\product{k = 1, k \neq i}{n}{x - x_k}}$ by repeated
+            \sum{i = 1}{n}{\prod{k = 1, k \neq i}{n}{x - x_k}}$ by repeated
             use of the product rule.
-            Therefore $\omega_n'(x_i) = \product{k=1, k \neq i}{n}{x_i - x_k} \neq 0$.
+            Therefore $\omega_n'(x_i) = \prod{k=1, k \neq i}{n}{x_i - x_k} \neq 0$.
             Thus $\lim{x \to x_i}{\frac{f'(x)- p_n'(x)}{w_n'(x)}}$ exists so
             $g(x)$ is continuous at $x_i$.
             Then by the Weierstrass Approximation Theorem there exists a polynomial
@@ -179,8 +227,8 @@ Homework 1
                 \end{align*}
                 \begin{align*}
                     \p{\pi_i, f} &= \dintt{-\infty}{\infty}{\pi_i f}{\lambda} \\
-                    &= \dintt{0}{1}{e^{-it}{t} \\
-                    &= -\frac{1}{i} e^{-it} \Bit|_{x = 0}^{1} \\
+                    &= \dintt{0}{1}{e^{-it}}{t} \\
+                    &= -\frac{1}{i} e^{-it} \Big|_{x = 0}^{1} \\
                     &= -\frac{1}{i} e^{-i} + \frac{1}{i} \\
                     &= \frac{1}{i} \p{1 - e^{-i}}
                 \end{align*}
@@ -239,7 +287,7 @@ Homework 1
                     2.88841221308708e+03
                 \end{verbatim}
                 \includegraphics[scale=.3]{Figures/01_6.png}
-                \lstinputlisting[Language=Matlab, firstline=11]{H01.m}
+                \lstinputlisting[language=Matlab, firstline=11]{H01.m}
         \end{enumerate}
 \end{enumerate}
 \end{document}
