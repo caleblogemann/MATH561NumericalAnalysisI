@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 \usepackage[letterpaper]{geometry}
 \usepackage{MATH561}
+\usepackage{SetTheory}
 
 \begin{document}
 \noindent \textbf{\Large{Caleb Logemann \\
@@ -38,7 +39,27 @@ Homework 2
                 overall sum.
 
             \item[(d)]
-                
+                For $\abs{i - j} > 1$, $\pi_i(t) \pi_j(t) = 0$ for $t \in (0, 1)$.
+                Therefore $\dintt{0}{1}{\pi_i(t) \pi_j(t)}{t} = 0$ and $a_{ij} = 0$
+                for $\abs{i - j} > 1$.
+
+                For $\abs{i - j} = 1$, without loss of generality assume $j = i + 1$.
+                Note that $\supp\p{\pi_i(t)\pi_j(t)} = (i/n, i+1/n) = (i/n, j/n)$
+                \begin{align*}
+                    \dintt{0}{1}{\pi_i(t)\pi_j(t)}{t} &= \dintt{0}{1}{\pi_i(t)\pi_{i+1}(t)}{t}
+                    \intertext{Since $\supp\p{\pi_i(t)\pi_{i+1}(t)} = (i/n, i+1/n)$}
+                    &= \dintt{i/n}{\p{i+1}/n}{\pi_i(t)\pi_{i+1}(t)}{t}
+                    \intertext{On this interval $\pi_i(t) = -nt + i + 1$ and $\pi_{i+1}(t) = nt - i$}
+                    &= \dintt{i/n}{\p{i+1}/n}{\p{-nt + i + 1}\p{nt - i}}{t} \\
+                    &= \dintt{i/n}{\p{i+1}/n}{-n^2t^2 + int + int + nt - i^2 - i}{t} \\
+                    &= \dintt{i/n}{\p{i+1}/n}{-n^2t^2 + (2i+1)nt - i^2 - i}{t} \\
+                    &= \eval{-\frac{n^2}{3}t^3 + \frac{(2i+1)n}{2}t^2 - (i^2 + i)t}{t=i/n}{\p{i+1}/n} \\
+                    &= \eval{-\frac{n^2}{3}t^3 + \frac{(2i+1)n}{2}t^2 - (i^2 + i)t}{t=i/n}{\p{i+1}/n} \\
+                    &= -\frac{n^2}{3}\p{\frac{i+1}{n}}^3 + \frac{(2i+1)n}{2}\p{\frac{i+1}{n}}^2 - (i^2 + i)\frac{i+1}{n} +
+                    \frac{n^2}{3}\p{\frac{i+1}{n}}^3 - \frac{(2i+1)n}{2}\p{\frac{i}{n}}^2 + (i^2 + i)\frac{i}{n} \\
+                    &= 
+                \end{align*}
+
         \end{enumerate}
     \item % #2 finding upper bounds for error
         \begin{enumerate}
