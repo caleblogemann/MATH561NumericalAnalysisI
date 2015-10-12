@@ -1,0 +1,1347 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     39769,       1338]
+NotebookOptionsPosition[     38352,       1296]
+NotebookOutlinePosition[     38733,       1313]
+CellTagsIndexPosition[     38690,       1310]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Splines", "Chapter",
+ CellChangeTimes->{{3.6535860712425537`*^9, 3.653586072642558*^9}}],
+
+Cell[TextData[{
+ "Given a set of points ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      SubscriptBox["x", "1"], ",", 
+      SubscriptBox["f", "1"]}], ")"}], ",", 
+    RowBox[{"(", 
+     RowBox[{
+      SubscriptBox["x", "2"], ",", 
+      SubscriptBox["f", "2"]}], ")"}], ",", "\[Ellipsis]", ",", 
+    RowBox[{"(", 
+     RowBox[{
+      SubscriptBox["x", "n"], ",", 
+      SubscriptBox["f", "n"]}], ")"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " on an interval ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"[", 
+    RowBox[{"a", ",", "b"}], "]"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " it is often of interest to find a way of interpolating these values. That \
+is find an associated value to any value ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", " ", "\[Element]", " ", 
+    RowBox[{"[", 
+     RowBox[{"a", ",", "b"}], "]"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " not just ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", "1"], ",", 
+    SubscriptBox["x", "2"], ",", "\[Ellipsis]", ",", 
+    SubscriptBox["x", "n"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". This has been discussed previously by using a single polynomial of degree \
+less than or equal to n. See polynomialInterpolation.nb for more information. \
+Often times this approach can result in polynomials of very large degree, \
+which is not ideal. Another approach is to use a piecewise polynomial to \
+interpolate these points, that is have a lower degree polynomial interpolate \
+this relation on each subinterval ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"[", 
+    RowBox[{
+     SubscriptBox["x", "i"], ",", 
+     SubscriptBox["x", 
+      RowBox[{"i", "+", "1"}]]}], "]"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.653586079058571*^9, 3.653586148337288*^9}, {
+   3.653586181864312*^9, 3.6535862501083927`*^9}, {3.653586315883534*^9, 
+   3.65358653680371*^9}, 3.653586582458303*^9, {3.6536090970082293`*^9, 
+   3.653609107736313*^9}}],
+
+Cell[BoxData[
+ RowBox[{" ", 
+  StyleBox[
+   RowBox[{"Cubic", " ", "Splines"}], "Subchapter"]}]], "Input",
+ CellChangeTimes->{{3.6535860102609987`*^9, 3.653586021803762*^9}}],
+
+Cell["\<\
+The cubic splines are the most popular type of interpolating spline. As the \
+name implies cubic splines use cubic polynomials to interpolate the function \
+on each interval.\
+\>", "Text",
+ CellChangeTimes->{{3.6535865975215*^9, 3.653586646961177*^9}}],
+
+Cell[TextData[{
+ "Almost always cubic splines will have a continuous first derivative, that \
+is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      SubscriptBox["p", "i"], "'"}], 
+     RowBox[{"(", 
+      SubscriptBox["x", 
+       RowBox[{"i", "+", "1"}]], ")"}]}], "=", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["p", 
+       RowBox[{"i", "+", "1"}]], "'"}], 
+     RowBox[{"(", 
+      SubscriptBox["x", 
+       RowBox[{"i", "+", "1"}]], ")"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"i", "=", "1"}], ",", "2", ",", "\[Ellipsis]", ",", "n"}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". Let ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["m", "i"], "=", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["p", "i"], "'"}], 
+     RowBox[{"(", 
+      SubscriptBox["x", "i"], ")"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", then finding the polynomial that interpolates the function on ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"[", 
+    RowBox[{
+     SubscriptBox["x", "i"], ",", 
+     SubscriptBox["x", 
+      RowBox[{"i", "+", "1"}]]}], "]"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " can be formatted as a Hermite Interpolation problem, where ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     SubscriptBox["p", "i"], "(", 
+     SubscriptBox["x", "i"], ")"}], " ", "=", " ", 
+    SubscriptBox["f", "i"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     SubscriptBox["p", "i"], "(", 
+     SubscriptBox["x", 
+      RowBox[{"i", "+", "1"}]], ")"}], "=", 
+    SubscriptBox["f", 
+     RowBox[{"i", "+", "1"}]]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      SubscriptBox["p", "i"], "'"}], 
+     RowBox[{"(", 
+      SubscriptBox["x", "i"], ")"}]}], "=", 
+    SubscriptBox["m", "i"]}], TraditionalForm]]],
+ ", and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      SubscriptBox["p", "i"], "'"}], 
+     RowBox[{"(", 
+      SubscriptBox["x", 
+       RowBox[{"i", "+", "1"}]], ")"}]}], "=", 
+    SubscriptBox["m", 
+     RowBox[{"i", "+", "1"}]]}], TraditionalForm]]],
+ ". The table of divided differences for this Hermite Interpolation is shown \
+below.\n",
+ Cell[BoxData[
+  FormBox[GridBox[{
+     {
+      SubscriptBox["x", "i"], 
+      SubscriptBox["f", "i"], "\[Placeholder]", "\[Placeholder]", 
+      "\[Placeholder]"},
+     {
+      SubscriptBox["x", "i"], 
+      SubscriptBox["f", "i"], 
+      SubscriptBox["m", "i"], "\[Placeholder]", "\[Placeholder]"},
+     {
+      SubscriptBox["x", 
+       RowBox[{"i", "+", "1"}]], 
+      SubscriptBox["f", 
+       RowBox[{"i", "+", "1"}]], 
+      RowBox[{
+       RowBox[{"[", 
+        RowBox[{
+         SubscriptBox["x", "i"], ",", 
+         SubscriptBox["x", 
+          RowBox[{"i", "+", "1"}]]}], "]"}], "f"}], 
+      FractionBox[
+       RowBox[{
+        RowBox[{
+         RowBox[{"[", 
+          RowBox[{
+           SubscriptBox["x", "i"], ",", 
+           SubscriptBox["x", 
+            RowBox[{"i", "+", "1"}]]}], "]"}], "f"}], "-", 
+        SubscriptBox["m", "i"]}], 
+       SubscriptBox["\[CapitalDelta]x", "i"]], "\[Placeholder]"},
+     {
+      SubscriptBox["x", 
+       RowBox[{"i", "+", "1"}]], 
+      SubscriptBox["f", 
+       RowBox[{"i", "+", "1"}]], 
+      SubscriptBox["m", 
+       RowBox[{"i", "+", "1"}]], 
+      FractionBox[
+       RowBox[{
+        SubscriptBox["m", 
+         RowBox[{"i", "+", "1"}]], "-", 
+        RowBox[{
+         RowBox[{"[", 
+          RowBox[{
+           SubscriptBox["x", "i"], ",", 
+           SubscriptBox["x", 
+            RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], 
+       SubscriptBox["\[CapitalDelta]x", "i"]], 
+      FractionBox[
+       RowBox[{
+        SubscriptBox["m", 
+         RowBox[{"i", "+", "1"}]], "+", 
+        SubscriptBox["m", "i"], "-", 
+        RowBox[{
+         RowBox[{"2", "[", 
+          RowBox[{
+           SubscriptBox["x", "i"], ",", 
+           SubscriptBox["x", 
+            RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], 
+       SuperscriptBox[
+        RowBox[{"(", 
+         SubscriptBox["\[CapitalDelta]x", "i"], ")"}], "2"]]}
+    }], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "\nRemember that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{"[", 
+      RowBox[{
+       SubscriptBox["x", "i"], ",", 
+       SubscriptBox["x", 
+        RowBox[{"i", "+", "1"}]]}], "]"}], "f"}], "=", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       SubscriptBox["f", 
+        RowBox[{"i", "+", "1"}]], "-", 
+       SubscriptBox["f", "i"]}], 
+      RowBox[{
+       SubscriptBox["x", 
+        RowBox[{"i", "+", "1"}]], "-", 
+       SubscriptBox["x", "i"]}]], "=", 
+     FractionBox[
+      RowBox[{
+       SubscriptBox["f", 
+        RowBox[{"i", "+", "1"}]], "-", 
+       SubscriptBox["f", "i"]}], 
+      SubscriptBox["\[CapitalDelta]x", "i"]]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "\nThen in Newton\[CloseCurlyQuote]s Form"
+}], "Text",
+ CellChangeTimes->{{3.653586041573474*^9, 3.653586042036894*^9}, {
+   3.65358734210909*^9, 3.653587551729869*^9}, {3.6535875870672092`*^9, 
+   3.653587988340191*^9}, {3.653588041842287*^9, 3.65358810971703*^9}, {
+   3.653588145456468*^9, 3.653588227314691*^9}, {3.653588302881812*^9, 
+   3.653588322268635*^9}, {3.653588400669862*^9, 3.653588457611659*^9}, {
+   3.653588796279805*^9, 3.6535888089897346`*^9}, 3.653588854652914*^9, {
+   3.653589178504985*^9, 3.6535892230298367`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["p", "i"], "(", "x", ")"}], " ", "=", " ", 
+   RowBox[{
+    SubscriptBox["f", "i"], "+", 
+    RowBox[{
+     SubscriptBox["m", "i"], "(", 
+     RowBox[{"x", " ", "-", " ", 
+      SubscriptBox["x", "i"]}], ")"}], " ", "+", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       RowBox[{
+        RowBox[{"[", 
+         RowBox[{
+          SubscriptBox["x", "i"], ",", 
+          SubscriptBox["x", 
+           RowBox[{"i", "+", "1"}]]}], "]"}], "f"}], "-", 
+       SubscriptBox["m", "i"]}], 
+      SubscriptBox["\[CapitalDelta]x", "i"]], 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"x", " ", "-", " ", 
+        SubscriptBox["x", "i"]}], ")"}], "2"]}], "+", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       SubscriptBox["m", 
+        RowBox[{"i", "+", "1"}]], "+", 
+       SubscriptBox["m", "i"], "-", 
+       RowBox[{
+        RowBox[{"2", "[", 
+         RowBox[{
+          SubscriptBox["x", "i"], ",", 
+          SubscriptBox["x", 
+           RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        SubscriptBox["\[CapitalDelta]x", "i"], ")"}], "2"]], " ", 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"x", "-", 
+        SubscriptBox["x", "i"]}], ")"}], "2"], 
+     RowBox[{"(", 
+      RowBox[{"x", "-", 
+       SubscriptBox["x", 
+        RowBox[{"i", "+", "1"}]]}], ")"}]}]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{{3.6535885275391693`*^9, 3.653588551251598*^9}},
+ LocatorBoxOptions->{LocatorCentering->False}],
+
+Cell[TextData[{
+ "Since ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", 
+     RowBox[{"i", "+", "1"}]], "=", 
+    RowBox[{
+     SubscriptBox["x", "i"], "+", 
+     SubscriptBox["\[CapitalDelta]x", "i"]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", then"
+}], "Text",
+ CellChangeTimes->{3.653588793169924*^9}],
+
+Cell[BoxData[{
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["p", "i"], "(", "x", ")"}], "=", 
+   RowBox[{
+    SubscriptBox["f", "i"], "+", 
+    RowBox[{
+     SubscriptBox["m", "i"], "(", 
+     RowBox[{"x", "-", 
+      SubscriptBox["x", "i"]}], ")"}], "+", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       RowBox[{
+        RowBox[{"[", 
+         RowBox[{
+          SubscriptBox["x", "i"], ",", 
+          SubscriptBox["x", 
+           RowBox[{"i", "+", "1"}]]}], "]"}], "f"}], "-", 
+       SubscriptBox["m", "i"]}], 
+      SubscriptBox["\[CapitalDelta]x", "i"]], 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"x", "-", 
+        SubscriptBox["x", "i"]}], ")"}], "2"]}], "+", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       SubscriptBox["m", 
+        RowBox[{"i", "+", "1"}]], "+", 
+       SubscriptBox["m", "i"], "-", 
+       RowBox[{
+        RowBox[{"2", "[", 
+         RowBox[{
+          SubscriptBox["x", "i"], ",", 
+          SubscriptBox["x", 
+           RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        SubscriptBox["\[CapitalDelta]x", "i"], ")"}], "2"]], 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"x", "-", 
+        SubscriptBox["x", "i"]}], ")"}], "3"]}], "-", 
+    RowBox[{
+     SubscriptBox["\[CapitalDelta]x", "i"], 
+     FractionBox[
+      RowBox[{
+       SubscriptBox["m", 
+        RowBox[{"i", "+", "1"}]], "+", 
+       SubscriptBox["m", "i"], "-", 
+       RowBox[{
+        RowBox[{"2", "[", 
+         RowBox[{
+          SubscriptBox["x", "i"], ",", 
+          SubscriptBox["x", 
+           RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        SubscriptBox["\[CapitalDelta]x", "i"], ")"}], "2"]], 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"x", "-", 
+        SubscriptBox["x", "i"]}], ")"}], "2"]}]}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["p", "i"], "(", "x", ")"}], "=", 
+   RowBox[{
+    SubscriptBox["f", "i"], "+", 
+    RowBox[{
+     SubscriptBox["m", "i"], "(", 
+     RowBox[{"x", "-", 
+      SubscriptBox["x", "i"]}], ")"}], "+", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       RowBox[{
+        RowBox[{"3", "[", 
+         RowBox[{
+          SubscriptBox["x", "i"], ",", 
+          SubscriptBox["x", 
+           RowBox[{"i", "+", "1"}]]}], "]"}], "f"}], "-", 
+       RowBox[{"2", 
+        SubscriptBox["m", "i"]}], "-", 
+       SubscriptBox["m", 
+        RowBox[{"i", "+", "1"}]]}], 
+      SubscriptBox["\[CapitalDelta]x", "i"]], 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"x", "-", 
+        SubscriptBox["x", "i"]}], ")"}], "2"]}], "+", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       SubscriptBox["m", 
+        RowBox[{"i", "+", "1"}]], "+", 
+       SubscriptBox["m", "i"], "-", 
+       RowBox[{
+        RowBox[{"2", "[", 
+         RowBox[{
+          SubscriptBox["x", "i"], ",", 
+          SubscriptBox["x", 
+           RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        SubscriptBox["\[CapitalDelta]x", "i"], ")"}], "2"]], 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"x", "-", 
+        SubscriptBox["x", "i"]}], ")"}], "3"]}]}]}], 
+  TraditionalForm]}], "DisplayFormulaNumbered",
+ CellChangeTimes->{
+  3.6535887765117693`*^9, {3.653588985705533*^9, 3.653589047729232*^9}}],
+
+Cell["This can be expressed in Taylor\[CloseCurlyQuote]s Form as", "Text",
+ CellChangeTimes->{{3.6535888868592167`*^9, 3.653588889507411*^9}, {
+  3.6535889470541286`*^9, 3.653588955954091*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["p", "i"], "(", "x", ")"}], "=", 
+   RowBox[{
+    SubscriptBox["c", 
+     RowBox[{"i", ",", "0"}]], "+", 
+    RowBox[{
+     SubscriptBox["c", 
+      RowBox[{"i", ",", "1"}]], "(", 
+     RowBox[{"x", "-", 
+      SubscriptBox["x", "i"]}], ")"}], "+", 
+    SuperscriptBox[
+     RowBox[{
+      SubscriptBox["c", 
+       RowBox[{"i", ",", "2"}]], "(", 
+      RowBox[{"x", "-", 
+       SubscriptBox["x", "i"]}], ")"}], "2"], "+", 
+    SuperscriptBox[
+     RowBox[{
+      SubscriptBox["c", 
+       RowBox[{"i", ",", "3"}]], "(", 
+      RowBox[{"x", "-", 
+       SubscriptBox["x", "i"]}], ")"}], "3"]}]}], 
+  TraditionalForm]], "DisplayFormulaNumbered",
+ CellChangeTimes->{
+  3.6535887765117693`*^9, {3.653589058992157*^9, 3.653589093648127*^9}}],
+
+Cell["where", "Text",
+ CellChangeTimes->{{3.653589096015654*^9, 3.653589102783288*^9}}],
+
+Cell[BoxData[{
+ FormBox[
+  RowBox[{
+   SubscriptBox["c", 
+    RowBox[{"i", ",", "0"}]], "=", 
+   SubscriptBox["f", "i"]}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   SubscriptBox["c", 
+    RowBox[{"i", ",", "1"}]], "=", 
+   SubscriptBox["m", "i"]}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   SubscriptBox["c", 
+    RowBox[{"i", ",", "2"}]], "=", 
+   FractionBox[
+    RowBox[{
+     RowBox[{
+      RowBox[{"3", "[", 
+       RowBox[{
+        SubscriptBox["x", "i"], ",", 
+        SubscriptBox["x", 
+         RowBox[{"i", "+", "1"}]]}], "]"}], "f"}], "-", 
+     RowBox[{"2", 
+      SubscriptBox["m", "i"]}], "-", 
+     SubscriptBox["m", 
+      RowBox[{"i", "+", "1"}]]}], 
+    SubscriptBox["\[CapitalDelta]x", "i"]]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   SubscriptBox["c", 
+    RowBox[{"i", ",", "3"}]], "=", 
+   FractionBox[
+    RowBox[{
+     SubscriptBox["m", 
+      RowBox[{"i", "+", "1"}]], "+", 
+     SubscriptBox["m", "i"], "-", 
+     RowBox[{
+      RowBox[{"2", "[", 
+       RowBox[{
+        SubscriptBox["x", "i"], ",", 
+        SubscriptBox["x", 
+         RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], 
+    SuperscriptBox[
+     RowBox[{"(", 
+      SubscriptBox["\[CapitalDelta]x", "i"], ")"}], "2"]]}], 
+  TraditionalForm]}], "DisplayFormulaNumbered",
+ CellChangeTimes->{
+  3.6535887765117693`*^9, {3.653589058992157*^9, 3.653589166435193*^9}}],
+
+Cell[TextData[{
+ "Now all that needs to be found is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["m", "1"], ",", 
+    SubscriptBox["m", "2"], ",", "\[Ellipsis]", ",", " ", 
+    SubscriptBox["m", "n"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". These can be specified directly if the derivative of the function being \
+interpolated is known at these points. This is then known as piecewise cubic \
+Hermite interpolation. This results in generally a better interpolation \
+because the interpolation is not only matching function values but the first \
+derivative as well. However this spline interpolation is continuous only up \
+to the first derivative, the second derivatives may be discontinuous.\n\nIf \
+the first derivative is not known, then another condition may be imposed, \
+such as requiring the second derivative of the piecewise polynomials to be \
+continuous. This means that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      SubscriptBox["p", "i"], "''"}], 
+     RowBox[{"(", 
+      SubscriptBox["x", 
+       RowBox[{"i", "+", "1"}]], ")"}]}], "=", 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["p", 
+       RowBox[{"i", "+", "1"}]], "''"}], 
+     RowBox[{"(", 
+      SubscriptBox["x", 
+       RowBox[{"i", "+", "1"}]], ")"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", "\[LessEqual]", "i", " ", "\[LessEqual]", 
+    RowBox[{"n", "-", "2"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". This gives continuity of the second derivatives at ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", "2"], ",", 
+    SubscriptBox["x", "3"], ",", 
+    SubscriptBox["\[Ellipsis]x", 
+     RowBox[{"n", "-", "1"}]]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". This results in"
+}], "Text",
+ CellChangeTimes->{{3.653608802428887*^9, 3.653608804120596*^9}, {
+  3.653608843263752*^9, 3.653608888562785*^9}, {3.653609125630891*^9, 
+  3.653609141570346*^9}, {3.653609182945846*^9, 3.653609225937334*^9}, {
+  3.653609259849312*^9, 3.653609485405941*^9}, {3.653610829193057*^9, 
+  3.6536108978901663`*^9}}],
+
+Cell[BoxData[{
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     SubscriptBox["p", "i"], "''"}], 
+    RowBox[{"(", "x", ")"}]}], "=", 
+   RowBox[{
+    RowBox[{"2", 
+     SubscriptBox["c", 
+      RowBox[{"i", ",", "2"}]]}], " ", "+", " ", 
+    RowBox[{"6", 
+     RowBox[{
+      SubscriptBox["c", 
+       RowBox[{"i", ",", "3"}]], "(", 
+      RowBox[{"x", "-", 
+       SubscriptBox["x", "i"]}], ")"}]}]}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     SubscriptBox["p", "i"], "''"}], 
+    RowBox[{"(", 
+     SubscriptBox["x", 
+      RowBox[{"i", "+", "1"}]], ")"}]}], "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"2", 
+      SubscriptBox["c", 
+       RowBox[{"i", ",", "2"}]]}], "+", 
+     RowBox[{"6", 
+      RowBox[{
+       SubscriptBox["c", 
+        RowBox[{"i", ",", "3"}]], "(", 
+       RowBox[{
+        SubscriptBox["x", 
+         RowBox[{"i", "+", "1"}]], "-", 
+        SubscriptBox["x", "i"]}], ")"}]}]}], "=", 
+    RowBox[{
+     RowBox[{"2", 
+      SubscriptBox["c", 
+       RowBox[{"i", ",", "2"}]]}], "+", 
+     RowBox[{"6", 
+      SubscriptBox["c", 
+       RowBox[{"i", ",", "3"}]], 
+      SubscriptBox["\[CapitalDelta]x", "i"]}]}]}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     SubscriptBox["p", 
+      RowBox[{"i", "+", "1"}]], "''"}], 
+    RowBox[{"(", 
+     SubscriptBox["x", 
+      RowBox[{"i", "+", "1"}]], ")"}]}], "=", 
+   RowBox[{"2", 
+    SubscriptBox["c", 
+     RowBox[{
+      RowBox[{"i", "+", "1"}], ",", "2"}]]}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"2", 
+      SubscriptBox["c", 
+       RowBox[{"i", ",", "2"}]]}], "+", 
+     RowBox[{"6", 
+      SubscriptBox["c", 
+       RowBox[{"i", ",", "3"}]], 
+      SubscriptBox["\[CapitalDelta]x", "i"]}]}], "=", 
+    RowBox[{"2", 
+     SubscriptBox["c", 
+      RowBox[{
+       RowBox[{"i", "+", "1"}], ",", "2"}]]}]}], "\[IndentingNewLine]"}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"2", 
+     FractionBox[
+      RowBox[{
+       RowBox[{
+        RowBox[{"3", "[", 
+         RowBox[{
+          SubscriptBox["x", "i"], ",", 
+          SubscriptBox["x", 
+           RowBox[{"i", "+", "1"}]]}], "]"}], "f"}], "-", 
+       RowBox[{"2", 
+        SubscriptBox["m", "i"]}], "-", 
+       SubscriptBox["m", 
+        RowBox[{"i", "+", "1"}]]}], 
+      SubscriptBox["\[CapitalDelta]x", "i"]]}], "+", 
+    RowBox[{"6", 
+     FractionBox[
+      RowBox[{
+       SubscriptBox["m", 
+        RowBox[{"i", "+", "1"}]], "+", 
+       SubscriptBox["m", "i"], "-", 
+       RowBox[{
+        RowBox[{"2", "[", 
+         RowBox[{
+          SubscriptBox["x", "i"], ",", 
+          SubscriptBox["x", 
+           RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        SubscriptBox["\[CapitalDelta]x", "i"], ")"}], "2"]], 
+     SubscriptBox["\[CapitalDelta]x", "i"]}]}], "=", 
+   RowBox[{"2", 
+    FractionBox[
+     RowBox[{
+      RowBox[{
+       RowBox[{"3", "[", 
+        RowBox[{
+         SubscriptBox["x", 
+          RowBox[{"i", "+", "1"}]], ",", 
+         SubscriptBox["x", 
+          RowBox[{"i", "+", "2"}]]}], "]"}], "f"}], "-", 
+      RowBox[{"2", 
+       SubscriptBox["m", 
+        RowBox[{"i", "+", "1"}]]}], "-", 
+      SubscriptBox["m", 
+       RowBox[{"i", "+", "2"}]]}], 
+     SubscriptBox["\[CapitalDelta]x", 
+      RowBox[{"i", "+", "1"}]]]}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     RowBox[{
+      RowBox[{"6", "[", 
+       RowBox[{
+        SubscriptBox["x", "i"], ",", 
+        SubscriptBox["x", 
+         RowBox[{"i", "+", "1"}]]}], "]"}], "f"}], "-", 
+     RowBox[{"4", 
+      SubscriptBox["m", "i"]}], "-", 
+     RowBox[{"2", 
+      SubscriptBox["m", 
+       RowBox[{"i", "+", "1"}]]}], "+", 
+     RowBox[{"6", 
+      SubscriptBox["m", 
+       RowBox[{"i", "+", "1"}]]}], "+", 
+     RowBox[{"6", 
+      SubscriptBox["m", "i"]}], "-", 
+     RowBox[{
+      RowBox[{"12", "[", 
+       RowBox[{
+        SubscriptBox["x", "i"], ",", 
+        SubscriptBox["x", 
+         RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], 
+    SubscriptBox["\[CapitalDelta]x", "i"]], "=", 
+   FractionBox[
+    RowBox[{
+     RowBox[{
+      RowBox[{"6", "[", 
+       RowBox[{
+        SubscriptBox["x", 
+         RowBox[{"i", "+", "1"}]], ",", 
+        SubscriptBox["x", 
+         RowBox[{"i", "+", "2"}]]}], "]"}], "f"}], "-", 
+     RowBox[{"4", 
+      SubscriptBox["m", 
+       RowBox[{"i", "+", "1"}]]}], "-", 
+     RowBox[{"2", 
+      SubscriptBox["m", 
+       RowBox[{"i", "+", "2"}]]}]}], 
+    SubscriptBox["\[CapitalDelta]x", 
+     RowBox[{"i", "+", "1"}]]]}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     RowBox[{"4", 
+      SubscriptBox["m", 
+       RowBox[{"i", "+", "1"}]]}], "+", 
+     RowBox[{"2", 
+      SubscriptBox["m", "i"]}], "-", 
+     RowBox[{
+      RowBox[{"6", "[", 
+       RowBox[{
+        SubscriptBox["x", "i"], ",", 
+        SubscriptBox["x", 
+         RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], 
+    SubscriptBox["\[CapitalDelta]x", "i"]], "=", 
+   FractionBox[
+    RowBox[{
+     RowBox[{
+      RowBox[{"6", "[", 
+       RowBox[{
+        SubscriptBox["x", 
+         RowBox[{"i", "+", "1"}]], ",", 
+        SubscriptBox["x", 
+         RowBox[{"i", "+", "2"}]]}], "]"}], "f"}], "-", 
+     RowBox[{"4", 
+      SubscriptBox["m", 
+       RowBox[{"i", "+", "1"}]]}], "-", 
+     RowBox[{"2", 
+      SubscriptBox["m", 
+       RowBox[{"i", "+", "2"}]]}]}], 
+    SubscriptBox["\[CapitalDelta]x", 
+     RowBox[{"i", "+", "1"}]]]}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"2", 
+     SubscriptBox["\[CapitalDelta]x", 
+      RowBox[{"i", "+", "1"}]], 
+     SubscriptBox["m", "i"]}], "+", 
+    RowBox[{"4", 
+     RowBox[{"(", 
+      RowBox[{
+       SubscriptBox["\[CapitalDelta]x", 
+        RowBox[{"i", "+", "1"}]], "+", 
+       SubscriptBox["\[CapitalDelta]x", "i"]}], ")"}], 
+     SubscriptBox["m", 
+      RowBox[{"i", "+", "1"}]]}], "+", 
+    RowBox[{"2", 
+     SubscriptBox["\[CapitalDelta]x", "i"], 
+     SubscriptBox["m", 
+      RowBox[{"i", "+", "2"}]]}]}], "=", 
+   RowBox[{"6", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        SubscriptBox["\[CapitalDelta]x", "i"], "[", 
+        RowBox[{
+         SubscriptBox["x", 
+          RowBox[{"i", "+", "1"}]], ",", 
+         SubscriptBox["x", 
+          RowBox[{"i", "+", "2"}]]}], "]"}], "f"}], "+", 
+      RowBox[{
+       RowBox[{
+        SubscriptBox["\[CapitalDelta]x", 
+         RowBox[{"i", "+", "1"}]], "[", 
+        RowBox[{
+         SubscriptBox["x", "i"], ",", 
+         SubscriptBox["x", 
+          RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], ")"}]}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     SubscriptBox["\[CapitalDelta]x", 
+      RowBox[{"i", "+", "1"}]], 
+     SubscriptBox["m", "i"]}], "+", 
+    RowBox[{"2", 
+     RowBox[{"(", 
+      RowBox[{
+       SubscriptBox["\[CapitalDelta]x", 
+        RowBox[{"i", "+", "1"}]], "+", 
+       SubscriptBox["\[CapitalDelta]x", "i"]}], ")"}], 
+     SubscriptBox["m", 
+      RowBox[{"i", "+", "1"}]]}], "+", 
+    RowBox[{
+     SubscriptBox["\[CapitalDelta]x", "i"], 
+     SubscriptBox["m", 
+      RowBox[{"i", "+", "2"}]]}]}], "=", 
+   RowBox[{"3", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        SubscriptBox["\[CapitalDelta]x", "i"], "[", 
+        RowBox[{
+         SubscriptBox["x", 
+          RowBox[{"i", "+", "1"}]], ",", 
+         SubscriptBox["x", 
+          RowBox[{"i", "+", "2"}]]}], "]"}], "f"}], "+", 
+      RowBox[{
+       RowBox[{
+        SubscriptBox["\[CapitalDelta]x", 
+         RowBox[{"i", "+", "1"}]], "[", 
+        RowBox[{
+         SubscriptBox["x", "i"], ",", 
+         SubscriptBox["x", 
+          RowBox[{"i", "+", "1"}]]}], "]"}], "f"}]}], ")"}]}]}], 
+  TraditionalForm]}], "DisplayFormulaNumbered",
+ CellChangeTimes->{
+  3.6535887765117693`*^9, {3.653589058992157*^9, 3.653589093648127*^9}, {
+   3.6536095028447437`*^9, 3.653609583852001*^9}, {3.6536096283145514`*^9, 
+   3.653609779632763*^9}, {3.6536098300313177`*^9, 3.653609881734865*^9}, {
+   3.653609924965523*^9, 3.653609949230073*^9}, {3.6536099980325203`*^9, 
+   3.653610065059452*^9}, {3.653610096451325*^9, 3.6536102201045103`*^9}, {
+   3.653611548594893*^9, 3.653611579018265*^9}}],
+
+Cell[TextData[{
+ "There are now ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "-", "2"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " equations for determining ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["m", "i"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", "\[LessEqual]", "i", "\[LessEqual]", "n"}], TraditionalForm]],
+  
+  FormatType->"TraditionalForm"],
+ ". Notice the tridiagonal form of these equations except for 2 missing \
+equations. Since these equations focusing on the points ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "i"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"2", " ", "\[LessEqual]", "i", "\[LessEqual]", 
+    RowBox[{"n", "-", "1"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", additional specifications for ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["m", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["m", "n"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " are needed. These specifications can come in many different forms, which \
+will be outlined below."
+}], "Text",
+ CellChangeTimes->{{3.653610905685264*^9, 3.653610906958385*^9}, {
+  3.6536111655130873`*^9, 3.653611341798368*^9}, {3.653611397900792*^9, 
+  3.653611426796895*^9}, {3.65361247017894*^9, 3.6536124862113237`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Natural Cubic Splines", "Subsubsection",
+ CellChangeTimes->{{3.6536113281261387`*^9, 3.653611332422127*^9}}],
+
+Cell[TextData[{
+ "Natural cubic splines set the second derivative to be zero at ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "1"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "n"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", that is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      SubscriptBox["p", "1"], "''"}], 
+     RowBox[{"(", 
+      SubscriptBox["x", "1"], ")"}]}], " ", "=", " ", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      SubscriptBox["p", 
+       RowBox[{"n", "-", "1"}]], "''"}], "0", 
+     RowBox[{"(", 
+      SubscriptBox["x", "n"], ")"}]}], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". This implies that"
+}], "Text",
+ CellChangeTimes->{{3.653611350005314*^9, 3.653611380148836*^9}, {
+  3.653611432161626*^9, 3.653611438604423*^9}, {3.653611470011606*^9, 
+  3.653611516795061*^9}}],
+
+Cell[BoxData[{
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     SubscriptBox["p", "1"], "''"}], 
+    RowBox[{"(", 
+     SubscriptBox["x", "1"], ")"}]}], "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"2", 
+      SubscriptBox["c", 
+       RowBox[{"i", ",", "2"}]]}], " ", "+", " ", 
+     RowBox[{"6", 
+      RowBox[{
+       SubscriptBox["c", 
+        RowBox[{"i", ",", "3"}]], "(", 
+       RowBox[{
+        SubscriptBox["x", "1"], "-", 
+        SubscriptBox["x", "1"]}], ")"}]}]}], "=", 
+    RowBox[{"2", 
+     SubscriptBox["c", 
+      RowBox[{"1", ",", "2"}]]}]}]}], TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{"2", 
+    SubscriptBox["c", 
+     RowBox[{"1", ",", "2"}]]}], "=", 
+   RowBox[{
+    RowBox[{"0", "\[DoubleLeftRightArrow]", " ", 
+     SubscriptBox["c", 
+      RowBox[{"1", ",", "2"}]]}], "=", "0"}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   FractionBox[
+    RowBox[{
+     RowBox[{
+      RowBox[{"3", "[", 
+       RowBox[{
+        SubscriptBox["x", "1"], ",", 
+        SubscriptBox["x", "2"]}], "]"}], "f"}], "-", 
+     RowBox[{"2", 
+      SubscriptBox["m", "1"]}], "-", 
+     SubscriptBox["m", "2"]}], 
+    SubscriptBox["\[CapitalDelta]x", "1"]], "=", "0"}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"2", 
+     SubscriptBox["m", "1"]}], "+", 
+    SubscriptBox["m", "2"]}], "=", 
+   RowBox[{
+    RowBox[{"3", "[", 
+     RowBox[{
+      SubscriptBox["x", "1"], ",", 
+      SubscriptBox["x", "2"]}], "]"}], "f"}]}], 
+  TraditionalForm]}], "DisplayFormulaNumbered",
+ CellChangeTimes->{
+  3.6535887765117693`*^9, {3.653589058992157*^9, 3.653589093648127*^9}, 
+   3.653611544028759*^9, {3.653611587246346*^9, 3.65361173000811*^9}, {
+   3.653612095248816*^9, 3.653612118424945*^9}}],
+
+Cell["and", "Text",
+ CellChangeTimes->{{3.653611731950737*^9, 3.653611732215122*^9}}],
+
+Cell[BoxData[{
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     SubscriptBox["p", 
+      RowBox[{"n", "-", "1"}]], "''"}], 
+    RowBox[{"(", 
+     SubscriptBox["x", "n"], ")"}]}], "=", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"2", 
+      SubscriptBox["c", 
+       RowBox[{
+        RowBox[{"n", "-", "1"}], ",", "2"}]]}], " ", "+", " ", 
+     RowBox[{"6", 
+      RowBox[{
+       SubscriptBox["c", 
+        RowBox[{
+         RowBox[{"n", "-", "1"}], ",", "3"}]], "(", 
+       RowBox[{
+        SubscriptBox["x", "n"], "-", 
+        SubscriptBox["x", 
+         RowBox[{"n", "-", "1"}]]}], ")"}]}]}], "=", 
+    RowBox[{
+     RowBox[{"2", 
+      SubscriptBox["c", 
+       RowBox[{
+        RowBox[{"n", "-", "1"}], ",", "2"}]]}], " ", "+", " ", 
+     RowBox[{"6", 
+      RowBox[{
+       SubscriptBox["c", 
+        RowBox[{
+         RowBox[{"n", "-", "1"}], ",", "3"}]], "(", 
+       SubscriptBox["\[CapitalDelta]x", 
+        RowBox[{"n", "-", "1"}]], ")"}]}]}]}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{"2", 
+     SubscriptBox["c", 
+      RowBox[{
+       RowBox[{"n", "-", "1"}], ",", "2"}]]}], " ", "-", " ", 
+    RowBox[{"6", 
+     RowBox[{
+      SubscriptBox["c", 
+       RowBox[{
+        RowBox[{"n", "-", "1"}], ",", "3"}]], "(", 
+      SubscriptBox["\[CapitalDelta]x", 
+       RowBox[{"n", "-", "1"}]], ")"}]}]}], "=", 
+   RowBox[{
+    RowBox[{"0", "\[DoubleLeftRightArrow]", " ", 
+     RowBox[{
+      SubscriptBox["c", 
+       RowBox[{
+        RowBox[{"n", "-", "1"}], ",", "2"}]], " ", "+", " ", 
+      RowBox[{"3", 
+       RowBox[{
+        SubscriptBox["c", 
+         RowBox[{
+          RowBox[{"n", "-", "1"}], ",", "3"}]], "(", 
+        SubscriptBox["\[CapitalDelta]x", 
+         RowBox[{"n", "-", "1"}]], ")"}]}]}]}], "=", "0"}]}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    FractionBox[
+     RowBox[{
+      RowBox[{
+       RowBox[{"3", "[", 
+        RowBox[{
+         SubscriptBox["x", 
+          RowBox[{"n", "-", "1"}]], ",", 
+         SubscriptBox["x", "n"]}], "]"}], "f"}], "-", 
+      RowBox[{"2", 
+       SubscriptBox["m", 
+        RowBox[{"n", "-", "1"}]]}], "-", 
+      SubscriptBox["m", "n"]}], 
+     SubscriptBox["\[CapitalDelta]x", 
+      RowBox[{"n", "-", "1"}]]], "+", 
+    RowBox[{"3", 
+     FractionBox[
+      RowBox[{
+       SubscriptBox["m", 
+        RowBox[{"n", "-", "1"}]], "+", 
+       SubscriptBox["m", "n"], "-", 
+       RowBox[{
+        RowBox[{"2", "[", 
+         RowBox[{
+          SubscriptBox["x", 
+           RowBox[{"n", "-", "1"}]], ",", 
+          SubscriptBox["x", "n"]}], "]"}], "f"}]}], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        SubscriptBox["\[CapitalDelta]x", 
+         RowBox[{"n", "-", "1"}]], ")"}], "2"]], 
+     RowBox[{"(", 
+      SubscriptBox["\[CapitalDelta]x", 
+       RowBox[{"n", "-", "1"}]], ")"}]}]}], "=", "0"}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"3", "[", 
+      RowBox[{
+       SubscriptBox["x", 
+        RowBox[{"n", "-", "1"}]], ",", 
+       SubscriptBox["x", "n"]}], "]"}], "f"}], "-", 
+    RowBox[{"2", 
+     SubscriptBox["m", 
+      RowBox[{"n", "-", "1"}]]}], "-", 
+    SubscriptBox["m", "n"], "+", 
+    RowBox[{"3", 
+     SubscriptBox["m", 
+      RowBox[{"n", "-", "1"}]]}], "+", 
+    RowBox[{"3", 
+     SubscriptBox["m", "n"]}], "-", 
+    RowBox[{
+     RowBox[{"6", "[", 
+      RowBox[{
+       SubscriptBox["x", 
+        RowBox[{"n", "-", "1"}]], ",", 
+       SubscriptBox["x", "n"]}], "]"}], "f"}]}], "=", "0"}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["m", 
+     RowBox[{"n", "-", "1"}]], "+", 
+    RowBox[{"2", 
+     SubscriptBox["m", "n"]}], "+", 
+    RowBox[{
+     RowBox[{"-", 
+      RowBox[{"3", "[", 
+       RowBox[{
+        SubscriptBox["x", 
+         RowBox[{"n", "-", "1"}]], ",", 
+        SubscriptBox["x", "n"]}], "]"}]}], "f"}]}], "=", "0"}], 
+  TraditionalForm], "\[IndentingNewLine]", 
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["m", 
+     RowBox[{"n", "-", "1"}]], "+", 
+    RowBox[{"2", 
+     SubscriptBox["m", "n"]}]}], "=", 
+   RowBox[{
+    RowBox[{"3", "[", 
+     RowBox[{
+      SubscriptBox["x", 
+       RowBox[{"n", "-", "1"}]], ",", 
+      SubscriptBox["x", "n"]}], "]"}], "f"}]}], 
+  TraditionalForm]}], "DisplayFormulaNumbered",
+ CellChangeTimes->{
+  3.6535887765117693`*^9, {3.653589058992157*^9, 3.653589093648127*^9}, 
+   3.653611544028759*^9, {3.653611587246346*^9, 3.653611785840043*^9}, {
+   3.653611833021916*^9, 3.653611880533564*^9}, {3.653612018830551*^9, 
+   3.653612029910825*^9}, {3.6536121276494017`*^9, 3.653612257375128*^9}, {
+   3.6536123593893757`*^9, 3.653612428108786*^9}}],
+
+Cell[TextData[{
+ "These are the extra two equations necessary to find all values of ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["m", "i"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". These can be put together with the n-2 equations found previously to form \
+a tridiagonal system that can be solved for ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["m", "i"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", "\[LessEqual]", "i", "\[LessEqual]", "n"}], TraditionalForm]],
+  
+  FormatType->"TraditionalForm"],
+ ". Once these have been found ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", 
+    RowBox[{"i", ",", "0"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", 
+    RowBox[{"i", ",", "1"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", 
+    RowBox[{"i", ",", "2"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["c", 
+    RowBox[{"i", ",", "3"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " can be found, and these are the coefficients of the ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "-", "1"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " interpolating polynomials in Taylor\[CloseCurlyQuote]s form."
+}], "Text",
+ CellChangeTimes->{{3.653612430971108*^9, 3.65361245377916*^9}, {
+  3.653612821318481*^9, 3.6536129896989813`*^9}}]
+}, Open  ]],
+
+Cell["Complete Cubic Splines", "Subsubsection",
+ CellChangeTimes->{{3.653613023721403*^9, 3.6536130272259283`*^9}}],
+
+Cell["Matching of the Second Derivatives at the endpoints", "Subsubsection",
+ CellChangeTimes->{{3.653613043464958*^9, 3.653613070001219*^9}}],
+
+Cell["Not-a-Knot", "Subsubsection",
+ CellChangeTimes->{{3.653613076768598*^9, 3.6536130804482803`*^9}}]
+}, Open  ]]
+},
+WindowSize->{1280, 751},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>2. Inherited,
+FrontEndVersion->"10.2 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 6, \
+2015)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 94, 1, 129, "Chapter"],
+Cell[677, 25, 2059, 59, 332, "Text"],
+Cell[2739, 86, 173, 4, 84, "Input"],
+Cell[2915, 92, 262, 5, 98, "Text"],
+Cell[3180, 99, 5612, 191, 514, "Text"],
+Cell[8795, 292, 1570, 51, 95, "DisplayFormulaNumbered"],
+Cell[10368, 345, 337, 13, 62, "Text"],
+Cell[10708, 360, 3383, 115, 284, "DisplayFormulaNumbered"],
+Cell[14094, 477, 193, 2, 60, "Text"],
+Cell[14290, 481, 802, 27, 56, "DisplayFormulaNumbered"],
+Cell[15095, 510, 87, 1, 60, "Text"],
+Cell[15185, 513, 1427, 49, 279, "DisplayFormulaNumbered"],
+Cell[16615, 564, 2155, 56, 447, "Text"],
+Cell[18773, 622, 8449, 290, 581, "DisplayFormulaNumbered"],
+Cell[27225, 914, 1436, 44, 178, "Text"],
+Cell[CellGroupData[{
+Cell[28686, 962, 114, 1, 68, "Subsubsection"],
+Cell[28803, 965, 1025, 36, 102, "Text"],
+Cell[29831, 1003, 1793, 62, 227, "DisplayFormulaNumbered"],
+Cell[31627, 1067, 85, 1, 60, "Text"],
+Cell[31715, 1070, 4719, 161, 311, "DisplayFormulaNumbered"],
+Cell[36437, 1233, 1518, 50, 220, "Text"]
+}, Open  ]],
+Cell[37970, 1286, 115, 1, 68, "Subsubsection"],
+Cell[38088, 1289, 142, 1, 52, "Subsubsection"],
+Cell[38233, 1292, 103, 1, 52, "Subsubsection"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
