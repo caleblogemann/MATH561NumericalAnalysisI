@@ -1,0 +1,298 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper]{geometry}
+\usepackage{MATH561}
+\usepackage{SetTheory}
+\usepackage{Derivative}
+\allowdisplaybreaks
+
+\begin{document}
+\noindent \textbf{\Large{Caleb Logemann \\
+MATH 561 Numerical Analysis I \\
+Homework 3
+}}
+
+\begin{enumerate}
+    \item % 1
+    \begin{enumerate}
+        \item[(a)] Use the central quotient approximation $f'(x) \approx
+            \frac{f(x + h) - f(x - h)}{2h}$ to obtain an approximation of
+            $\frac{\partial^2}{\partial x \partial y} u(x,y)$, for a function
+            $u$ of two variables.
+            \begin{align*}
+                \frac{\partial^2}{\partial x \partial y} u(x,y) &=
+                    \frac{\partial}{\partial x} \p{\frac{\partial}{\partial y} u(x,y)} \\
+                &\approx \frac{\partial}{\partial x} \p{\frac{u(x,y + h) - u(x,y - h)}{2h}} \\
+                &= \frac{1}{2h} \p{\frac{\partial}{\partial x} u(x,y+h) -
+                    \frac{\partial}{\partial x} u(x,y-h)} \\
+                &\approx \frac{1}{2h} \p{\frac{u(x+h, y+h) - u(x-h, y+h)}{2h} -
+                    \frac{u(x+h, y-h) - u(x-h, y-h)}{2h}} \\
+                &= \frac{u(x+h, y+h) - u(x-h, y+h) - u(x+h, y-h) + u(x-h, y-h)}{4h^2} \\
+            \end{align*}
+
+        \item[(b)]
+            The fourth order Taylor expansion of $u(v,w)$ approximated at $(x,y)$ is
+            \begin{align*}
+                u(v,w) &= u(x,y) + (v - x)\pd{u(x,y)}{x} + (w - y)\pd{u(x,y)}{y}
+                + \frac{(v-x)^2}{2} \pd[2]{u(x,y)}{x} \\
+                &+ (v-x)(w-y)\mpd[2]{u(x,y)}{\partial x \partial y}
+                + \frac{(w-y)^2}{2}\pd[2]{u(x,y)}{y}
+                + \frac{(v-x)^3}{3!}\pd[3]{u(x,y)}{x} \\
+                &+ \frac{(v-x)^2(w-y)}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+                + \frac{(v-x)(w-y)^2}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+                &+ \frac{(w-y)^3}{3!} \pd[3]{u(x,y)}{y}
+                + \frac{(v-x)^4}{4!} \pd[4]{u(x,y)}{x}
+                + \frac{(v-x)^3(w-y)}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+                &+ \frac{(v-x)^2 (w-y)^2}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+                + \frac{(v-x) (w-y)^3}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+                &+ \frac{(w-y)^4}{4!} \pd[4]{u(x,y)}{y}
+            \end{align*}
+
+            Taking the fourth order Taylor expansion of the terms found in part (a)
+            \begin{align*}
+                &\frac{u(x+h, y+h) - u(x-h, y+h) - u(x+h, y-h) + u(x-h, y-h)}{4h^2} \\
+                &\approx \frac{1}{4h^2} (u(x,y) + h\pd{u(x,y)}{x} + h\pd{u(x,y)}{y}
+                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y} - 
+                    u(x,y) + h\pd{u(x,y)}{x} - h\pd{u(x,y)}{y}
+                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y} - u(x,y) - h\pd{u(x,y)}{x} + h\pd{u(x,y)}{y}
+                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
+                    + u(x,y) - h\pd{u(x,y)}{x} - h\pd{u(x,y)}{y}
+                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}) \\
+%                &= \frac{1}{4h^2} (
+%%                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+%                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+%                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+%                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+%                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+%                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+%                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+%                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+%                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
+%                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+%                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+%                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+%                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+%                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+%                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+%                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+%                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+%                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
+%                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+%                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+%                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+%                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+%                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+%                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+%                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+%                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+%                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
+%                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+%                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+%                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+%                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+%                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+%                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+%                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+%                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+%                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}) \\
+                &= \frac{1}{4h^2} \p{\frac{2h^4}{3}
+                    \mpd[4]{u(x,y)}{\partial x^3 \partial y} + 
+                    4h^2 \mpd[2]{u(x,y)}{\partial x \partial y} + \frac{2h^4}{3}
+                    \mpd[4]{u(x,y)}{\partial x \partial y^3}} \\
+                &= \mpd[2]{u(x,y)}{\partial x \partial y} + \frac{h^2}{6} 
+                    \p{\mpd[4]{u(x,y)}{\partial x^3 \partial y} + 
+                    \mpd[4]{u(x,y)}{\partial x \partial y^3}}\\
+                &= \mpd[2]{u(x,y)}{\partial x \partial y} + O(h^2)
+            \end{align*}
+    \end{enumerate}
+
+    % 2 TODO: finish part (b)
+    \item Let $s$ be a function defined by
+        \begin{align*}
+            s(x) &=
+            \begin{cases}
+                (x + 1)^3 & -1 \le x \le 0 \\
+                (1 - x)^3 & 0 \le x \le 1
+            \end{cases}
+        \end{align*}
+    \begin{enumerate}
+        \item[(a)]
+            With $\Delta$ denoting the subdivision of $\br{-1,1}$ into
+            $\br{-1, 0}$ and $\br{0, 1}$, to what class $S_m^k(\Delta)$
+            does the spline $s$ belong to?
+
+            Since each piece of $s$ is degree 3, the degree of $s$ is $m = 3$.
+            Let $s_1(x) = (x + 1)^3$ and let $s_2(x) = (1-x)^3$.
+            Then $s$ is continuous because $s_1(0) = (0 + 1)^3 = 1 = (1 - 0)^3
+            = s_2(0)$.
+            Also $s_1'(0) = 3(0 + 1)^2 = 3$ and $s_2'(0) = -3(1 - 0)^2 = -3$,
+            therefore the first derivative of $s$ is not continuous.
+            So $s$ belongs to smoothness class $k=0$.
+
+        \item[(b)] % TODO: find error estimate of trapezoidal rule
+            Estimate the error of the composite trapezoidal rule applied to 
+            $\dintt{-1}{1}{s(x)}{x}$, when $\br{-1, 1}$ is divided into n
+            subintervals of equal length $h = 2/n$ and n is even.
+
+            
+
+        \item[(c)]
+            What is the error of the composite Simpson’s rule applied to
+            $\dintt{-1}{1}{s(x)}{x}$, with the same subdivision of
+            $\br{-1, 1}$ as in (b)?
+
+            Simpson's rule has a degree of exactness equal to 3.
+            Simpson's rule is applied to every two intervals, since $n$ is
+            even Simpson's rule can be applied to $s$ over the subdivision
+            $\Delta$.
+
+            Since $n$ is even either $n = 4m$ or $n = 4m + 2$ for some positive
+            integer $m$.
+            If $n = 4m$ for some positive integer $m$, that is $n$ is a multiple
+            of $4$, then $\dintt{-1}{1}{s(x)}{x}$ can be approximated by
+            applying Simpson's rule to $\dintt{-1}{0}{s(x)}{x}$ and 
+            $\dintt{0}{1}{s(x)}{x}$ separately and summing.
+            This can be done because there $n/2 = 2m$ intervals on $\br{-1, 0}$ and
+            $\br{0,1}$.
+            Each of these integrals can be evaluated exactly because Simpson's rule
+            has degree of exactness equal to 3.
+            Therefore the total error is 0.
+
+            If $n = 4m + 2$ for some positive integer $m$, then 
+            $\dintt{-1}{1}{s(x)}{x}$ can be approximated by
+            applying Simpson's rule to $\dintt{-1}{-h}{s(x)}{x}$, 
+            $\dintt{-h}{h}{s(x)}{x}$, and $\dintt{h}{1}{s(x)}{x}$ separately
+            and summing.
+            In this situation each interval $\br{-1,0}$ and $\br{0,1}$ has
+            an odd number of subintervals, so Simpson's rule must be applied
+            across the interval $\br{-h, h}$.
+            Simpson's rule evaluates $\dintt{-1}{-h}{s(x)}{x}$ and
+            $\dintt{h}{1}{s(x)}{x}$ exactly because $s(x)$ is a degree 3
+            polynomial on these intervals.
+            Therefore the error from Simpson's rule comes when approximating
+            the integral $\dintt{-h}{h}{s(x)}{x}$.
+            The error can be found as follows.
+            \begin{align*}
+                E &= \dintt{-h}{h}{s(x)}{x} - \frac{h}{3} \p{s(-h) + 4s(0) + s(h)} \\
+                  &= \dintt{-h}{0}{(x+1)^3}{x} + \dintt{0}{h}{(1-x)^3}{x} - \frac{h}{3} \p{(1-h)^3 + 4 + (1-h)^3} \\
+                  &= \eval{\frac{1}{4}(x+1)^4}{x=-h}{0} + \eval{-\frac{1}{4}(1-x)^4}{x=0}{h} - \frac{h}{3} \p{2(1-h)^3 + 4} \\
+                  &= \frac{1}{4}\p{1 - (1-h)^4} - \frac{1}{4}\p{(1-h)^4 - 1} - \frac{h}{3} \p{2(1-h)^3 + 4} \\
+                  &= \frac{1}{2} - \frac{1}{2}(1-h)^4 - \frac{4h}{3} - \frac{2h}{3}(1-h)^3 \\
+                  &= (1-h)^3\p{-\frac{1}{2}(1-h) - \frac{2h}{3}} - \frac{4h}{3} + \frac{1}{2} \\
+                  &= (1-h)^3\p{-\frac{h}{6} -\frac{1}{2}} - \frac{4h}{3} + \frac{1}{2} \\
+            \end{align*}
+            This is also the total error.
+
+        \item[(d)]
+            What is the error resulting from applying the 2-point
+            Gauss-Legendre rule to $\dintt{-1}{0}{s(x)}{x}$ and
+            $\dintt{0}{1}{s(x)}{x}$ separately and summing?
+
+            The 2-point Gauss-Legendre rule has degree of exactness equal to 3.
+            So on each of these intervals the $s(x)$ is a degree 3 polynomial,
+            therefore the error on each of these intervals will be zero.
+            So the total error is zero.
+    \end{enumerate}
+
+    \item % 3
+    \begin{enumerate}
+        \item[(a)] %TODO: look at error of intrpolation polynomial
+            Determine by Hermite interplation the quadractic polynomial $p$
+            interpolating $f$ at $x=0$ and $x=1$ and $f'$ at $x = 0$.
+            Also express the errors in terms of an appropriate derivative.
+
+            \begin{tabular}{c|c|c|c}
+                $x$ & $f(x)$ & & \\
+                \midrule
+                $0$ & $f(0)$ & & \\
+                $0$ & $f(0)$ & $f'(0)$ & \\
+                $1$ & $f(1)$ & $f(1) - f(0)$ & $f(1) - f(0) - f'(0)$
+            \end{tabular}
+
+            Therefore $p(x) = f(0) + f'(0) x + \p{f(1) - f(0) - f'(0)} x^2$.
+
+        \item[(b)] % TODO: find error of integration formula
+            Using the interpolation polynomial found in (a),
+            $\dintt{0}{1}{f(x)}{x} \approx \dintt{0}{1}{p(x)}{x}$.
+            \begin{align*}
+                \dintt{0}{1}{p(x)}{x} &= \dintt{0}{1}{f(0) + f'(0) x + \p{f(1) - f(0) - f'(0)} x^2}{x} \\
+                &= \eval{f(0) x + \frac{1}{2} f'(0) x^2 + \frac{1}{3}\p{f(1) - f(0) - f'(0)}x^3}{x=0}{1} \\
+                &= f(0) + \frac{1}{2} f'(0) + \frac{1}{3}\p{f(1) - f(0) - f'(0)} \\
+                &= \frac{2}{3} f(0) - \frac{1}{3} f(1) + \frac{1}{6} f'(0)
+                \intertext{Therefore}
+                \dintt{0}{1}{f(x)}{x} &\approx \frac{2}{3} f(0) - \frac{1}{3} f(1) + \frac{1}{6} f'(0)
+            \end{align*}
+            This can be expressed as the integration formula
+            $\dintt{0}{1}{f(x)}{x} \approx a_0 f(0) + a_1 f(1) + b_0 f'(0)$, where
+            $a_0 = \frac{2}{3}$, $a_1 = -\frac{1}{3}$, and $b_0 = \frac{1}{6}$.
+
+        \item[(c)]
+            \begin{tabular}{c|c|c|c}
+                $x$ & $f(x)$ & & \\
+                \midrule
+                $c$ & $f(c)$ & & \\
+                $c$ & $f(c)$ & $f'(c)$ & \\
+                $c+h$ & $f(c+h)$ & $(f(c) - f(c+h))/h$ & $(f(c) - f(c+h))/h^2 - f'(c)/h$
+            \end{tabular}
+    \end{enumerate}
+
+    \item % 4
+    \item % 5
+    \item % 6
+\end{enumerate}
+\end{document}
