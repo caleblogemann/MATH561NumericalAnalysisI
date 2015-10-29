@@ -13,153 +13,104 @@ Homework 3
 
 \begin{enumerate}
     \item % 1
-    \begin{enumerate}
-        \item[(a)] Use the central quotient approximation $f'(x) \approx
-            \frac{f(x + h) - f(x - h)}{2h}$ to obtain an approximation of
-            $\frac{\partial^2}{\partial x \partial y} u(x,y)$, for a function
-            $u$ of two variables.
-            \begin{align*}
-                \frac{\partial^2}{\partial x \partial y} u(x,y) &=
-                    \frac{\partial}{\partial x} \p{\frac{\partial}{\partial y} u(x,y)} \\
-                &\approx \frac{\partial}{\partial x} \p{\frac{u(x,y + h) - u(x,y - h)}{2h}} \\
-                &= \frac{1}{2h} \p{\frac{\partial}{\partial x} u(x,y+h) -
-                    \frac{\partial}{\partial x} u(x,y-h)} \\
-                &\approx \frac{1}{2h} \p{\frac{u(x+h, y+h) - u(x-h, y+h)}{2h} -
-                    \frac{u(x+h, y-h) - u(x-h, y-h)}{2h}} \\
-                &= \frac{u(x+h, y+h) - u(x-h, y+h) - u(x+h, y-h) + u(x-h, y-h)}{4h^2} \\
-            \end{align*}
+        \begin{enumerate}
+            \item[(a)] Use the central quotient approximation $f'(x) \approx
+                \frac{f(x + h) - f(x - h)}{2h}$ to obtain an approximation of
+                $\frac{\partial^2}{\partial x \partial y} u(x,y)$, for a function
+                $u$ of two variables.
+                \begin{align*}
+                    \frac{\partial^2}{\partial x \partial y} u(x,y) &=
+                        \frac{\partial}{\partial x} \p{\frac{\partial}{\partial y} u(x,y)} \\
+                    &\approx \frac{\partial}{\partial x} \p{\frac{u(x,y + h) - u(x,y - h)}{2h}} \\
+                    &= \frac{1}{2h} \p{\frac{\partial}{\partial x} u(x,y+h) -
+                        \frac{\partial}{\partial x} u(x,y-h)} \\
+                    &\approx \frac{1}{2h} \p{\frac{u(x+h, y+h) - u(x-h, y+h)}{2h} -
+                        \frac{u(x+h, y-h) - u(x-h, y-h)}{2h}} \\
+                    &= \frac{u(x+h, y+h) - u(x-h, y+h) - u(x+h, y-h) + u(x-h, y-h)}{4h^2} \\
+                \end{align*}
 
-        \item[(b)]
-%            The fourth order Taylor expansion of $u(v,w)$ approximated at $(x,y)$ is
-%            \begin{align*}
-%                u(v,w) &= u(x,y) + (v - x)\pd{u(x,y)}{x} + (w - y)\pd{u(x,y)}{y}
-%                + \frac{(v-x)^2}{2} \pd[2]{u(x,y)}{x} \\
-%                &+ (v-x)(w-y)\mpd[2]{u(x,y)}{\partial x \partial y}
-%                + \frac{(w-y)^2}{2}\pd[2]{u(x,y)}{y}
-%                + \frac{(v-x)^3}{3!}\pd[3]{u(x,y)}{x} \\
-%                &+ \frac{(v-x)^2(w-y)}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-%                + \frac{(v-x)(w-y)^2}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-%                &+ \frac{(w-y)^3}{3!} \pd[3]{u(x,y)}{y}
-%                + \frac{(v-x)^4}{4!} \pd[4]{u(x,y)}{x}
-%                + \frac{(v-x)^3(w-y)}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-%                &+ \frac{(v-x)^2 (w-y)^2}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-%                + \frac{(v-x) (w-y)^3}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-%                &+ \frac{(w-y)^4}{4!} \pd[4]{u(x,y)}{y}
-%            \end{align*}
+            \item[(b)]
+                The fourth order Taylor expansion of $u(v,w)$ approximated at $(x,y)$ is
+                \begin{align*}
+                    u(v,w) &= u(x,y) + (v - x)\pd{u(x,y)}{x} + (w - y)\pd{u(x,y)}{y}
+                    + \frac{(v-x)^2}{2} \pd[2]{u(x,y)}{x} \\
+                    &+ (v-x)(w-y)\mpd[2]{u(x,y)}{\partial x \partial y}
+                    + \frac{(w-y)^2}{2}\pd[2]{u(x,y)}{y}
+                    + \frac{(v-x)^3}{3!}\pd[3]{u(x,y)}{x} \\
+                    &+ \frac{(v-x)^2(w-y)}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+                    + \frac{(v-x)(w-y)^2}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+                    &+ \frac{(w-y)^3}{3!} \pd[3]{u(x,y)}{y}
+                    + \frac{(v-x)^4}{4!} \pd[4]{u(x,y)}{x}
+                    + \frac{(v-x)^3(w-y)}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+                    &+ \frac{(v-x)^2 (w-y)^2}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+                    + \frac{(v-x) (w-y)^3}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+                    &+ \frac{(w-y)^4}{4!} \pd[4]{u(x,y)}{y}
+                \end{align*}
 
-%            Taking the fourth order Taylor expansion of the terms found in part (a)
-%            \begin{align*}
-%                &\frac{u(x+h, y+h) - u(x-h, y+h) - u(x+h, y-h) + u(x-h, y-h)}{4h^2} \\
-%                &\approx \frac{1}{4h^2} (u(x,y) + h\pd{u(x,y)}{x} + h\pd{u(x,y)}{y}
-%                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-%                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-%                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-%                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-%                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-%                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-%                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-%                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-%                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y} - 
-%                    u(x,y) + h\pd{u(x,y)}{x} - h\pd{u(x,y)}{y}
-%                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-%                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-%                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-%                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-%                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-%                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-%                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-%                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-%                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y} - u(x,y) - h\pd{u(x,y)}{x} + h\pd{u(x,y)}{y}
-%                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-%                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-%                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-%                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-%                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-%                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-%                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-%                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-%                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
-%                    + u(x,y) - h\pd{u(x,y)}{x} - h\pd{u(x,y)}{y}
-%                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-%                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-%                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-%                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-%                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-%                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-%                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-%                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-%                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}) \\
-%%                &= \frac{1}{4h^2} (
-%%%                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-%%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-%%                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-%%                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-%%                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-%%                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-%%                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-%%                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-%%                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-%%                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
-%%                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-%%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-%%                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-%%                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-%%                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-%%                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-%%                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-%%                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-%%                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-%%                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
-%%                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-%%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-%%                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-%%                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-%%                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-%%                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-%%                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-%%                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-%%                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-%%                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
-%%                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-%%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-%%                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-%%                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-%%                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-%%                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-%%                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-%%                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-%%                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-%%                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}) \\
-%                &= \frac{1}{4h^2} \p{\frac{2h^4}{3}
-%                    \mpd[4]{u(x,y)}{\partial x^3 \partial y} + 
-%                    4h^2 \mpd[2]{u(x,y)}{\partial x \partial y} + \frac{2h^4}{3}
-%                    \mpd[4]{u(x,y)}{\partial x \partial y^3}} \\
-%                &= \mpd[2]{u(x,y)}{\partial x \partial y} + \frac{h^2}{6} 
-%                    \p{\mpd[4]{u(x,y)}{\partial x^3 \partial y} + 
-%                    \mpd[4]{u(x,y)}{\partial x \partial y^3}}\\
-%                &= \mpd[2]{u(x,y)}{\partial x \partial y} + O(h^2)
-%            \end{align*}
-    \end{enumerate}
+                Taking the fourth order Taylor expansion of the terms found in part (a)
+                \begin{align*}
+                    &\frac{u(x+h, y+h) - u(x-h, y+h) - u(x+h, y-h) + u(x-h, y-h)}{4h^2} \\
+                    &\approx \frac{1}{4h^2} (u(x,y) + h\pd{u(x,y)}{x} + h\pd{u(x,y)}{y}
+                        + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+                        &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+                        + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+                        + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+                        &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+                        + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+                        &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+                        + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+                        + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+                        &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+                        + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+                        &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y} - 
+                        u(x,y) + h\pd{u(x,y)}{x} - h\pd{u(x,y)}{y}
+                        - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+                        &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+                        - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+                        + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+                        &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+                        + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+                        &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+                        - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+                        + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+                        &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+                        + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+                        &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y} - u(x,y) - h\pd{u(x,y)}{x} + h\pd{u(x,y)}{y}
+                        - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+                        &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+                        - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+                        - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+                        &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+                        - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+                        &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+                        - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+                        + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+                        &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+                        + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+                        &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
+                        + u(x,y) - h\pd{u(x,y)}{x} - h\pd{u(x,y)}{y}
+                        + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+                        &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+                        + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+                        - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+                        &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+                        - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+                        &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+                        + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+                        + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+                        &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+                        + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+                        &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}) \\
+                    &= \frac{1}{4h^2} \p{\frac{2h^4}{3}
+                        \mpd[4]{u(x,y)}{\partial x^3 \partial y} + 
+                        4h^2 \mpd[2]{u(x,y)}{\partial x \partial y} + \frac{2h^4}{3}
+                        \mpd[4]{u(x,y)}{\partial x \partial y^3}} \\
+                    &= \mpd[2]{u(x,y)}{\partial x \partial y} + \frac{h^2}{6} 
+                        \p{\mpd[4]{u(x,y)}{\partial x^3 \partial y} + 
+                        \mpd[4]{u(x,y)}{\partial x \partial y^3}}\\
+                    &= \mpd[2]{u(x,y)}{\partial x \partial y} + O(h^2)
+                \end{align*}
+        \end{enumerate}
 
     \item % 2 Done
         Let $s$ be a function defined by
@@ -193,7 +144,7 @@ Homework 3
                 into two subintervals, $\br{-1,0}$ and $\br{0,1}$.
                 The total error is then the sum of the errors on the two parts.
                 \begin{align*}
-                    E &= -\frac{1}{12}h^2 s_1''(\xi_1) - \frac{1}{12} h^2 s_2''(\xi_2)
+                    E &= -\frac{1}{12}h^2 s_1''(\xi_1) - \frac{1}{12} h^2 s_2''(\xi_2) \\
                     &= -\frac{1}{12} h^2 \p{s_1''(\xi_1) + s_2''(\xi_2)}
                 \end{align*}
                 This is for $-1 < \xi_1 < 0$ and $0 < \xi_2 < 1$.
@@ -212,7 +163,7 @@ Homework 3
                 \]
 
             \item[(c)] % Done
-                What is the error of the composite Simpson’s rule applied to
+                What is the error of the composite Simpson's rule applied to
                 $\dintt{-1}{1}{s(x)}{x}$, with the same subdivision of
                 $\br{-1, 1}$ as in (b)?
 
@@ -288,7 +239,7 @@ Homework 3
                 + x^2(x - 1) \frac{f'''(\xi)}{6}$, where the error is
                 $x^2(x - 1) \frac{f'''(\xi)}{6}$ for some $0 < \xi < 1$
 
-            \item[(b)] % TODO: find error of integration formula
+            \item[(b)] % Done
                 Using the interpolation polynomial found in (a),
                 $\dintt{0}{1}{f(x)}{x} \approx \dintt{0}{1}{p(x)}{x}$.
                 \begin{align*}
@@ -305,19 +256,32 @@ Homework 3
 
                 The error term for this quadrature formula can be found by
                 integrating, the error of the polynomial.
+                \begin{align*}
+                    E(f) &= \dintt{0}{1}{x^2 (x - 1) \frac{f'''(\xi)}{6}}{x}
+                    \intertext{Since $x^2 (x - 1)$ does not change sign over the interval $(0,1)$}
+                         &= \frac{f'''(\xi)}{6} \dintt{0}{1}{x^2 (x - 1)}{x} \\
+                         &= \frac{f'''(\xi)}{6} \dintt{0}{1}{x^3 - x^2}{x} \\
+                         &= \frac{f'''(\xi)}{6} \eval{\p{\frac{1}{4}x^4 - \frac{1}{3}x^3}}{x=0}{1} \\
+                         &= \frac{f'''(\xi)}{6} \p{\frac{1}{4} - \frac{1}{3}} \\
+                         &= -\frac{f'''(\xi)}{72} \\
+                \end{align*}
 
+            \item[(c)] % Done
+                Transform the result of $(b)$ to obtain an integration rule,
+                with remainder, for $\dintt{c}{c+h}{y(t)}{t}$.
 
-            \item[(c)] % TODO: find how to transform result to different interval
-                \begin{tabular}{c|c|c|c}
-                    $x$ & $f(x)$ & & \\
-                    \midrule
-                    $c$ & $f(c)$ & & \\
-                    $c$ & $f(c)$ & $f'(c)$ & \\
-                    $c+h$ & $f(c+h)$ & $(f(c) - f(c+h))/h$ & $(f(c) - f(c+h))/h^2 - f'(c)/h$
-                \end{tabular}
+                This can be accomplished by linearly mapping the interval
+                $(0, 1)$ to $(c, c+h)$, which is equivalent to a change of
+                variables $t \to c + xh$.
+                Thus $f(x) = y(c + xh)$.
+                \begin{align*}
+                    \dintt{c}{c+h}{y(t)}{t} &= \dintt{0}{1}{y(c + xh)}{x} \\
+                    &= \frac{2}{3} y(c) - \frac{1}{3} y(c+h) + \frac{h}{6} y'(c) - \frac{h^3}{72} y'''(c + \xi h)
+                \end{align*}
+                Where $0 < \xi < 1$
         \end{enumerate}
 
-    \item % 4
+    \item % 4 Done
         \begin{enumerate}
             \item[(a)] % Done
                 Construct the quadractic (monic) polynomial
@@ -357,15 +321,13 @@ Homework 3
                 Therefore the orthogonal quadractic polynomial is 
                 $\pi_2(t; w) = t^2 - 4t + 2$
 
-            \item[(b)] % TODO: Finish error analysis
+            \item[(b)] % Done
                 Obtain the two point Gauss-Laguerre quadrature formula.
                 \[
                     \dintt{0}{\infty}{f(t) e^{-t}}{t} = w_1 f(t_1) + w_2 f(t_2) + E_2(f)
                 \]
 
                 The values of $t_1$ and $t_2$ are the zeros of the orthogonal
-                polynomial $\pi_2(t;w) = t^2 - 4t + 2$.
-                The roots of this polynomial can be found using the quadractic formula.
                 \begin{align*}
                     t &= \frac{4 \pm \sqrt{16 - 4 \cdot 2}}{2} \\
                     &= \frac{4 \pm 2\sqrt{2}}{2} \\
@@ -398,16 +360,26 @@ Homework 3
                 \end{align*}
 
                 Also the error term $E_2(f)$ is given by
+                \begin{align*}
+                    E_2(f) &= \frac{f^{(4)}(\xi)}{4!} \dintt{0}{\infty}{\pi_2(t)^2 e^{-t}}{t} \\
+                    &= \frac{f^{(4)}(\xi)}{4!} \dintt{0}{\infty}{\p{t^2 - 4t + 2}^2 e^{-t}}{t} \\
+                    &= \frac{f^{(4)}(\xi)}{4!} \dintt{0}{\infty}{\p{t^4 - 8t^3 + 20t^2 - 16t + 4} e^{-t}}{t} \\
+                    &= \frac{f^{(4)}(\xi)}{4!} \p{4! - 8\cdot3! - 20\cdot2 - 16 + 4} \\
+                    &= \frac{f^{(4)}(\xi)}{24} \p{24 - 48 + 40 - 16 + 4} \\
+                    &= \frac{f^{(4)}(\xi)}{24} \p{4} \\
+                    &= \frac{1}{6} f^{(4)}(\xi) \\
+                \end{align*}
+                for $0 < \xi < \infty$
 
                 Therefore the Gauss-Laguerre quadrature formula is
                 \[
                     \dintt{0}{\infty}{f(t) e^{-t}}{t} =
                         \frac{2 + \sqrt{2}}{4} f(2 - \sqrt{2}) +
                         \frac{2 - \sqrt{2}}{4} f(2 + \sqrt{2}) +
-                        % TODO: Insert error term
+                        \frac{1}{6} f^{(4)}(\xi)
                 \]
 
-            \item[(c)] %TODO: use error analysis
+            \item[(c)] % Done
                 Apply the formula in (b) to approximate
                 $I = \dintt{0}{\infty}{\frac{e^{-t}}{t+1}}{t}$.
                 Use the remainder term $E_2(f)$ to estimate the error,
@@ -426,16 +398,26 @@ Homework 3
                     &\approx 0.571428571
                 \end{align*}
 
-                % TODO: estimate the error
+                The error can be estimated by examining $E_2(f)$.
+                \begin{align*}
+                    E_2(f) &= \frac{1}{6} f^{(4)}(\xi) \\
+                    f^{(4)}(\xi) &= \frac{24}{(1 + \xi)^5} \\
+                    E_2(f) &= \frac{4}{(1 + \xi)^5} \\
+                    E_2(f) &< 4
+                \end{align*}
 
                 The true error is $E_2(f) = 0.596347361 - 0.571428571 = .0249188$.
                 Thus the quantity $\xi > 0$ can be identified as follows
                 \begin{align*}
-                    .0249188 &=  \\
+                    .0249188 &= \frac{4}{(1 + \xi)^5} \\
+                    (1 + \xi)^5 &= \frac{4}{.0249188} \\
+                    1 + \xi &= \p{\frac{4}{.0249188}}^{1/5} \\
+                    \xi &= \p{\frac{4}{.0249188}}^{1/5} - 1 \\
+                    \xi &\approx 1.761255600
                 \end{align*}
         \end{enumerate}
 
-    \item % 5
+    \item % 5 Done
         Consider a quadrature formula of the type
         \[
             \dintt{0}{\infty}{e^{-x} f(x)}{x} = a f(0) + b f(c) + E(f)
@@ -507,7 +489,26 @@ Homework 3
                 \end{align*}
                 This is the same quadrature formula as found in part (a).
 
-            \item[(c)] % TODO: Find error term
+            \item[(c)] % Done
+                Obtain the remainder $E(f)$ in the form
+                $E(f) = const \cdot f'''(\xi)$, for $\xi > 0$.
+
+                The error of the interpolating polynomial $p_2(x)$ can be
+                expressed as $x(x-2)^2 \frac{f'''(\xi)}{6}$, for some $\xi > 0$.
+                Integrating this expression, will result in the error for the
+                quadrature formula, since the error of the quadrature is
+                directly related to the error of the interpolation polynomial.
+                \begin{align*}
+                    E(f) &= \dintt{0}{\infty}{x(x-2)^2 \frac{f'''(\xi)}{6} e^{-x}}{x}
+                    \intertext{Since $x(x-2)^2 e^{-x}$ does not change signs
+                        over $(0, \infty)$, the Mean Value Theorem for integrals
+                        can be applied.}
+                    &= \frac{f'''(\xi)}{6} \dintt{0}{\infty}{x(x-2)^2 e^{-x}}{x} \\
+                    &= \frac{f'''(\xi)}{6} \dintt{0}{\infty}{\p{x^3 - 4x^2 + 4x}e^{-x}}{x} \\
+                    &= \frac{f'''(\xi)}{6} \p{6 - 8 + 4} \\
+                    &= \frac{f'''(\xi)}{6} \p{2} \\
+                    &= \frac{f'''(\xi)}{3} \\
+                \end{align*}
         \end{enumerate}
 
     \item % 6
@@ -518,22 +519,67 @@ Homework 3
                 Let $h_k = (b-a)/2^k$ and let $T_{h_k}$ be composite trapezoidal
                 rule with subdivion of $h_k$, that is
                 \[
-                    T_{h_k} = h_k \p{\frac{1}{2} f(a) + \sum{r=1}{2k-1}{f(a + r h_k)}
+                    T_{h_k} = h_k \p{\frac{1}{2} f(a) + \sum{r=1}{2^k-1}{f(a + r h_k)}
                         + \frac{1}{2} f(b)}
                 \]
                 Alse let $M_{h_k}$ be the midpoint rule with subdivision of
                 $h_k$, that is
                 \[
-                    M_{h_k} = h_k \sum{r=1}{2k}{f(a + (r - \frac{1}{2})h_k)}
+                    M_{h_k} = h_k \sum{r=1}{2^k}{f(a + (r - \frac{1}{2})h_k)}
                 \]
 
                 Obviously for $k = 0$, $h_k = (b-a)$.
                 Then
                 \begin{align*}
-                    T_{h_0} &= (b-a)\p{\frac{1}{2} f(a) + \sum{r=1}{0}{f(a + r h_k)} + \frac{1}{2} f(b)}
+                    T_{h_0} &= (b-a)\p{\frac{1}{2} f(a) + \sum{r=1}{0}{f(a + r h_k)} + \frac{1}{2} f(b)} \\
+                    &= (b-a)\p{\frac{1}{2} f(a) + \frac{1}{2} f(b)} \\
+                    &= \frac{(b-a)}{2}\p{f(a) + f(b)}
                 \end{align*}
+                Thus the bases condition for the recursive definition is valid.
+
+                Now consider $T_{k+1,0}$
+                \begin{align*}
+                    T_{h_{k+1}} &= h_{k+1} \p{\frac{1}{2} f(a) + \sum{r=1}{2^{k+1} - 1}{f(a + r h_{k+1})}
+                        + \frac{1}{2} f(b)}
+                    \intertext{Note that $h_{k+1} = \frac{1}{2} h_k$}
+                    &= \frac{1}{2} h_k \p{\frac{1}{2} f(a) + \sum{r=1}{2^{k+1} - 1}{f(a + \frac{1}{2} r h_k)} + \frac{1}{2} f(b)}
+                    \intertext{Also note that $r$ is either even or odd.
+                        If $r$ is even then $r = 2n$ for $1 \le n \le 2^k - 1$.
+                        If $r$ is odd then $r = 2m - 1$, for $1 \le m \le 2^k$.}
+                    &= \frac{1}{2} h_k \p{\frac{1}{2} f(a) + \sum{n=1}{2^{k} - 1}{f(a + n h_k)} + \sum{m=1}{2^{k}}{f(a + (m - \frac{1}{2})h_k)} + \frac{1}{2} f(b)} \\
+                    &= \frac{1}{2} \p{h_k\p{\frac{1}{2} f(a) + \sum{n=1}{2^{k} - 1}{f(a + n h_k)} + \frac{1}{2} f(b)} + h_k\sum{m=1}{2^{k}}{f(a + (m - \frac{1}{2})h_k)}} \\
+                    &= \frac{1}{2} \p{T_{k,0} + M_{h_k}}
+                \end{align*}
+                This verifies the recursive relation.
+
             \item[(b)]
+                Code for creating Romber array.
+                \lstinputlisting[language=Matlab]{../+NumericalAnalysis/rombergIntegration.m}
+                
             \item[(c)]
+                Running code on function $f(x) = e^x/x$ on the interval $(1,2)$.
+                \lstinputlisting[language=Matlab]{H03.m}
+
+                Output generated
+                \begin{verbatim}
+>> H03
+     i         T(i,1)            T(i,i) 
+     1   3.206404938962185   3.206404938962185 
+     2   3.068704101194839   3.059524045343683 
+     3   3.061519689433579   3.061435517910511 
+     4   3.059717728013521   3.059697224270367 
+     5   3.059266861956402   3.059265136834889 
+     6   3.059154121802282   3.059153985140233 
+     7   3.059125935283745   3.059125924984416 
+     8   3.059118888561571   3.059118887809404 
+     9   3.059117126875244   3.059117126821492 
+    10   3.059116686453301   3.059116686449520 
+                \end{verbatim}
+
+                Both the trapezoidal rule and the Romberg integration converge
+                very rapidly.
+                I would say that the Romberg integration converged slightly better
+                than the trapezoidal rule by itself.
         \end{enumerate}
 \end{enumerate}
 \end{document}
