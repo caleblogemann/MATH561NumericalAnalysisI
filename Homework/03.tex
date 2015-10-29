@@ -30,79 +30,28 @@ Homework 3
             \end{align*}
 
         \item[(b)]
-            The fourth order Taylor expansion of $u(v,w)$ approximated at $(x,y)$ is
-            \begin{align*}
-                u(v,w) &= u(x,y) + (v - x)\pd{u(x,y)}{x} + (w - y)\pd{u(x,y)}{y}
-                + \frac{(v-x)^2}{2} \pd[2]{u(x,y)}{x} \\
-                &+ (v-x)(w-y)\mpd[2]{u(x,y)}{\partial x \partial y}
-                + \frac{(w-y)^2}{2}\pd[2]{u(x,y)}{y}
-                + \frac{(v-x)^3}{3!}\pd[3]{u(x,y)}{x} \\
-                &+ \frac{(v-x)^2(w-y)}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-                + \frac{(v-x)(w-y)^2}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-                &+ \frac{(w-y)^3}{3!} \pd[3]{u(x,y)}{y}
-                + \frac{(v-x)^4}{4!} \pd[4]{u(x,y)}{x}
-                + \frac{(v-x)^3(w-y)}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-                &+ \frac{(v-x)^2 (w-y)^2}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-                + \frac{(v-x) (w-y)^3}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-                &+ \frac{(w-y)^4}{4!} \pd[4]{u(x,y)}{y}
-            \end{align*}
+%            The fourth order Taylor expansion of $u(v,w)$ approximated at $(x,y)$ is
+%            \begin{align*}
+%                u(v,w) &= u(x,y) + (v - x)\pd{u(x,y)}{x} + (w - y)\pd{u(x,y)}{y}
+%                + \frac{(v-x)^2}{2} \pd[2]{u(x,y)}{x} \\
+%                &+ (v-x)(w-y)\mpd[2]{u(x,y)}{\partial x \partial y}
+%                + \frac{(w-y)^2}{2}\pd[2]{u(x,y)}{y}
+%                + \frac{(v-x)^3}{3!}\pd[3]{u(x,y)}{x} \\
+%                &+ \frac{(v-x)^2(w-y)}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+%                + \frac{(v-x)(w-y)^2}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+%                &+ \frac{(w-y)^3}{3!} \pd[3]{u(x,y)}{y}
+%                + \frac{(v-x)^4}{4!} \pd[4]{u(x,y)}{x}
+%                + \frac{(v-x)^3(w-y)}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+%                &+ \frac{(v-x)^2 (w-y)^2}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+%                + \frac{(v-x) (w-y)^3}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+%                &+ \frac{(w-y)^4}{4!} \pd[4]{u(x,y)}{y}
+%            \end{align*}
 
-            Taking the fourth order Taylor expansion of the terms found in part (a)
-            \begin{align*}
-                &\frac{u(x+h, y+h) - u(x-h, y+h) - u(x+h, y-h) + u(x-h, y-h)}{4h^2} \\
-                &\approx \frac{1}{4h^2} (u(x,y) + h\pd{u(x,y)}{x} + h\pd{u(x,y)}{y}
-                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y} - 
-                    u(x,y) + h\pd{u(x,y)}{x} - h\pd{u(x,y)}{y}
-                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y} - u(x,y) - h\pd{u(x,y)}{x} + h\pd{u(x,y)}{y}
-                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
-                    + u(x,y) - h\pd{u(x,y)}{x} - h\pd{u(x,y)}{y}
-                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
-                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
-                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
-                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
-                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
-                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
-                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
-                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
-                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
-                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
-                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}) \\
-%                &= \frac{1}{4h^2} (
-%%                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+%            Taking the fourth order Taylor expansion of the terms found in part (a)
+%            \begin{align*}
+%                &\frac{u(x+h, y+h) - u(x-h, y+h) - u(x+h, y-h) + u(x-h, y-h)}{4h^2} \\
+%                &\approx \frac{1}{4h^2} (u(x,y) + h\pd{u(x,y)}{x} + h\pd{u(x,y)}{y}
+%                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
 %                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
 %                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
 %                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
@@ -113,7 +62,8 @@ Homework 3
 %                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
 %                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
 %                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-%                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
+%                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y} - 
+%                    u(x,y) + h\pd{u(x,y)}{x} - h\pd{u(x,y)}{y}
 %                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
 %                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
 %                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
@@ -125,7 +75,7 @@ Homework 3
 %                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
 %                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
 %                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
-%                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
+%                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y} - u(x,y) - h\pd{u(x,y)}{x} + h\pd{u(x,y)}{y}
 %                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
 %                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
 %                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
@@ -138,6 +88,7 @@ Homework 3
 %                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
 %                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
 %                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
+%                    + u(x,y) - h\pd{u(x,y)}{x} - h\pd{u(x,y)}{y}
 %                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
 %                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
 %                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
@@ -150,19 +101,68 @@ Homework 3
 %                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
 %                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
 %                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}) \\
-                &= \frac{1}{4h^2} \p{\frac{2h^4}{3}
-                    \mpd[4]{u(x,y)}{\partial x^3 \partial y} + 
-                    4h^2 \mpd[2]{u(x,y)}{\partial x \partial y} + \frac{2h^4}{3}
-                    \mpd[4]{u(x,y)}{\partial x \partial y^3}} \\
-                &= \mpd[2]{u(x,y)}{\partial x \partial y} + \frac{h^2}{6} 
-                    \p{\mpd[4]{u(x,y)}{\partial x^3 \partial y} + 
-                    \mpd[4]{u(x,y)}{\partial x \partial y^3}}\\
-                &= \mpd[2]{u(x,y)}{\partial x \partial y} + O(h^2)
-            \end{align*}
+%%                &= \frac{1}{4h^2} (
+%%%                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+%%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+%%                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+%%                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+%%                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+%%                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+%%                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+%%                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+%%                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+%%                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
+%%                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+%%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+%%                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+%%                    + \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+%%                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+%%                    + \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+%%                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+%%                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+%%                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+%%                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
+%%                    - \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+%%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+%%                    - \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+%%                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+%%                    &+ \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+%%                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+%%                    &+ \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+%%                    - \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+%%                    &- \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+%%                    &- \frac{h^4}{4!} \pd[4]{u(x,y)}{y}
+%%                    + \frac{h^2}{2} \pd[2]{u(x,y)}{x} \\
+%%                    &+ h^2\mpd[2]{u(x,y)}{\partial x \partial y}
+%%                    + \frac{h^2}{2}\pd[2]{u(x,y)}{y}
+%%                    - \frac{h^3}{3!}\pd[3]{u(x,y)}{x} \\
+%%                    &- \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x^2 \partial y}
+%%                    - \frac{h^3}{2!} \mpd[3]{u(x,y)}{\partial x \partial y^2} \\
+%%                    &- \frac{h^3}{3!} \pd[3]{u(x,y)}{y}
+%%                    + \frac{h^4}{4!} \pd[4]{u(x,y)}{x}
+%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x^3 \partial y} \\
+%%                    &+ \frac{h^4}{2! 2!} \mpd[4]{u(x,y)}{\partial x^2 \partial y^2}
+%%                    + \frac{h^4}{3!} \mpd[4]{u(x,y)}{\partial x \partial y^3} \\
+%%                    &+ \frac{h^4}{4!} \pd[4]{u(x,y)}{y}) \\
+%                &= \frac{1}{4h^2} \p{\frac{2h^4}{3}
+%                    \mpd[4]{u(x,y)}{\partial x^3 \partial y} + 
+%                    4h^2 \mpd[2]{u(x,y)}{\partial x \partial y} + \frac{2h^4}{3}
+%                    \mpd[4]{u(x,y)}{\partial x \partial y^3}} \\
+%                &= \mpd[2]{u(x,y)}{\partial x \partial y} + \frac{h^2}{6} 
+%                    \p{\mpd[4]{u(x,y)}{\partial x^3 \partial y} + 
+%                    \mpd[4]{u(x,y)}{\partial x \partial y^3}}\\
+%                &= \mpd[2]{u(x,y)}{\partial x \partial y} + O(h^2)
+%            \end{align*}
     \end{enumerate}
 
-    % 2 TODO: finish part (b)
-    \item Let $s$ be a function defined by
+    \item % 2 Done
+        Let $s$ be a function defined by
         \begin{align*}
             s(x) &=
             \begin{cases}
@@ -170,135 +170,370 @@ Homework 3
                 (1 - x)^3 & 0 \le x \le 1
             \end{cases}
         \end{align*}
-    \begin{enumerate}
-        \item[(a)]
-            With $\Delta$ denoting the subdivision of $\br{-1,1}$ into
-            $\br{-1, 0}$ and $\br{0, 1}$, to what class $S_m^k(\Delta)$
-            does the spline $s$ belong to?
+        \begin{enumerate}
+            \item[(a)] % Done
+                With $\Delta$ denoting the subdivision of $\br{-1,1}$ into
+                $\br{-1, 0}$ and $\br{0, 1}$, to what class $S_m^k(\Delta)$
+                does the spline $s$ belong to?
 
-            Since each piece of $s$ is degree 3, the degree of $s$ is $m = 3$.
-            Let $s_1(x) = (x + 1)^3$ and let $s_2(x) = (1-x)^3$.
-            Then $s$ is continuous because $s_1(0) = (0 + 1)^3 = 1 = (1 - 0)^3
-            = s_2(0)$.
-            Also $s_1'(0) = 3(0 + 1)^2 = 3$ and $s_2'(0) = -3(1 - 0)^2 = -3$,
-            therefore the first derivative of $s$ is not continuous.
-            So $s$ belongs to smoothness class $k=0$.
+                Since each piece of $s$ is degree 3, the degree of $s$ is $m = 3$.
+                Let $s_1(x) = (x + 1)^3$ and let $s_2(x) = (1-x)^3$.
+                Then $s$ is continuous because $s_1(0) = (0 + 1)^3 = 1 = (1 - 0)^3
+                = s_2(0)$.
+                Also $s_1'(0) = 3(0 + 1)^2 = 3$ and $s_2'(0) = -3(1 - 0)^2 = -3$,
+                therefore the first derivative of $s$ is not continuous.
+                So $s$ belongs to smoothness class $k=0$.
 
-        \item[(b)] % TODO: find error estimate of trapezoidal rule
-            Estimate the error of the composite trapezoidal rule applied to 
-            $\dintt{-1}{1}{s(x)}{x}$, when $\br{-1, 1}$ is divided into n
-            subintervals of equal length $h = 2/n$ and n is even.
+            \item[(b)] % Done
+                Estimate the error of the composite trapezoidal rule applied to 
+                $\dintt{-1}{1}{s(x)}{x}$, when $\br{-1, 1}$ is divided into n
+                subintervals of equal length $h = 2/n$ and n is even.
 
-            
+                Since n is even the composite trapezoidal rule can be broken
+                into two subintervals, $\br{-1,0}$ and $\br{0,1}$.
+                The total error is then the sum of the errors on the two parts.
+                \begin{align*}
+                    E &= -\frac{1}{12}h^2 s_1''(\xi_1) - \frac{1}{12} h^2 s_2''(\xi_2)
+                    &= -\frac{1}{12} h^2 \p{s_1''(\xi_1) + s_2''(\xi_2)}
+                \end{align*}
+                This is for $-1 < \xi_1 < 0$ and $0 < \xi_2 < 1$.
+                The second derivatives of each piece are $s_1''(x) = 6(x + 1)$
+                and $s_2''(x) = 6(1 - x)$.
+                These are both positive, so the estimate will be larger than
+                the actual integral, so the error will be negative as can be
+                seen in the error formula.
+                We can find an upper bound for the error, by noting that the
+                second derivatives are bounded, that is $s_1''(\xi_1) < 6$
+                and $s_2''(\xi_2) < 6$.
+                Therefore $\p{s_1''(\xi_1) + s_2''(\xi_2)} < 12$.
+                This implies that the error can be bounded by $-h^2$, that is
+                \[
+                     -h^2 > E > 0
+                \]
 
-        \item[(c)]
-            What is the error of the composite Simpson’s rule applied to
-            $\dintt{-1}{1}{s(x)}{x}$, with the same subdivision of
-            $\br{-1, 1}$ as in (b)?
+            \item[(c)] % Done
+                What is the error of the composite Simpson’s rule applied to
+                $\dintt{-1}{1}{s(x)}{x}$, with the same subdivision of
+                $\br{-1, 1}$ as in (b)?
 
-            Simpson's rule has a degree of exactness equal to 3.
-            Simpson's rule is applied to every two intervals, since $n$ is
-            even Simpson's rule can be applied to $s$ over the subdivision
-            $\Delta$.
+                Simpson's rule has a degree of exactness equal to 3.
+                Simpson's rule is applied to every two intervals, since $n$ is
+                even Simpson's rule can be applied to $s$ over the subdivision
+                $\Delta$.
 
-            Since $n$ is even either $n = 4m$ or $n = 4m + 2$ for some positive
-            integer $m$.
-            If $n = 4m$ for some positive integer $m$, that is $n$ is a multiple
-            of $4$, then $\dintt{-1}{1}{s(x)}{x}$ can be approximated by
-            applying Simpson's rule to $\dintt{-1}{0}{s(x)}{x}$ and 
-            $\dintt{0}{1}{s(x)}{x}$ separately and summing.
-            This can be done because there $n/2 = 2m$ intervals on $\br{-1, 0}$ and
-            $\br{0,1}$.
-            Each of these integrals can be evaluated exactly because Simpson's rule
-            has degree of exactness equal to 3.
-            Therefore the total error is 0.
+                Since $n$ is even either $n = 4m$ or $n = 4m + 2$ for some positive
+                integer $m$.
+                If $n = 4m$ for some positive integer $m$, that is $n$ is a multiple
+                of $4$, then $\dintt{-1}{1}{s(x)}{x}$ can be approximated by
+                applying Simpson's rule to $\dintt{-1}{0}{s(x)}{x}$ and 
+                $\dintt{0}{1}{s(x)}{x}$ separately and summing.
+                This can be done because there $n/2 = 2m$ intervals on $\br{-1, 0}$ and
+                $\br{0,1}$.
+                Each of these integrals can be evaluated exactly because Simpson's rule
+                has degree of exactness equal to 3.
+                Therefore the total error is 0.
 
-            If $n = 4m + 2$ for some positive integer $m$, then 
-            $\dintt{-1}{1}{s(x)}{x}$ can be approximated by
-            applying Simpson's rule to $\dintt{-1}{-h}{s(x)}{x}$, 
-            $\dintt{-h}{h}{s(x)}{x}$, and $\dintt{h}{1}{s(x)}{x}$ separately
-            and summing.
-            In this situation each interval $\br{-1,0}$ and $\br{0,1}$ has
-            an odd number of subintervals, so Simpson's rule must be applied
-            across the interval $\br{-h, h}$.
-            Simpson's rule evaluates $\dintt{-1}{-h}{s(x)}{x}$ and
-            $\dintt{h}{1}{s(x)}{x}$ exactly because $s(x)$ is a degree 3
-            polynomial on these intervals.
-            Therefore the error from Simpson's rule comes when approximating
-            the integral $\dintt{-h}{h}{s(x)}{x}$.
-            The error can be found as follows.
-            \begin{align*}
-                E &= \dintt{-h}{h}{s(x)}{x} - \frac{h}{3} \p{s(-h) + 4s(0) + s(h)} \\
-                  &= \dintt{-h}{0}{(x+1)^3}{x} + \dintt{0}{h}{(1-x)^3}{x} - \frac{h}{3} \p{(1-h)^3 + 4 + (1-h)^3} \\
-                  &= \eval{\frac{1}{4}(x+1)^4}{x=-h}{0} + \eval{-\frac{1}{4}(1-x)^4}{x=0}{h} - \frac{h}{3} \p{2(1-h)^3 + 4} \\
-                  &= \frac{1}{4}\p{1 - (1-h)^4} - \frac{1}{4}\p{(1-h)^4 - 1} - \frac{h}{3} \p{2(1-h)^3 + 4} \\
-                  &= \frac{1}{2} - \frac{1}{2}(1-h)^4 - \frac{4h}{3} - \frac{2h}{3}(1-h)^3 \\
-                  &= (1-h)^3\p{-\frac{1}{2}(1-h) - \frac{2h}{3}} - \frac{4h}{3} + \frac{1}{2} \\
-                  &= (1-h)^3\p{-\frac{h}{6} -\frac{1}{2}} - \frac{4h}{3} + \frac{1}{2} \\
-            \end{align*}
-            This is also the total error.
+                If $n = 4m + 2$ for some positive integer $m$, then 
+                $\dintt{-1}{1}{s(x)}{x}$ can be approximated by
+                applying Simpson's rule to $\dintt{-1}{-h}{s(x)}{x}$, 
+                $\dintt{-h}{h}{s(x)}{x}$, and $\dintt{h}{1}{s(x)}{x}$ separately
+                and summing.
+                In this situation each interval $\br{-1,0}$ and $\br{0,1}$ has
+                an odd number of subintervals, so Simpson's rule must be applied
+                across the interval $\br{-h, h}$.
+                Simpson's rule evaluates $\dintt{-1}{-h}{s(x)}{x}$ and
+                $\dintt{h}{1}{s(x)}{x}$ exactly because $s(x)$ is a degree 3
+                polynomial on these intervals.
+                Therefore the error from Simpson's rule comes when approximating
+                the integral $\dintt{-h}{h}{s(x)}{x}$.
+                The error can be found as follows.
+                \begin{align*}
+                    E &= \dintt{-h}{h}{s(x)}{x} - \frac{h}{3} \p{s(-h) + 4s(0) + s(h)} \\
+                    &= \dintt{-h}{0}{(x+1)^3}{x} + \dintt{0}{h}{(1-x)^3}{x} - \frac{h}{3} \p{(1-h)^3 + 4 + (1-h)^3} \\
+                    &= \eval{\frac{1}{4}(x+1)^4}{x=-h}{0} + \eval{-\frac{1}{4}(1-x)^4}{x=0}{h} - \frac{h}{3} \p{2(1-h)^3 + 4} \\
+                    &= \frac{1}{4}\p{1 - (1-h)^4} - \frac{1}{4}\p{(1-h)^4 - 1} - \frac{h}{3} \p{2(1-h)^3 + 4} \\
+                    &= \frac{1}{2} - \frac{1}{2}(1-h)^4 - \frac{4h}{3} - \frac{2h}{3}(1-h)^3 \\
+                    &= (1-h)^3\p{-\frac{1}{2}(1-h) - \frac{2h}{3}} - \frac{4h}{3} + \frac{1}{2} \\
+                    &= (1-h)^3\p{-\frac{h}{6} -\frac{1}{2}} - \frac{4h}{3} + \frac{1}{2} \\
+                \end{align*}
+                This is also the total error.
 
-        \item[(d)]
-            What is the error resulting from applying the 2-point
-            Gauss-Legendre rule to $\dintt{-1}{0}{s(x)}{x}$ and
-            $\dintt{0}{1}{s(x)}{x}$ separately and summing?
+            \item[(d)] % Done
+                What is the error resulting from applying the 2-point
+                Gauss-Legendre rule to $\dintt{-1}{0}{s(x)}{x}$ and
+                $\dintt{0}{1}{s(x)}{x}$ separately and summing?
 
-            The 2-point Gauss-Legendre rule has degree of exactness equal to 3.
-            So on each of these intervals the $s(x)$ is a degree 3 polynomial,
-            therefore the error on each of these intervals will be zero.
-            So the total error is zero.
-    \end{enumerate}
+                The 2-point Gauss-Legendre rule has degree of exactness equal to 3.
+                So on each of these intervals the $s(x)$ is a degree 3 polynomial,
+                therefore the error on each of these intervals will be zero.
+                So the total error is zero.
+        \end{enumerate}
 
     \item % 3
-    \begin{enumerate}
-        \item[(a)] %TODO: look at error of intrpolation polynomial
-            Determine by Hermite interplation the quadractic polynomial $p$
-            interpolating $f$ at $x=0$ and $x=1$ and $f'$ at $x = 0$.
-            Also express the errors in terms of an appropriate derivative.
+        \begin{enumerate}
+            \item[(a)] % Done
+                Determine by Hermite interplation the quadractic polynomial $p$
+                interpolating $f$ at $x=0$ and $x=1$ and $f'$ at $x = 0$.
+                Also express the errors in terms of an appropriate derivative.
 
-            \begin{tabular}{c|c|c|c}
-                $x$ & $f(x)$ & & \\
-                \midrule
-                $0$ & $f(0)$ & & \\
-                $0$ & $f(0)$ & $f'(0)$ & \\
-                $1$ & $f(1)$ & $f(1) - f(0)$ & $f(1) - f(0) - f'(0)$
-            \end{tabular}
+                \begin{tabular}{c|c|c|c}
+                    $x$ & $f(x)$ & & \\
+                    \midrule
+                    $0$ & $f(0)$ & & \\
+                    $0$ & $f(0)$ & $f'(0)$ & \\
+                    $1$ & $f(1)$ & $f(1) - f(0)$ & $f(1) - f(0) - f'(0)$
+                \end{tabular}
 
-            Therefore $p(x) = f(0) + f'(0) x + \p{f(1) - f(0) - f'(0)} x^2$.
+                Therefore $p(x) = f(0) + f'(0) x + \p{f(1) - f(0) - f'(0)} x^2
+                + x^2(x - 1) \frac{f'''(\xi)}{6}$, where the error is
+                $x^2(x - 1) \frac{f'''(\xi)}{6}$ for some $0 < \xi < 1$
 
-        \item[(b)] % TODO: find error of integration formula
-            Using the interpolation polynomial found in (a),
-            $\dintt{0}{1}{f(x)}{x} \approx \dintt{0}{1}{p(x)}{x}$.
-            \begin{align*}
-                \dintt{0}{1}{p(x)}{x} &= \dintt{0}{1}{f(0) + f'(0) x + \p{f(1) - f(0) - f'(0)} x^2}{x} \\
-                &= \eval{f(0) x + \frac{1}{2} f'(0) x^2 + \frac{1}{3}\p{f(1) - f(0) - f'(0)}x^3}{x=0}{1} \\
-                &= f(0) + \frac{1}{2} f'(0) + \frac{1}{3}\p{f(1) - f(0) - f'(0)} \\
-                &= \frac{2}{3} f(0) - \frac{1}{3} f(1) + \frac{1}{6} f'(0)
-                \intertext{Therefore}
-                \dintt{0}{1}{f(x)}{x} &\approx \frac{2}{3} f(0) - \frac{1}{3} f(1) + \frac{1}{6} f'(0)
-            \end{align*}
-            This can be expressed as the integration formula
-            $\dintt{0}{1}{f(x)}{x} \approx a_0 f(0) + a_1 f(1) + b_0 f'(0)$, where
-            $a_0 = \frac{2}{3}$, $a_1 = -\frac{1}{3}$, and $b_0 = \frac{1}{6}$.
+            \item[(b)] % TODO: find error of integration formula
+                Using the interpolation polynomial found in (a),
+                $\dintt{0}{1}{f(x)}{x} \approx \dintt{0}{1}{p(x)}{x}$.
+                \begin{align*}
+                    \dintt{0}{1}{p(x)}{x} &= \dintt{0}{1}{f(0) + f'(0) x + \p{f(1) - f(0) - f'(0)} x^2}{x} \\
+                    &= \eval{f(0) x + \frac{1}{2} f'(0) x^2 + \frac{1}{3}\p{f(1) - f(0) - f'(0)}x^3}{x=0}{1} \\
+                    &= f(0) + \frac{1}{2} f'(0) + \frac{1}{3}\p{f(1) - f(0) - f'(0)} \\
+                    &= \frac{2}{3} f(0) - \frac{1}{3} f(1) + \frac{1}{6} f'(0)
+                    \intertext{Therefore}
+                    \dintt{0}{1}{f(x)}{x} &\approx \frac{2}{3} f(0) - \frac{1}{3} f(1) + \frac{1}{6} f'(0)
+                \end{align*}
+                This can be expressed as the integration formula
+                $\dintt{0}{1}{f(x)}{x} \approx a_0 f(0) + a_1 f(1) + b_0 f'(0)$, where
+                $a_0 = \frac{2}{3}$, $a_1 = -\frac{1}{3}$, and $b_0 = \frac{1}{6}$.
 
-        \item[(c)]
-            \begin{tabular}{c|c|c|c}
-                $x$ & $f(x)$ & & \\
-                \midrule
-                $c$ & $f(c)$ & & \\
-                $c$ & $f(c)$ & $f'(c)$ & \\
-                $c+h$ & $f(c+h)$ & $(f(c) - f(c+h))/h$ & $(f(c) - f(c+h))/h^2 - f'(c)/h$
-            \end{tabular}
-    \end{enumerate}
+                The error term for this quadrature formula can be found by
+                integrating, the error of the polynomial.
+
+
+            \item[(c)] % TODO: find how to transform result to different interval
+                \begin{tabular}{c|c|c|c}
+                    $x$ & $f(x)$ & & \\
+                    \midrule
+                    $c$ & $f(c)$ & & \\
+                    $c$ & $f(c)$ & $f'(c)$ & \\
+                    $c+h$ & $f(c+h)$ & $(f(c) - f(c+h))/h$ & $(f(c) - f(c+h))/h^2 - f'(c)/h$
+                \end{tabular}
+        \end{enumerate}
 
     \item % 4
+        \begin{enumerate}
+            \item[(a)] % Done
+                Construct the quadractic (monic) polynomial
+                $\pi_2(t; w)$ orthogonal on $(0, \infty)$ with respect to the
+                weight function $w(t) = e^{-t}$.
+
+                The quadractic monic orthogonal polynomial will be in the form,
+                $\pi_2(t; w) = t^2 + p_1 t + p_2$.
+                Since this polynomial is orthogonal to any polynomials of
+                degree 1 or less with respect to the weight $w(t)$ the following
+                two conditions can be imposed, 
+                $\dintt{0}{\infty}{\pi_2(t) f(t) w(t)}{t} = 0$ for $f(t) = 1$
+                and $f(t) = t$.
+                These two conditions allow for $p_1$ and $p_2$ to be uniquely
+                determined.
+
+                \begin{align*}
+                    0 &= \dintt{0}{\infty}{\pi_2(t) w(t)}{t} \\
+                    &= \dintt{0}{\infty}{\p{t^2 + p_1 t + p_2}e^{-t}}{t} \\
+                    &= \dintt{0}{\infty}{t^2 e^{-t} + p_1 t e^{-t} + p_2 e^{-t}}{t}
+                    \intertext{Using the fact that $\dintt{0}{\infty}{t^m e^{-t}}{t} = m!$}
+                    0 &= 2 + p_1 + p_2 \\
+                    0 &= \dintt{0}{\infty}{t \pi_2(t) w(t)}{t} \\
+                    &= \dintt{0}{\infty}{\p{t^3 + p_1 t^2 + p_2 t}e^{-t}}{t} \\
+                    &= \dintt{0}{\infty}{t^3 e^{-t} + p_1 t^2 e^{-t} + p_2 t e^{-t}}{t} \\
+                    0 &= 6 + 2 p_1 + p_2
+                \end{align*}
+                This system of two equations can now be solved for $p_1$ and $p_2$.
+                \begin{align*}
+                    0 &= 2 + p_1 + p_2 \\
+                    p_1 &= -p_2 - 2 \\
+                    0 &= 6 + 2 p_1 + p_2 \\
+                    0 &= 6 -2p_2 - 4 + p_2 \\
+                    p_2 &= 2 \\
+                    p_1 &= -2 - 2 = -4
+                \end{align*}
+                Therefore the orthogonal quadractic polynomial is 
+                $\pi_2(t; w) = t^2 - 4t + 2$
+
+            \item[(b)] % TODO: Finish error analysis
+                Obtain the two point Gauss-Laguerre quadrature formula.
+                \[
+                    \dintt{0}{\infty}{f(t) e^{-t}}{t} = w_1 f(t_1) + w_2 f(t_2) + E_2(f)
+                \]
+
+                The values of $t_1$ and $t_2$ are the zeros of the orthogonal
+                polynomial $\pi_2(t;w) = t^2 - 4t + 2$.
+                The roots of this polynomial can be found using the quadractic formula.
+                \begin{align*}
+                    t &= \frac{4 \pm \sqrt{16 - 4 \cdot 2}}{2} \\
+                    &= \frac{4 \pm 2\sqrt{2}}{2} \\
+                    &= 2 \pm \sqrt{2}
+                \end{align*}
+                Therefore $t_1 = 2 - \sqrt{2}$ and $t_2 = 2 + \sqrt{2}$.
+
+                We know that this quadrature formula must be exact for
+                polynomials of degree 1 or less.
+                This gives us two conditions with which to find $w_1$ and $w_2$.
+                That is the quadrature formula must be exact for $f(t) = 1$ and
+                $f(t) = t$
+                \begin{align*}
+                    \dintt{0}{\infty}{e^{-t}}{t} &= w_1 + w_2 \\
+                    1 &= w_1 + w_2 \\
+                    \dintt{0}{\infty}{t e^{-t}}{t} &= w_1(2 - \sqrt{2})+ w_2(2 + \sqrt{2}) \\
+                    1 &=  w_1(2 - \sqrt{2})+ w_2(2 + \sqrt{2}) \\
+                \end{align*}
+                Now $w_1$ and $w_2$ can be found by solving this system of
+                linear equations.
+                \begin{align*}
+                    1 &= w_1 + w_2 \\
+                    w_1 &= 1 - w_2 \\
+                    1 &=  w_1(2 - \sqrt{2})+ w_2(2 + \sqrt{2}) \\
+                    1 &=  (1 - w_2)(2 - \sqrt{2})+ w_2(2 + \sqrt{2}) \\
+                    1 &= 2 - \sqrt{2} + 2\sqrt{2} w_2 \\
+                    w_2 &= \frac{\sqrt{2} - 1}{2\sqrt{2}} \\
+                    w_2 &= \frac{2 - \sqrt{2}}{4} \\
+                    w_1 &= \frac{2 + \sqrt{2}}{4}
+                \end{align*}
+
+                Also the error term $E_2(f)$ is given by
+
+                Therefore the Gauss-Laguerre quadrature formula is
+                \[
+                    \dintt{0}{\infty}{f(t) e^{-t}}{t} =
+                        \frac{2 + \sqrt{2}}{4} f(2 - \sqrt{2}) +
+                        \frac{2 - \sqrt{2}}{4} f(2 + \sqrt{2}) +
+                        % TODO: Insert error term
+                \]
+
+            \item[(c)] %TODO: use error analysis
+                Apply the formula in (b) to approximate
+                $I = \dintt{0}{\infty}{\frac{e^{-t}}{t+1}}{t}$.
+                Use the remainder term $E_2(f)$ to estimate the error,
+                and compare your estimate with the true error (use I = 
+                0.596347361).
+                Knowing the true error, identify the unknown quantity $\xi > 0$
+                contained in the error term $E_2(t)$.
+
+                Using the quadrature formula
+                \begin{align*}
+                    I &= \dintt{0}{\infty}{f(t) e^{-t}}{t} \\
+                    &\approx \frac{2 + \sqrt{2}}{4} f(2 - \sqrt{2}) +
+                        \frac{2 - \sqrt{2}}{4} f(2 + \sqrt{2}) \\
+                    &= \frac{2 + \sqrt{2}}{4} \frac{1}{3 - \sqrt{2}} +
+                        \frac{2 - \sqrt{2}}{4} \frac{1}{3 + \sqrt{2}} \\
+                    &\approx 0.571428571
+                \end{align*}
+
+                % TODO: estimate the error
+
+                The true error is $E_2(f) = 0.596347361 - 0.571428571 = .0249188$.
+                Thus the quantity $\xi > 0$ can be identified as follows
+                \begin{align*}
+                    .0249188 &=  \\
+                \end{align*}
+        \end{enumerate}
+
     \item % 5
+        Consider a quadrature formula of the type
+        \[
+            \dintt{0}{\infty}{e^{-x} f(x)}{x} = a f(0) + b f(c) + E(f)
+        \]
+        \begin{enumerate}
+            \item[(a)] % Done
+                Find $a$, $b$, and $c$ such that the formula has degree
+                of exactness $d = 2$.
+                Can you identify the formula so obtained?
+
+                If the degree of exactness is to be equal to $d=2$, then
+                the quadrature formula must be exact for $f(x) = 1$, $f(x) = x$,
+                and $f(x) = x^2$.
+                \begin{align*}
+                    \dintt{0}{\infty}{e^{-x}}{x} &= a + b \\
+                    1 &= a + b \\
+                    \dintt{0}{\infty}{x e^{-x}}{x} &= bc \\
+                    1 &= a + bc \\
+                    \dintt{0}{\infty}{x^2 e^{-x}}{x} &= bc^2 \\
+                    2 &= a + bc^2
+                \end{align*}
+                These three equations can now be solved for $a$, $b$, and $c$.
+                \begin{align*}
+                    bc &= 1 \\
+                    b &= \frac{1}{c} \\
+                    bc^2 &= 2 \\
+                    \frac{c^2}{c} &= 2 \\
+                    c &= 2 \\
+                    b &= \frac{1}{2} \\
+                    a &= \frac{1}{2} \\
+                \end{align*}
+                Therefore the quadrature rule will be
+                \[
+                    \dintt{0}{\infty}{e^{-x} f(x)}{x} \approx \frac{1}{2}\p{f(0) + f(2)}
+                \]
+
+            \item[(b)] % Done
+                Let $p_2(x) = p_2(f; 0, 2, 2; x)$ be the Hermite interpolation
+                polynomial at the point $x = 0$ and at the double point $x = 2$.
+                Determine $\dintt{0}{\infty}{p_2(x) e^{-x}}{x}$ and compare
+                with results in (a).
+
+                First we must find the Hermite interpolation polynomial.
+                \begin{center}
+                \begin{tabular}{cccc}
+                    $x$ & $f(x)$ & & \\
+                    0   & $f(0)$ & & \\
+                    2   & $f(2)$ & $(f(2) - f(0))/2$ & \\
+                    2   & $f(2)$ & $f'(2)$ & $([0,2]f - f'(2))/2$
+                \end{tabular}
+                \end{center}
+                Thus
+                \begin{align*}
+                    p_2(x) &= f(0) + \frac{f(2) - f(0)}{2} x +
+                    \frac{\frac{f(2) - f(0)}{2} - f'(2)}{2} x(x - 2) \\
+                    &=  f(0) + \p{\frac{f(2) - f(0)}{2} - \frac{f(2) - f(0)}{2} + f'(2)} x +
+                    \frac{\frac{f(2) - f(0)}{2} - f'(2)}{2} x^2 \\
+                    &= f(0) + f'(2) x + \frac{\frac{f(2) - f(0)}{2} - f'(2)}{2} x^2 \\
+                \end{align*}
+
+                This interpolation polynomial can be integrated to form a new
+                quadrature formula.
+                \begin{align*}
+                    \dintt{0}{\infty}{p_2(x) e^{-x}}{x} &= 
+                        \dintt{0}{\infty}{\p{f(0) + f'(2) x + \frac{\frac{f(2) - f(0)}{2} - f'(2)}{2} x^2}e^{-x}}{x} \\
+                    &=  f(0) + f'(2) + \frac{f(2) - f(0)}{2} - f'(2) \\
+                    &= f(0) + \frac{f(2) - f(0)}{2} \\
+                    &= \frac{1}{2} \p{f(0) + f(2)}
+                \end{align*}
+                This is the same quadrature formula as found in part (a).
+
+            \item[(c)] % TODO: Find error term
+        \end{enumerate}
+
     \item % 6
-    \begin{enumerate}
-        \item[(a)]
-            
-        \item[(b)]
-        \item[(c)]
-    \end{enumerate}
+        \begin{enumerate}
+            \item[(a)]
+                The first column of the Romberg array is the basic composite
+                trapezoidal rule with a shrinking subinterval h.
+                Let $h_k = (b-a)/2^k$ and let $T_{h_k}$ be composite trapezoidal
+                rule with subdivion of $h_k$, that is
+                \[
+                    T_{h_k} = h_k \p{\frac{1}{2} f(a) + \sum{r=1}{2k-1}{f(a + r h_k)}
+                        + \frac{1}{2} f(b)}
+                \]
+                Alse let $M_{h_k}$ be the midpoint rule with subdivision of
+                $h_k$, that is
+                \[
+                    M_{h_k} = h_k \sum{r=1}{2k}{f(a + (r - \frac{1}{2})h_k)}
+                \]
+
+                Obviously for $k = 0$, $h_k = (b-a)$.
+                Then
+                \begin{align*}
+                    T_{h_0} &= (b-a)\p{\frac{1}{2} f(a) + \sum{r=1}{0}{f(a + r h_k)} + \frac{1}{2} f(b)}
+                \end{align*}
+            \item[(b)]
+            \item[(c)]
+        \end{enumerate}
 \end{enumerate}
 \end{document}
