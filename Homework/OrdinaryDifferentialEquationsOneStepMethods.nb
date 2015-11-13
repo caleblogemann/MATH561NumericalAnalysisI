@@ -1,0 +1,117 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      3351,        108]
+NotebookOptionsPosition[      2997,         90]
+NotebookOutlinePosition[      3384,        107]
+CellTagsIndexPosition[      3341,        104]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Ordinary Differential Equations: One Step Methods", "Title",
+ CellChangeTimes->{{3.655559823946848*^9, 3.655559872387805*^9}}],
+
+Cell[TextData[{
+ "An ordinary differential equation (ODE) is a equation of the form ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"F", "(", 
+     RowBox[{"x", ",", " ", "y", ",", " ", 
+      RowBox[{"y", "'"}], ",", " ", 
+      RowBox[{"y", "''"}], ",", " ", "\[Ellipsis]", ",", " ", 
+      SuperscriptBox["y", 
+       RowBox[{"(", "n", ")"}]]}], ")"}], " ", "=", " ", "0"}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " where y is a function of a single variable x, F is any function and y\
+\[CloseCurlyQuote], y\[CloseCurlyQuote]\[CloseCurlyQuote], \[Ellipsis] ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["y", 
+    RowBox[{"(", "n", ")"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " are the derivatives of y in terms of x. This ODE is said to have order n, \
+where n is the highest derivative of y in the function F.\n\nA linear ODE is \
+of the form ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       SubscriptBox["a", "n"], "(", "x", ")"}], 
+      FractionBox[
+       RowBox[{
+        SuperscriptBox["\[DoubleStruckD]", "n"], "y"}], 
+       SuperscriptBox["\[DoubleStruckD]x", "n"]]}], "+", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["a", 
+        RowBox[{"n", "-", "1"}]], "(", "x", ")"}], 
+      FractionBox[
+       RowBox[{
+        SuperscriptBox["\[DoubleStruckD]", 
+         RowBox[{"n", "-", "1"}]], "y"}], 
+       SuperscriptBox["\[DoubleStruckD]x", 
+        RowBox[{"n", "-", "1"}]]]}], "+", "\[Ellipsis]", "+", 
+     FractionBox[
+      RowBox[{
+       SuperscriptBox["\[DoubleStruckD]", "2"], "y"}], 
+      SuperscriptBox["\[DoubleStruckD]x", "2"]], "+", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["a", "1"], "(", "x", ")"}], 
+      FractionBox["\[DoubleStruckD]y", "\[DoubleStruckD]x"]}], "+", " ", 
+     RowBox[{
+      RowBox[{
+       SubscriptBox["a", "0"], "(", "x", ")"}], "y"}]}], "=", 
+    RowBox[{"f", "(", "x", ")"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.655577157137691*^9, 3.655577321126754*^9}, {
+   3.655578341297007*^9, 3.655578384329232*^9}, {3.6555787921231956`*^9, 
+   3.655578817200982*^9}, {3.655654434809464*^9, 3.655654682813179*^9}, 
+   3.6556651833649683`*^9, 3.655725522148494*^9}]
+}, Open  ]]
+},
+WindowSize->{1920, 1056},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (December 4, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 132, 1, 137, "Title"],
+Cell[715, 25, 2266, 62, 162, "Text"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
