@@ -12,6 +12,68 @@ Homework 4
 }}
 
 \begin{enumerate}
-    \item
+    \item[\#1]
+        \begin{itemize}
+            \item[(a)]
+                Determine the principle error function of the general explicit
+                two-stage Runge-Kutta method.
+
+                The general explicit two-stage Runge-Kutta method can be
+                described as follows.
+                \begin{align*}
+                    k_1 &= f(x,y) \\
+                    k_2 &= f(x + \mu h, y + \mu h k_1) \\
+                    \Phi(x, y; h) = \alpha_1 k_1 + \alpha_2 k_2
+                \end{align*}
+
+                To find the priniciple error function, first the local
+                truncation error must be found.
+                The local truncation error is defined as
+                \[
+                    T(x, y; h) = \Phi(x, y; h) - \frac{1}{h}\p{y(x + h) - y(x)}
+                \]
+                The principle error function is the functional coefficient of $h^p$
+                in the local truncation error, when $p$ is the order of the method.
+                Two-stage Runge-Kutta methods have in general an order of $p = 2$,
+                so the principle error function is the coefficient of $h^2$.
+                In order to find this the Taylor expansion of $\Phi(x, y; h)$ and
+                $\frac{1}{h}\p{y(x + h) - y(x))}$ must be found, at least to the 
+                $h^2$ term.
+
+                First I will find the Taylor expansion of
+                $\Phi(x, y; h) = \alpha_1 k_1 + \alpha_2 k_2$.
+                The Taylor expansion of $k_1 = f(x,y)$ is just $f(x,y)$.
+                The Taylor expansion of $k_2$ can be found as follows.
+                \begin{align*}
+                    k_2 &= f(x + \mu h, y + \mu h k_1) \\
+                    &= f(x + \mu h, y + \mu h f(x,y)) \\
+                    &= f(x,y) + f_x(x, y)(\mu h) + f_y(x,y)(\mu h f(x,y)) \\
+                        &+ \frac{1}{2}\p{f_{xx}(x,y) (\mu h)^2 + 2f_{xy}(x,y)(\mu^2 h^2 f(x,y))
+                        + f_{yy}(x,y)(\mu^2 h^2 f(x,y)^2} + O(h^3) \\
+                    &= f(x,y) + \mu \p{f_x(x,y) + f(x,y) f_y(x,y)} h \\
+                        &+\frac{1}{2} \mu^2 \p{f_{xx}(x,y) + 2 f(x,y) f_{xy}(x,y) + f(x,y)^2 f_{yy}(x,y)} h^2
+                        + O(h^3) \\
+                \end{align*}
+                Now the Taylor expansion of $\Phi(x, y; h)$ can be expressed as follows.
+                Note that moving forward all values or derivatives of $f$ will be
+                evaluated at $(x,y)$.
+                Thus $f = f(x,y)$, $f_x = f_x(x,y)$, $f_y = f_y(x,y)$, and so on.
+                \begin{align*}
+                    \Phi(x,y;h) &= \alpha_1 k_1 + \alpha_2 k_2 \\
+                    &= \alpha_1 f + \alpha_2 \p{f + \mu \p{f_x + f f_y} h +
+                        \frac{1}{2} \mu^2 \p{f_{xx} + f f_{xy} + f^2 f_{yy}} h^2 + O(h^3)} \\
+                    &= (\alpha_1 + \alpha_2) f + \mu \alpha_2 \p{f_x + f f_y} h + 
+                        \frac{1}{2} \alpha_2 \mu^2 \p{f_{xx} + f f_{xy} + f^2 f_{yy}} h^2 + O(h^3)
+                \end{align*}
+
+                Now that the Taylor expansion of $\Phi(x, y; h)$ has been found
+                the Taylor expansion of $\frac{1}{h}\p{y(x + h) - y(x))}$ must be
+                found and put in terms of $f$.
+                \begin{align*}
+                    
+                \end{align*}
+            \item[(b)]
+            \item[(c)]
+        \end{itemize}
 \end{enumerate}
 \end{document}
