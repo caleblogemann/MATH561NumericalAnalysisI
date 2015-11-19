@@ -1,8 +1,9 @@
 \documentclass[11pt]{article}
-\usepackage[letterpaper]{geometry}
+\usepackage[letterpaper, margin = .75in]{geometry}
 \usepackage{MATH561}
 \usepackage{SetTheory}
 \usepackage{Derivative}
+\usepackage{Vector}
 \allowdisplaybreaks
 
 \begin{document}
@@ -12,8 +13,8 @@ Homework 4
 }}
 
 \begin{enumerate}
-    \item[\#1]
-        \begin{itemize}
+    \item[\#1] % Done
+        \begin{enumerate}
             \item[(a)]
                 Determine the principle error function of the general explicit
                 two-stage Runge-Kutta method.
@@ -63,17 +64,263 @@ Homework 4
                     &= \alpha_1 f + \alpha_2 \p{f + \mu \p{f_x + f f_y} h +
                         \frac{1}{2} \mu^2 \p{f_{xx} + f f_{xy} + f^2 f_{yy}} h^2 + O(h^3)} \\
                     &= (\alpha_1 + \alpha_2) f + \mu \alpha_2 \p{f_x + f f_y} h + 
-                        \frac{1}{2} \alpha_2 \mu^2 \p{f_{xx} + f f_{xy} + f^2 f_{yy}} h^2 + O(h^3)
+                        \frac{1}{2} \alpha_2 \mu^2 \p{f_{xx} + 2f f_{xy} + f^2 f_{yy}} h^2 + O(h^3)
                 \end{align*}
 
                 Now that the Taylor expansion of $\Phi(x, y; h)$ has been found
                 the Taylor expansion of $\frac{1}{h}\p{y(x + h) - y(x))}$ must be
                 found and put in terms of $f$.
                 \begin{align*}
-                    
+                    y(x + h) &= y(x) + h y'(x) + \frac{h^2}{2} y''(x) + \frac{h^3}{6} y'''(x) + O(h^4) \\
+                    \frac{1}{h}\p{y(x + h) - y(x))} &= y'(x) + \frac{h}{2} y''(x) + \frac{h^2}{6} y'''(x) + O(h^3) \\
+                    \intertext{Now note that $y'(x) = f(x,y)$, and the other derivatives of $y$ can be put in terms of $f$ as well.}
+                    y''(x) &= f_x(x, y) f_y(x,y) y'(x) = f_x(x,y) + f_y(x,y) f(x,y) = f_x + f_y f \\
+                    y'''(x) &= f_{xx} + f_{xy} f + f_y (f_x + f_y f) + f(f_{yx} + f_{yy} f) \\
+                            &= f_{xx} + 2 f f_{xy} + f_x f_y + f f_y^2 + f^2 f_{yy}
+                    \intertext{Therefore}
+                    \frac{1}{h}\p{y(x + h) - y(x))} &= f + \frac{h}{2} \p{f_x + f_y f}
+                        + \frac{h^2}{6}\p{f_{xx} + 2 f f_{xy} + f_x f_y + f f_y^2 + f^2 f_{yy}} + O(h^3)
                 \end{align*}
+
+                Finally the Taylor expansion of the local truncation error can be examined.
+                \begin{align*}
+                    T(x, y; h) &= (\alpha_1 + \alpha_2) f + \mu \alpha_2 \p{f_x + f f_y} h + 
+                        \frac{1}{2} \alpha_2 \mu^2 \p{f_{xx} + 2 f f_{xy} + f^2 f_{yy}} h^2 \\
+                        &-\p{f + \frac{h}{2} \p{f_x + f_y f}
+                        + \frac{h^2}{6}\p{f_{xx} + 2 f f_{xy} + f_x f_y + f f_y^2 + f^2 f_{yy}}} + O(h^3) \\
+                    &= (\alpha_1 + \alpha_2 - 1) f + \p{\mu \alpha_2 - \frac{1}{2}} \p{f_x + f f_y} h \\
+                        &+ \p{\p{\frac{1}{2} \alpha_2 \mu^2 - \frac{1}{6}}\p{f_{xx} + 2 f f_{xy} + f^2 f_{yy}}
+                        -\frac{1}{6}\p{f_x f_y + f f_y^2}} h^2 + O(h^3) \\
+                \end{align*}
+
+                For any general two-stage Runge-Kutta Method,
+                $(\alpha_1 + \alpha_2 - 1) = 0$ and
+                $\p{\mu \alpha_2 - \frac{1}{2}} = 0$.
+                This implies that $\mu = \frac{1}{2 \alpha_2}$.
+                Therefore the principle error function for any general
+                two-stage Runge-Kutta method is
+                \[
+                    \tau(x,y) = \p{\frac{1}{8 \alpha_2}
+                        -\frac{1}{6}}\p{f_{xx} + 2 f f_{xy} + f^2 f_{yy}}
+                        -\frac{1}{6}\p{f_x f_y + f f_y^2}
+                \]
+
             \item[(b)]
+                Compare the local accuracy of the modified Euler method with
+                that of Heun's method.
+
+                For this specific ordinary differential equation,
+                $f(x, y) = y^{\lambda}$.
+                Thus
+                \begin{align*}
+                    f_x &= 0 \\
+                    f_{xx} &= 0 \\
+                    f_{xy} &= 0 \\
+                    f_{y} &= \lambda y^{\lambda - 1} \\
+                    f_{yy} &= \p{\lambda^2 - \lambda} y^{\lambda - 2}
+                \end{align*}
+                
+
+                Therefore the principle error function becomes
+                \begin{align*}
+                    \tau(x,y) &= \p{\frac{1}{8 \alpha_2}
+                        -\frac{1}{6}}\p{y^{2\lambda} \p{\lambda^2 - \lambda}y^{\lambda - 2}}
+                        -\frac{1}{6}\p{y^{\lambda} \lambda^2 y^{2\lambda - 2}} \\
+                    &= \p{\frac{1}{8 \alpha_2}
+                        -\frac{1}{6}}\p{\p{\lambda^2 - \lambda} y^{3\lambda - 2}}
+                        -\frac{1}{6}\p{\lambda^2 y^{3\lambda - 2}} \\
+                    &= \p{\p{\frac{1}{8 \alpha_2}
+                        -\frac{1}{6}}\p{\lambda^2 - \lambda} - \frac{1}{6} \lambda^2} y^{3\lambda - 2}
+                \end{align*}
+
+                For the improved Euler method, $\alpha_2 = 1$.
+                Therefore the principle error function for the Euler method, $\tau_E$ is
+                \begin{align*}
+                    \tau_E(x, y) &= \p{\p{\frac{1}{8}-\frac{1}{6}}\p{\lambda^2 - \lambda} - \frac{1}{6} \lambda^2} y^{3\lambda - 2} \\
+                    &= -\frac{1}{24}\p{5\lambda^2 - \lambda} y^{3\lambda - 2} \\
+                \end{align*}
+
+                For Heun's method, $\alpha_2 = \frac{1}{2}$.
+                Therefore the principle error function for Heun's method, $\tau_H$ is
+                \begin{align*}
+                    \tau_H(x,y) &= \p{\p{\frac{1}{4}-\frac{1}{6}}\p{\lambda^2 - \lambda} - \frac{1}{6} \lambda^2} y^{3\lambda - 2} \\
+                                &= -\frac{1}{12}\p{\lambda^2 + \lambda} y^{3\lambda - 2}
+                \end{align*}
+
+                For what values of $\lambda$ is the magnitude of the principle
+                error function less Euler's method than Heun's method.
+                For what values of $\lambda$ is $\abs{\tau_E} < \abs{\tau_H}$
+                \begin{align*}
+                    \abs{\tau_E(x,y)} &< \abs{\tau_H(x,y)} \\
+                    \abs{-\frac{1}{24}\p{5\lambda^2 - \lambda} y^{3\lambda - 2}} &< \abs{-\frac{1}{12}\p{\lambda^2 + \lambda} y^{3\lambda - 2}} \\
+                    \frac{1}{24}\abs{5\lambda^2 - \lambda} &< \frac{1}{12}\abs{\lambda^2 + \lambda} \\
+                    \abs{5\lambda^2 - \lambda} &< 2\abs{\lambda^2 + \lambda} \\
+                    \abs{\lambda\p{5\lambda - 1}} &< \abs{\lambda\p{2\lambda + 2}} \\
+                \end{align*}
+                Clearly $\abs{\lambda\p{5\lambda - 1}} = \abs{\lambda\p{2\lambda + 2}}$,
+                when $\lambda = 0$.
+                It is also equal when $\p{5\lambda - 1} = \p{2\lambda + 2}$,
+                which implies that $\lambda = 1$.
+                These are the only two points of intersection.
+                When $\lambda = 2$, $\abs{\lambda\p{5\lambda - 1}} > \abs{\lambda\p{2\lambda + 2}}$
+                and when $\lambda = \frac{1}{2}$, $\abs{\lambda\p{5\lambda - 1}} < \abs{\lambda\p{2\lambda + 2}}$.
+                Therefore $\abs{\tau_E(x,y)} < \abs{\tau_H(x,y)}$ on $\lambda \in (0, 1)$, and
+                $\abs{\tau_H(x,y)} < \abs{\tau_E(x,y)}$ on $\lambda \in (1, \infty)$.
+
             \item[(c)]
-        \end{itemize}
+                Determine an interval of $\lambda$ such that for each
+                $\lambda$ in this interval there exists a two-stage explicit
+                Runge-Kutta method of order $p = 3$ having parameters
+                $0 < \alpha_1 < 1$, $0 < \alpha_2 < 1$ and $0 < \mu < 1$.
+
+                In order for a two stage explicit Runge-Kutta method to have
+                order $p = 3$, the principle error function, $\tau(x,y)$, must
+                be zero.
+
+                We have previously determined that $\alpha_1 = 1 - \alpha_2$
+                and $\mu = \frac{1}{2\alpha_2}$.
+                Therefore for $0 < \alpha_1 < 1$, then $0 < \alpha_2 < 1$.
+                Also for $0 < \mu < 1$, then $0 < \frac{1}{2\alpha_2} < 1$
+                which implies that $\frac{1}{2} < \alpha_2 < \infty$.
+                Therefore if $\frac{1}{2} < \alpha_2 < 1$, all three conditions
+                will be met.
+
+                In order for $\tau(x,y) = 0$,
+                \begin{align*}
+                    0 &= \p{\frac{1}{8 \alpha_2}-\frac{1}{6}}\p{\lambda^2 - \lambda} - \frac{1}{6} \lambda^2 \\
+                    0 &= \p{\frac{1}{8 \alpha_2} -\frac{1}{3}}\lambda^2 - \p{\frac{1}{8 \alpha_2} -\frac{1}{6}}\lambda \\
+                    0 &= \p{3 - 8\alpha_2} \lambda - 3 + 4\alpha_2 \\
+                    \frac{3 - 4\alpha_2}{3 - 8\alpha_2} &= \lambda \\
+                \end{align*}
+                If $\frac{1}{2} < \alpha_2 < 1$, then $-1 < \lambda < \frac{1}{5}$.
+                Since $\lambda > 0$, then for $0 < \lambda < \frac{1}{5}$ there exists
+                an explicit two-stage Runge-Kutta method with order $p=3$ and with parameters
+                between 0 and 1.
+        \end{enumerate}
+
+    \item[\#2] % Done
+        Let $\v{f}(x,\v{y})$ satisfy a Lipschitz condition in $\v{y}$ on
+        $\br{a,b} \times \RR^d$, with Lipschitz constant $L$.
+        \begin{enumerate}
+            \item[(a)] % Done
+                Show that the increment function $\v{\Phi}$ of the second order
+                Runge-Kutta method
+                \begin{align*}
+                    \v{k}_1 &= \v{f}(x, \v{y}) \\
+                    \v{k}_2 &= \v{f}(x + h, \v{y} + h\v{k}_1) \\
+                    \v{\Phi}(x, \v{y}; h) &= \frac{1}{2}(\v{k}_1 + \v{k}_2)
+                \end{align*}
+                also satisfies a Lipschitz condition whenever $x + h \in \br{a, b}$
+                and determine a respective Lipschitz constant $M$.
+
+                To show that $\v{\Phi}(x,\v{y}; h)$ satisfies a Lipschitz
+                condition the value of $\norm{\v{\Phi}(x,\v{y}; h) - \v{\Phi}(x,\v{y}^*; h)}$
+                must be shown to be bounded by a multiple of $\norm{y - y^*}$.
+                For notational simplicity, I will define the following values
+                \begin{align*}
+                    \v{k}_1^* &= \v{f}(x, \v{y}^*) \\
+                    \v{k}_2^* &= \v{f}(x + h, \v{y}^* + h\v{k}_1^*) \\
+                    \v{\Phi} &= \v{\Phi}(x, \v{y}; h) \\
+                    \v{\Phi}^* &= \v{\Phi}(x, \v{y}^*; h)
+                \end{align*}
+
+                Then
+                \begin{align*}
+                    \norm{\v{\Phi} - \v{\Phi}^*} &= \frac{1}{2}\norm{\v{k}_1 + \v{k}_2 - \v{k}_1^* - \v{k}_2^*} \\
+                    &\le \frac{1}{2}\p{\norm{\v{k}_1 - \v{k}_1^*} + \norm{\v{k}_2 - \v{k}_2^*}}
+                    \intertext{Now consider $\norm{\v{k}_1 - \v{k}_1^*}$}
+                    \norm{\v{k}_1 - \v{k}_1^*} &= \norm{\v{f}(x, \v{y}) - \v{f}(x, \v{y}^*)}
+                    \intertext{Since $f$ satisfies the Lipschitz condition}
+                    \norm{\v{k}_1 - \v{k}_1^*} &\le L\norm{\v{y} - \v{y}^*}
+                    \intertext{Next consider $\norm{\v{k}_2 - \v{k}_2^*}$}
+                    \norm{\v{k}_2 - \v{k}_2^*} &= \norm{\v{f}(x + h, \v{y} + h\v{k}_1) - \v{f}(x + h, \v{y}^* + h\v{k}_1^*)}
+                    \intertext{Since $f$ satisfies the Lipschitz condition}
+                    \norm{\v{k}_2 - \v{k}_2^*} &\le L \norm{\v{y} + h\v{k}_1 - \v{y}^* - h\v{k}_1^*} \\
+                    \norm{\v{k}_2 - \v{k}_2^*} &\le L \p{\norm{\v{y} - \v{y}^*} + h\norm{\v{k}_1 - \v{k}_1^*}}
+                    \intertext{We have already shown that $\norm{\v{k}_1 - \v{k}_1^*} \le L\norm{\v{y} - \v{y}^*}$}
+                    \norm{\v{k}_2 - \v{k}_2^*} &\le \p{L + hL^2} \norm{\v{y} - \v{y}^*}
+                    \intertext{Therefore}
+                    \norm{\v{\Phi} - \v{\Phi}^*} &\le \p{L + \frac{h}{2}L^2} \norm{\v{y} - \v{y}^*}
+                \end{align*}
+                Therefore $\v{\Phi}$ satisfies a Lipschitz condition and has
+                Lipschitz constant, $M = L + \frac{h}{2}L^2$.
+
+            \item[(b)] % Done
+                Show that the classical fourth order Runge-Kutta method
+                satisifies a Lipschitz condition.
+                \begin{align*}
+                    \v{k}_1 &= \v{f}(x,\v{y}) \\
+                    \v{k}_2 &= \v{f}(x + \frac{1}{2}h,\v{y} + \frac{1}{2}h\v{k}_1) \\
+                    \v{k}_3 &= \v{f}(x + \frac{1}{2}h,\v{y} + \frac{1}{2}h\v{k}_2) \\
+                    \v{k}_4 &= \v{f}(x + h,\v{y} + h\v{k}_3) \\
+                    \v{\Phi}(x,\v{y}; h) &= \frac{1}{6}\v{k}_1 + \frac{1}{3}\v{k}_2 + \frac{1}{3}\v{k}_3 + \frac{1}{6}\v{k}_4
+                \end{align*}
+
+                \begin{align*}
+                    \norm{\v{\Phi} - \v{\Phi}^*} &\le \frac{1}{6}\norm{\v{k}_1 - \v{k}_1^*}
+                        + \frac{1}{3}\norm{\v{k}_2 - \v{k}_2^*} + \frac{1}{3}\norm{\v{k}_3 - \v{k}_3^*}
+                        + \frac{1}{6}\norm{\v{k}_4 - \v{k}_4^*}
+                    \intertext{Now consider each of these norms individually}
+                    \norm{\v{k}_1 - \v{k}_1^*} &= \norm{\v{f}(x,\v{y}) - \v{f}(x,\v{y}^*)} \\
+                    &\le L\norm{\v{y} - \v{y}^*} \\
+                    \norm{\v{k}_2 - \v{k}_2^*} &= \norm{\v{f}(x + \frac{1}{2}h,\v{y} + \frac{1}{2}h\v{k}_1) - \v{f}(x + \frac{1}{2}h,\v{y}^* + \frac{1}{2}h \v{k}_1^*)} \\
+                    &\le L\norm{\v{y} + \frac{1}{2}h\v{k}_1 - \v{y}^* - \frac{1}{2}h\v{k}_1^*} \\
+                    &\le L\norm{\v{y} - \v{y}^*} + \frac{1}{2}h L \norm{\v{k}_1 - \v{k}_1^*} \\
+                    &\le (L + \frac{1}{2}hL^2)\norm{\v{y} - \v{y}^*} \\
+                    \norm{\v{k}_3 - \v{k}_3^*} &= \norm{\v{f}(x + \frac{1}{2}h,\v{y} + \frac{1}{2}h\v{k}_2) - \v{f}(x + \frac{1}{2}h,\v{y}^* + \frac{1}{2}h\v{k}_2^*)} \\
+                    &\le L\norm{\v{y} + \frac{1}{2}h\v{k}_2 - \v{y}^* - \frac{1}{2}h\v{k}_2^*} \\
+                    &\le L\norm{\v{y} - \v{y}^*} + \frac{1}{2}hL\norm{\v{k}_2 - \v{k}_2^*} \\
+                    &\le \p{L + \frac{1}{2}hL^2 + \frac{1}{4}h^2L^3}\norm{\v{y} - \v{y}^*} \\
+                    \norm{\v{k}_4 - \v{k}_4^*} &= \norm{\v{f}(x + h,\v{y} + h\v{k}_3) - \v{f}(x + h,\v{y}^* + h\v{k}_3^*)} \\
+                    &\le L \norm{\v{y} + h\v{k}_3 - \v{y}^* - h\v{k}_3^*} \\
+                    &\le L \norm{\v{y} - \v{y}} + hL\norm{\v{k}_3 - \v{k}_3^*} \\
+                    &\le L \norm{\v{y} - \v{y}^*} + \p{hL^2 + \frac{1}{2}h^2L^3 + \frac{1}{4}h^3L^4}\norm{\v{y} - \v{y}^*} \\
+                    &= \p{L + hL^2 + \frac{1}{2}h^2L^3 + \frac{1}{4}h^3L^4}\norm{\v{y} - \v{y}^*} \\
+                    \intertext{Let $M_1 = L$, $M_2 = L + \frac{1}{2}hL^2$,
+                        $M_3 = L + \frac{1}{2}hL^2 + \frac{1}{4}h^2L^3$ and
+                        $M_4 = L + hL^2 + \frac{1}{2}h^2L^3 + \frac{1}{4}h^3L^4$.
+                        Then}
+                    \norm{\v{\Phi} - \v{\Phi}^*} &\le \p{\frac{1}{6}M_1 + \frac{1}{3}M_2 + \frac{1}{3}M_3 + \frac{1}{6}M_4}\norm{\v{y} - \v{y}^*}
+                \end{align*}
+                Thus $\v{\Phi}$ does satisfy a Lipschitz condition and has a Lipschitz constant of
+                $M = \frac{1}{6}M_1 + \frac{1}{3}M_2 + \frac{1}{3}M_3 + \frac{1}{6}M_4$.
+
+            \item[(c)] % Done
+                Show that $\v{\Phi}$ for a general implicit Runge-Kutta method
+                satisfies a Lipschitz condition.
+
+                For a general implicit Runge-Kutta method,
+                $\v{\Phi}(x,\v{y}; h) =  \sum{s=1}{r}{\alpha_s \v{k}_s}$, where
+                $\v{k}_s = f(x + \mu_s h, \v{y} + h\sum{j=1}{r}{\lambda_{sj} \v{k}_j})$.
+                I will continue to use the previously established notation.
+                \begin{align*}
+                    \norm{\v{\Phi} - \v{\Phi}^*} &= \norm{\sum{s=1}{r}{\alpha_s \v{k}_s} - \sum{s=1}{r}{\alpha_s \v{k}_s^*}} \\
+                    &\le \sum{s=1}{r}{\alpha_s \norm{\v{k}_s - \v{k}_s^*}}
+                    \intertext{Now consider a single value of $\norm{\v{k}_s - \v{k}_s^*}$}
+                    \norm{\v{k}_s - \v{k}_s^*} &= \norm{f(x + \mu_s h, \v{y} + h\sum{j=1}{r}{\lambda_{sj} \v{k}_j}) - f(x + \mu_s h, \v{y}^* + h\sum{j=1}{r}{\lambda_{sj} \v{k}_j^*})}
+                    \intertext{Since $f$ satisfies a Lipschitz condition}
+                    \norm{\v{k}_s - \v{k}_s^*} &\le L \norm{\v{y} + h\sum{j=1}{r}{\lambda_{sj} \v{k}_j} - \v{y}^* - h\sum{j=1}{r}{\lambda_{sj} \v{k}_j^*}} \\
+                    &\le L \norm{\v{y} - \v{y}^*} + hL \norm{\sum{j=1}{r}{\lambda_{sj} \v{k}_j} -\sum{j=1}{r}{\lambda_{sj} \v{k}_j^*}}
+                    \intertext{Let $\Gamma$ be the max of $\lambda_{sj}$ for $s,j = 0, \ldots, r$}
+                    \norm{\v{k}_s - \v{k}_s^*} &\le L \norm{\v{y} - \v{y}^*} + hL\Gamma \sum{j=1}{r}{\norm{\v{k}_j\v{k}_j^*}} \\
+                    \intertext{Summing both side from $s = 1$ to $r$ results in}
+                    \sum{s=1}{r}{\norm{\v{k}_s - \v{k}_s^*}} &\le sL \norm{\v{y} - \v{y}^*} + shL\Gamma \sum{j=1}{r}{\norm{\v{k}_j\v{k}_j^*}} \\
+                    \sum{s=1}{r}{\norm{\v{k}_s - \v{k}_s^*}} &\le \frac{sL}{1 - shL\Gamma} \norm{\v{y} - \v{y}^*}
+                    \intertext{Now consider $\norm{\v{\Phi} - \v{\Phi}^*}$, and let $A$ be the max of $\alpha_s$ for $s = 1, \ldots, n$}
+                    \norm{\v{\Phi} - \v{\Phi}^*} &\le A \sum{s=1}{r}{\norm{\v{k}_s - \v{k}_s^*}} \\
+                    &\le \frac{AsL}{1 - shL\Gamma} \norm{\v{y} - \v{y}^*}
+                \end{align*}
+                Therefore $\v{\Phi}$ does satisfy a Lipschitz condition and has
+                a Lipschitz constant of $\frac{AsL}{1 - shL\Gamma}$.
+        \end{enumerate}
+
+    \item[\#3]
+    \item[\#4]
+    \item[\#5]
+        \begin{enumerate}
+            \item[(a)]
+
+            \item[(b)]
+        \end{enumerate}
 \end{enumerate}
 \end{document}
