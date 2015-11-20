@@ -4,7 +4,9 @@
 \usepackage{SetTheory}
 \usepackage{Derivative}
 \usepackage{Vector}
+\usepackage{Complex}
 \allowdisplaybreaks
+
 
 \begin{document}
 \noindent \textbf{\Large{Caleb Logemann \\
@@ -24,7 +26,7 @@ Homework 4
                 \begin{align*}
                     k_1 &= f(x,y) \\
                     k_2 &= f(x + \mu h, y + \mu h k_1) \\
-                    \Phi(x, y; h) = \alpha_1 k_1 + \alpha_2 k_2
+                    \Phi(x, y; h) &= \alpha_1 k_1 + \alpha_2 k_2
                 \end{align*}
 
                 To find the priniciple error function, first the local
@@ -315,12 +317,247 @@ Homework 4
         \end{enumerate}
 
     \item[\#3]
+        Consider $y' = \lambda y$ on $[0, \infty)$ for complex $\lambda$ with
+        $\Re(\lambda) < 0$.
+        Let $\set{u_n}$ be the approximations of $\set{y(x_n)}$ obtained by
+        the classical fourth-order Runge-Kutta method with the step $h$ held
+        constant.
+        \begin{enumerate}
+            \item[(a)] % Done
+                Show that $y(x) \to 0$ as $x \to \infty$, for any initial
+                value $y_0$.
+
+                This ODE can be solved exactly for any initial condition $y_0$.
+                The exact solution is $y(x) = y_0 e^{\lambda x}$.
+                This is equivalent to $y(x) = y_0 e^{\Re{\lambda}x} e^{\Im{\lambda} i x}$.
+                For all $x$ and all $\lambda$, $\abs{e^{\Im{\lambda} i x}} = 1$.
+                Also since $\Re(\lambda) < 0$, $e^{\Re{\lambda}x} \to 0$ as $x \to \infty$,
+                then $y(x) \to 0$ as $x \to \infty$.
+
+            \item[(b)]
+                Under what condition on $h$ can we assert that $u_n \to 0$ as
+                $n \to \infty$?
+                In particular what is the condition if $\lambda$ is real.
+
+                To determine if $u_n \to 0$ as $n \to \infty$, the function $\phi(x,y;h)$
+                must be considered, because $u_n = \phi(x,y;h) u_{n-1}$.
+                That is if $\abs{\phi(x,y;h)} < 1$, then $u_n \to 0$ when
+                $n \to \infty$.
+                \begin{align*}
+                    \phi(h\lambda)y &= y + h\Phi(x,y;h) \\
+                    \Phi(x,y;h) &= \frac{1}{6} k_1 + \frac{1}{3}k_2 + \frac{1}{3}k_3 + \frac{1}{6}k_4 \\
+                    k_1 &= f(x,y) \\
+                        &= \lambda y \\
+                    k_2 &= f(x + \frac{1}{2}h, y + \frac{1}{2}h k_1) \\
+                        &= \lambda(y + \frac{1}{2}h \lambda y) \\
+                        &= \lambda y + \frac{1}{2} h \lambda^2 y \\
+                        &= (\lambda + \frac{1}{2} h \lambda^2) y \\
+                    k_3 &= f(x + \frac{1}{2}h, y + \frac{1}{2} h k_2) \\
+                        &= \lambda(y + \frac{1}{2} h k_2) \\
+                        &= \lambda(y + \frac{1}{2} h (\lambda y + \frac{1}{2} h \lambda^2 y)) \\
+                        &= \lambda y + \frac{1}{2} h \lambda^2 y + \frac{1}{4} h^2 \lambda^3 y \\
+                        &= (\lambda + \frac{1}{2} h \lambda^2 + \frac{1}{4} h^2 \lambda^3) y \\
+                    k_4 &= f(x + h, y + h k_3) \\
+                        &= \lambda(y + h (\lambda + \frac{1}{2} h \lambda^2 + \frac{1}{4} h^2 \lambda^3) y) \\
+                        &= (\lambda + h \lambda^2 + \frac{1}{2} h^2 \lambda^3 + \frac{1}{4} h^3 \lambda^4) y \\
+                    \Phi(x,y;h) &= \p{\frac{1}{6} \lambda + \frac{1}{3}(\lambda + \frac{1}{2} h \lambda^2) +
+                        \frac{1}{3}(\lambda + \frac{1}{2} h \lambda^2 + \frac{1}{4} h^2 \lambda^3) + 
+                        \frac{1}{6}(\lambda + h \lambda^2 + \frac{1}{2} h^2 \lambda^3 + \frac{1}{4} h^3 \lambda^4)} y \\
+                        &= \p{\lambda + \frac{1}{2} h \lambda^2 + \frac{1}{6} h^2 \lambda^3 + \frac{1}{24} h^3 \lambda^4} y \\
+                    \phi(h\lambda) &= 1 + h\lambda + \frac{1}{2} h^2 \lambda^2 + \frac{1}{6} h^3 \lambda^3 + \frac{1}{24} h^4 \lambda^4
+                    \phi(z) &= 1 + z + \frac{1}{2} z^2 + \frac{1}{6} z^3 + \frac{1}{24} z^4
+                \end{align*}
+                This in order for $\abs{\phi(z)} < 1$,
+                $\abs{1 + z + \frac{1}{2} z^2 + \frac{1}{6} z^3 + \frac{1}{24} z^4} < 1$
+                This cannot be solved exactly easily.
+                Using Mathematica is can be found that if $-2.7859 < z < 0$, then $\abs{\phi(z)} < 1$
+                Therefore for $u_n \to 0$ as $n \to \infty$, $0 < h < -2.7859/\lambda$.
+
+            \item[(c)]
+                What is the analogous result for Euler's method.
+
+                For Euler's method
+                \begin{align*}
+                    \Phi(x,y;h) &= f(x,y) \\
+                    &= \lambda y
+                    \phi(h\lambda) &= 1 + h\lambda \\
+                    \phi(z) & = 1 + z \\
+                \end{align*}
+                Thus in order for $\abs{\phi(z)} < 1$, $-2 < z < 0$.
+                Therefore for $u_n \to 0$ as $n \to \infty$, $0 < h < -2/\lambda$.
+
+            \item[(d)]
+                Generalize to a system $\v{y}' = A\v{y}$, where $A$ is a
+                constant matrix with eigenvalues with negative real parts.
+
+                For this generalized system, the equations of $\phi(z)$ stay the
+                same, and we are considering $hA$ instead of $h\lambda$.
+                Also note that using recursion $u_n = \phi(hA)^n u_0$.
+                Therefore for $u_n \to 0$ as $n \to \infty$,
+                $\abs{\phi(hA)^n} \to 0$ as $n \to \infty$.
+                In order for the matrix $\abs{\phi(hA)^n}$ to converge to
+                the zero matrix, the spectral radius of $\phi(hA)$, $\rho(\phi(hA))$
+                must be less than one.
+                The spectral radius is the maximum of the absolute values of the eigenvalues.
+                Thus for $u_n \to \infty$ as $n \to \infty$, $\rho(\phi(hA)) < 1$.
+                Also it is known that since $\phi$ is a polynomial, $\rho(\phi(hA)) = \abs{\phi(h\rho(A))}$
+
+                For the classical fourth-order Runge-Kutta method, 
+                we have already shown that $\abs{\phi(h\lambda)} < 1$ implies
+                that $0 < h < \frac{-2.7859}{\lambda}$.
+                Therefore for $\abs{\phi(h\rho(A))} < 1$, $0 < h < \frac{-2.7859}{\rho(A)}$.
+                Since for all eigenvalues, $\lambda_i$ of $A$, $\abs{\lambda_i} \le \rho(A)$,
+                this implies that $0 < h < \frac{-2.7859}{\lambda_i}$ for all eigenvalues
+                of $A$.
+
+                Similarly for Euler's method,
+                $0 < h < \frac{-2}{\rho(A)} < \frac{-2}{\lambda_i}$.
+                Thus the value of h is related to the spectral radius of $A$.
+
+        \end{enumerate}
+
     \item[\#4]
+        Consider the linear homogeneous system
+        \[
+            \v{y}' = A\v{y}\text{, }y \in \RR^d
+        \]
+        with constant coefficient matrix $A \in \RR^{d \times d}$
+        \begin{enumerate}
+            \item[(a)]
+                For Euler method applied to this system, determine $\phi(z)$ and
+                the principle error function.
+
+                We have previously determined in problem 3, that $\phi(z) = 1 + z$
+                for this method on this system.
+                In order to find the principe error function the local truncation
+                error must be computed.
+                The local truncation error is given by
+                $T(x,\v{y}; h) = \frac{1}{h}\p{\phi(hA) - e^{hA}} \v{y}$
+                \begin{align*}
+                    T(x,\v{y}; h) &= \frac{1}{h}\p{1 + hA - e^{hA}} \v{y}
+                    \intertext{Taking the Taylor expansion of $e^{hA}$}
+                    T(x,\v{y}; h) &= \frac{1}{h} \p{1 + hA - 1 - hA - \frac{1}{2} (hA)^2 - O((hA)^3)} \v{y} \\
+                                  &= \p{-\frac{1}{2} hA^2 - O(h^2)} \v{y}
+                    \intertext{Therefore Euler's method is of order 1 and has
+                    principle error function}
+                    \tau(x,y) &= -\frac{1}{2}A^2\v{y}
+                \end{align*}
+
+            \item[(b)]
+                Do the same for the classical fourth-order Runge-Kutta method.
+
+                We have previously shown in problem 3, that
+                $\phi(z) = 1 + z + \frac{1}{2}z^2 + \frac{1}{3!}z^3 + \frac{1}{4!}z^4$,
+                for this problem and the classical fourth-order Runge-Kutta's method.
+                Again to find the principle error function the local truncation error
+                must be computed.
+                \begin{align*}
+                    T(x,\v{y}; h) &= \frac{1}{h}\p{1 + hA + \frac{1}{2}(hA)^2 + \frac{1}{3!}(hA)^3 + \frac{1}{4!}(hA)^4 - e^{hA}} \v{y}
+                    \intertext{Taking the Taylor expansion of $e^{hA}$ and canceling terms results in}
+                    T(x,\v{y}; h) &= \frac{1}{h}\p{-\frac{1}{5!}h^5A^5 + O(h^6)}\v{y}
+                    &= \p{\frac{1}{5!}h^4A^5 + O(h^5)} \v{y}
+                    \intertext{Therefore the classical fourth-order Runge-Kutta method
+                        has order 4 and principle error function}
+                    \tau(x,\v{y}) &= \frac{1}{120} A^5 \v{y}
+                \end{align*}
+        \end{enumerate}
+
     \item[\#5]
         \begin{enumerate}
             \item[(a)]
+                I created a set of objects to represent different methods of
+                solving a system of ODEs
+                The most general object represents explicit one-step methods
+                and is able to apply to method to approximate the system with the function
+                solveSystem.m.
+                Look specifically as the functions solveSystem.m and phi.m to see the inner workings
+                of this system.
+                \lstinputlisting[language=Matlab]{../+NumericalAnalysis/+ODES/@explicitOneStepMethod/explicitOneStepMethod.m}
+                \lstinputlisting[language=Matlab]{../+NumericalAnalysis/+ODES/@explicitOneStepMethod/solveSystem.m}
+
+                I created another object to be able to represent any explicit Runge-Kutta method,
+                and implemented the $\Phi$ method.
+                \lstinputlisting[language=Matlab]{../+NumericalAnalysis/+ODES/@explicitRungeKuttaMethod/explicitRungeKuttaMethod.m}
+                \lstinputlisting[language=Matlab]{../+NumericalAnalysis/+ODES/@explicitRungeKuttaMethod/phi.m}
+
+                Lastly there are objects to actually represent Euler's method and the
+                classical fourth-order Runge-Kutta method.
+                \lstinputlisting[language=Matlab]{../+NumericalAnalysis/+ODES/@eulerMethod/eulerMethod.m}
+                \lstinputlisting[language=Matlab]{../+NumericalAnalysis/+ODES/@standardRK4Method/standardRK4Method.m}
 
             \item[(b)]
+                This is the script that actually uses these object to solve the system
+                \lstinputlisting[language=Matlab]{H04.m}
+                \begin{verbatim}
+eulerError =
+
+   0.669647499864682
+   0.433642339396205
+   0.294149701224462
+   0.203833950720079
+   0.142702928842803
+
+
+rkError =
+
+   1.0e-03 *
+
+   0.172958606434202
+   0.009918694490326
+   0.000715540503618
+   0.000057312979472
+   0.000004825933441
+
+
+eulerError =
+
+   1.0e+12 *
+
+   0.000000575152398
+   0.001922582741375
+   1.643413090818388
+   0.000084922547445
+   0.000000000000952
+
+
+rkError =
+
+   1.0e+24 *
+
+   0.000000065788346
+   1.537651043959767
+   0.553810514762947
+   0.000000000000000
+   0.000000000000000
+                \end{verbatim}
+
+                I learned from these examples that for stiff problems
+                even good numerical methods can become very unstable
+                if $h$ is not in the region of A-stabity.
+                In the stiff problem both methods have extremely large error.
+                It is interesting to note that the Runge-Kutta method
+                has much larger error for this stiff problem than
+                Euler's method.
+                This seems to indicate that when they are both
+                unstable the Runge-Kutta method is much more unstable.
+                However once method is unstable the magnitude of the
+                error is not really important.
+                The Runge-Kutta method has a larger region of A-stability.
+                You can see that the error drops to almost 0, once
+                h enters the region of A-stability.
+                A much smaller h is required for this to happen
+                with Euler's method.
+
+                Also for the nonstiff problem, not how much smaller the
+                error is for Runge-Kuttas method.
+                It is also possible to see the error in Runge-Kutta's
+                method is divided by 64 as $h$ is cut in
+                half.
+                For Euler's method the error does not even decrease
+                by half as $h$ is cut in half.
+                This indicates that Runge-Kutta's method is of order 4
+                and Euler's method is of order 1, as we previously have
+                shown.
         \end{enumerate}
 \end{enumerate}
 \end{document}
