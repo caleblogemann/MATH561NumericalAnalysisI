@@ -1,0 +1,70 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper, margin = .75in]{geometry}
+\usepackage{MATH561}
+\usepackage{SetTheory}
+\usepackage{Derivative}
+\usepackage{Vector}
+\usepackage{Complex}
+\allowdisplaybreaks
+
+
+\begin{document}
+\noindent \textbf{\Large{Caleb Logemann \\
+MATH 561 Numerical Analysis I \\
+Homework 5
+}}
+
+\begin{enumerate}
+    \item % #1
+        \begin{enumerate}
+            \item[(a)]
+                Consider an explicit multistep method of the form
+                \[
+                    u_{n+2} + \alpha u_{n+1} - \alpha u_{n-1} - u_{n-2} =
+                    h\p{\beta f_{n+1} + \gamma f_n + \beta f_{n-1}}
+                \]
+                Show that the parameters $\alpha, \beta, \gamma$ can be
+                chosen uniquely so that the method has order $p = 6$.
+
+                % Hint: to preserve symmetry and algebraic symmplicity define
+                % the associated linear functional on the interval [-2, 2] instead
+                % of [0, 4] as in Section 6.1.2
+
+            \item[(b)]
+                Discuss the stability properties of the method obtained in (a).
+
+                % Outline: use the root condition, examine the roots of \alpha(t)
+        \end{enumerate}
+
+    \item % #2
+        Construct a pair of four-step methods, one explicit, the other implicit,
+        both have $\alpha(\xi) = \xi^4 - \xi^3$ and order $p = 4$,
+        but global error constants that are equal in magnitude but opposite in
+        sign.
+
+        % See example in Gautschi page 437
+
+    \item % #3
+        Consider the model problem
+        \[
+            \d{y}{x} = -\omega\p{y - a(x)}, 0 \le x \le 1, y(0) = y_0
+        \]
+        where $\omega > 0$ and (i) $a(x) = x^2$, $y_0 = 0$; and (ii) $a(x) = e^x$, $y_0 = 1$
+        \begin{enumerate}
+            \item[(a)]
+                In each of the cases (i) and (ii), solve the differential
+                equation exactly.
+
+                For case (i) this differential equation can be rewritten
+
+            \item[(b)]
+                In each of the cases (i) and (ii), apply the kth-order Adams-Bashford method and
+                kth-order Adams predictor/corrector method, for $k = 4$, using exact starting values and
+                step lengths h = 1/20 , 1/40 , 1/80 , 1/160. 
+                Plot the exact values $y_n$ and numerical solution $u_n$, and 
+                check the accuracy of the methods.
+                Try $\omega = 1, 10, 50$.
+                Summarize your results.
+        \end{enumerate}
+\end{enumerate}
+\end{document}
