@@ -55,7 +55,105 @@ Homework 5
                 In each of the cases (i) and (ii), solve the differential
                 equation exactly.
 
-                For case (i) this differential equation can be rewritten
+                For case (i) this differential equation can be rewritten as
+                \[
+                    \d{y}{x} = -\omega\p{y - x^2}
+                \]
+                for $0 \le x \le 1$ and $y(0) = 0$.
+                This is equivalent to 
+                \[
+                    \omega\p{y - x^2} + \d{y}{x} = 0
+                \]
+                This is not an exact differential equation but it can be made
+                into an exact differential equation by multiplying by an
+                integrating factor, $\mu(x)$.
+
+                \begin{align*}
+                    \mu(x)\omega\p{y - x^2} + \mu(x)\d{y}{x} &= 0 \\
+                    \pd{\mu(x)\omega\p{y - x^2}}{y} &= \mu(x) \omega \\
+                    \pd{\mu(x)}{x} &= \mu'(x) \\
+                    \mu(x) \omega &= \d{\mu}{x} \\
+                    \mu(x) &= e^{\omega x}
+                    \intertext{This results in the equivalent exact differential equation}
+                    e^{\omega x} \omega \p{y - x^2} + e^{\omega x} \d{y}{x} &= 0
+                    \intertext{To solve this type of equation a function
+                        $\Psi(x, y)$ must be found such that}
+                    \pd{\Psi(x, y)}{x} &= e^{\omega x} \omega \p{y - x^2}
+                    \intertext{and}
+                    \pd{\Psi(x, y)}{y} &= e^{\omega x}
+                    \intertext{Solving for $\Psi$}
+                    \Psi(x,y) &= \intt{e^{\omega x} \omega \p{y - x^2}}{x} \\
+                              &= \intt{\omega y e^{\omega x}}{x} - \intt{\omega e^{\omega x} x^2}{x} + h(y) \\
+                              &= y e^{\omega x} - e^{\omega x}\p{\frac{\omega^2 x^2 - 2 \omega x + 2}{\omega^2}} + h(y) \\
+                    \pd{\Psi(x,y)}{y} &= e^{\omega x} + h'(y) \\
+                    e^{\omega x} + h'(y) &= e^{\omega x} \\
+                    h(y) &= C \\
+                    \Psi(x,y) &= y e^{\omega x} - e^{\omega x}\p{\frac{\omega^2 x^2 - 2 \omega x + 2}{\omega^2}} + C \\
+                \end{align*}
+                Now this exact differential equation is equivalent to the equation
+                \begin{align*}
+                    y e^{\omega x} - e^{\omega x}\p{\frac{\omega^2 x^2 - 2 \omega x + 2}{\omega^2}} &= C \\
+                    y e^{\omega x} &= e^{\omega x}\p{\frac{\omega^2 x^2 - 2 \omega x + 2}{\omega^2}} + C \\
+                    y(x) &= \frac{\omega^2 x^2 - 2 \omega x + 2}{\omega^2} + e^{-\omega x}C \\
+                    y(x) &= x^2 - \frac{2}{\omega} x + \frac{2}{\omega^2} + e^{-\omega x}C \\
+                \end{align*}
+
+                Now the initial conditions must be used to solve for $C$.
+                \begin{align*}
+                    y(0) &= \frac{2}{\omega^2} + C \\
+                    0 &= \frac{2}{\omega^2} + C \\
+                    C &= -\frac{2}{\omega^2}
+                \end{align*}
+
+                Therefore the exact solution to (i) is
+                \[
+                    y(x) = x^2 - \frac{2}{\omega} x + \frac{2}{\omega^2}\p{1 - e^{-\omega x}} \\
+                \]
+
+                For case (ii) this differential equation can be rewritten as
+                \[
+                    \d{y}{x} = -\omega\p{y - e^x}
+                \]
+                for $0 \le x \le 1$ and $y(0) = 1$.
+
+                The same integrating factor as in part (i) can be used
+                \begin{align*}
+                    \omega e^{\omega x}\p{y - e^x} + e^{\omega x}\d{y}{x} &= 0
+                    \intertext{To solve this type of equation a function
+                        $\Psi(x, y)$ must be found such that}
+                    \pd{\Psi(x, y)}{x} &= e^{\omega x} \omega \p{y - e^x}
+                    \intertext{and}
+                    \pd{\Psi(x, y)}{y} &= e^{\omega x}
+                    \intertext{Solving for $\Psi$}
+                    \Psi(x, y) &= \intt{e^{\omega x}}{y} \\
+                               &= y e^{\omega x} + h(x) \\
+                    \pd{\Psi(x,y)}{x} &= \omega y e^{\omega x} + h'(x) \\
+                    \omega y e^{\omega x} + h'(x) &= e^{\omega x} \omega \p{y - e^x} \\
+                    \omega y e^{\omega x} + h'(x) &= e^{\omega x} \omega y - e^{\omega x} \omega e^x \\
+                    h'(x) &=  - \omega e^{(\omega + 1) x} \\
+                    h(x) &= - \frac{\omega}{\omega + 1} e^{(\omega + 1) x} + C \\
+                    \Psi(x, y) &= y e^{\omega x} - \frac{\omega}{\omega + 1} e^{(\omega + 1) x} + C \\
+                \end{align*}
+                Now this exact differential equation is equivalent to the equation
+                \begin{align*}
+                    y e^{\omega x} - \frac{\omega}{\omega + 1} e^{(\omega + 1) x} &= C \\
+                    y e^{\omega x} &= \frac{\omega}{\omega + 1} e^{(\omega + 1) x} + C \\
+                    y(x) &= e^{-\omega x}\p{\frac{\omega}{\omega + 1} e^{(\omega + 1) x} + C} \\
+                    y(x) &= \frac{\omega}{\omega + 1} e^{x} + Ce^{-\omega x} \\
+                \end{align*}
+                Then the initial conditions can be used to solve for $C$.
+                \begin{align*}
+                    y(0) &= \frac{\omega}{\omega + 1} + C \\
+                    1 &= \frac{\omega}{\omega + 1} + C \\
+                    C &= 1 - \frac{\omega}{\omega + 1} \\
+                    C &= \frac{1}{\omega + 1}
+                \end{align*}
+
+                Thus the exact solution to this differential equation is
+                \begin{align*}
+                    y(x) &= \frac{\omega}{\omega + 1} e^{x} + \frac{1}{\omega + 1}e^{-\omega x} \\
+                    y(x) &= \frac{\omega e^x + e^{-\omega x}}{\omega + 1}\\
+                \end{align*}
 
             \item[(b)]
                 In each of the cases (i) and (ii), apply the kth-order Adams-Bashford method and
