@@ -15,7 +15,7 @@ Homework 5
 }}
 
 \begin{enumerate}
-    \item % #1
+    \item % #1 % Done
         \begin{enumerate}
             \item[(a)]
                 Consider an explicit multistep method of the form
@@ -301,6 +301,122 @@ Homework 5
                 check the accuracy of the methods.
                 Try $\omega = 1, 10, 50$.
                 Summarize your results.
+
+                First I created two functions to implement the
+                4 step Adams-Bashforth method and the 4 step Adams predictor corrector
+                method.
+                These functions are shown below.
+                \lstinputlisting[language=Matlab]{../+NumericalAnalysis/adamsBashforth4.m}
+                \lstinputlisting[language=Matlab]{../+NumericalAnalysis/adamsPredictorCorrector.m}
+
+                As the value of $\omega$ increases each of the cases become
+                more stiff, that is they become more susceptible to instability.
+                This is especially visible in the Adams-Bashforth method at $\omega = 50$.
+                It is interesting to note that the Adams Predictor Corrector method
+                experiences much less instability with the introduction of the
+                implicit correction step.
+                This can be seen as the Adams Predictor Corrector method
+                is still of the same magnitude as the actual solution.
+                The predictor corrector method oscillates around the actual solution
+                but does not have extremely large error like the
+                Adams-Bashforth method.
+
+                For $\omega = 1$, it is clear when examining the error that these
+                methods are of order $4$, as the error is decreasing by a
+                factor of 16 as the step size is cut in half.
+                These errors and ratios are shown below.
+                \begin{verbatim}
+ErrorAB =
+
+   1.0e-05 *
+
+    0.1472
+    0.0096
+    0.0006
+    0.0000
+    0.0000
+    0.0000
+
+
+ans =
+
+   15.2793
+   15.6750
+   15.8457
+   15.9249
+   15.9644
+
+
+ErrorPC =
+
+   1.0e-06 *
+
+    0.1395
+    0.0082
+    0.0005
+    0.0000
+    0.0000
+    0.0000
+
+
+ans =
+
+   17.0364
+   16.5952
+   16.3166
+   16.1630
+   16.0878
+
+
+ErrorAB =
+
+   1.0e-06 *
+
+    0.7470
+    0.0508
+    0.0033
+    0.0002
+    0.0000
+    0.0000
+
+
+ans =
+
+   14.7062
+   15.3715
+   15.6898
+   15.8452
+   15.9210
+
+
+ErrorPC =
+
+   1.0e-07 *
+
+    0.8152
+    0.0466
+    0.0028
+    0.0002
+    0.0000
+    0.0000
+
+
+ans =
+
+   17.4984
+   16.8734
+   16.4716
+   16.2270
+   15.9863
+                \end{verbatim}
+                Generally the predictor corrector method's error is decreasing
+                slightly more than by a factor of 16.
+                Also the overall error is an order of magnitude
+                less than the error for the regular Adams-Bashforth method.
+
+                A printout of the script and the error when $\omega = 50$ is
+                attached.
+
         \end{enumerate}
 \end{enumerate}
 \end{document}
