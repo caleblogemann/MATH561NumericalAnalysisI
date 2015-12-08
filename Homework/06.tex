@@ -1,0 +1,96 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper, margin = .75in]{geometry}
+\usepackage{MATH561}
+\usepackage{SetTheory}
+\usepackage{Derivative}
+\usepackage{Vector}
+\usepackage{Complex}
+\allowdisplaybreaks
+
+
+\begin{document}
+\noindent \textbf{\Large{Caleb Logemann \\
+MATH 561 Numerical Analysis I \\
+Final Assignment
+}}
+
+\begin{enumerate}
+    \item % #1 Done
+        Let $x_1, x_2, \ldots, x_n$, for $n > 1$, be machine numbers.
+        Their product can be computed by the alogirithm
+        \begin{align*}
+            p_1 &= x_1 \\
+            p_k &= fl(x_k p_{k-1}), k = 2, 3, \ldots, n
+        \end{align*}
+        \begin{enumerate}
+            \item[(a)]
+                Find an upper bound for the relative error in terms of the
+                machine precision $eps$ and $n$.
+
+                The relative error is given by
+                \[
+                    \frac{p_n - x_1x_2\cdots x_n}{x_1x_2\cdots x_n}
+                \]
+
+                First consider $p_k$.
+                \begin{align*}
+                    p_k &= fl(x_k p_{k-1}) \\
+                        &= x_k p_{k-1} (1 + \epsilon_k)
+                    \intertext{Where $\abs{\epsilon_k} < eps$, for $k = 1, \cdots, n$}
+                    &< x_k p_{k-1} (1 + eps)
+                    \intertext{Applying this recursively to $p_n$, we see that}
+                    p_n &< x_n p_{n-1} (1 + eps) \\
+                        &< x_n x_{n-1} p_{n-2} (1 + eps)^2 \\
+                        &< x_n x_{n-1} x_{n-2} p_{n-3} (1 + eps)^3 \\
+                        &\vdots \\
+                        &< x_n x_{n-1} \cdots x_1 (1 + eps)^{n-1}
+                \end{align*}
+
+                Therefore the relative error can be bounded as follows
+                \begin{align*}
+                    E &= \abs{\frac{p_n - x_1x_2\cdots x_n}{x_1x_2\cdots x_n}} \\
+                    &< \abs{\frac{x_n x_{n-1} \cdots x_1 (1 + eps)^{n-1} - x_1x_2\cdots x_n}{x_1x_2\cdots x_n}} \\
+                    &= \abs{\frac{x_1x_2\cdots x_n\p{(1 + eps)^{n-1} - 1}}{x_1x_2\cdots x_n}} \\
+                    &= (1 + eps)^{n-1} - 1 \\
+                \end{align*}
+                Therefore the upper bound for the relative error is
+                $E < (1 + eps)^{n-1} - 1$.
+
+            \item[(b)]
+                For any integer $r$ that satisfies $r \times eps < \frac{1}{10}$,
+                show that
+                \[
+                    (1 + eps)^r - 1 < 1.06 \times r \times eps
+                \]
+                Hence for $n$ not too large, simplify the answer given in (a).
+
+                % Use the Binomial Theorem
+                Using the Binomial Thereom, $(1 + eps)^r$ can be expanded.
+                \begin{align*}
+                    (1 + eps)^r - 1 &= \sum{i = 0}{r}{\binom{r}{i} 1^{r - i} eps^i} - 1 \\
+                    &= \sum{i = 1}{r}{\binom{r}{i} eps^i} \\
+                    &= r \cdot eps + \binom{r}{2} eps^2 + \binom{r}{3} eps^3 + \cdots + eps^r \\
+                    &= r \cdot eps + \frac{r(r-1)}{2} eps^2 + \frac{r(r-1)(r-2)}{3!} eps^3 + \cdots + eps^r \\
+                    &= r \cdot eps \p{1 + \frac{r-1}{2} eps + \frac{(r-1)(r-2)}{3!} eps^2 + \cdots + \frac{(r-1)(r-2)\cdots(1)}{r!} eps^{r-1}} \\
+                    \intertext{Since $r \times eps < \frac{1}{10}$, $(r-i) eps < \frac{1}{10}$ for any $0 < i < r$}
+                    &< r \cdot eps \p{1 + \frac{1}{2} \frac{1}{10} + \frac{1}{3!} \p{\frac{1}{10}}^2 + \cdots + \frac{1}{r!} \p{\frac{1}{10}}^{r-1}} \\
+                    &= r \cdot eps \sum{k=0}{r-1}{\frac{1}{k!} \p{\frac{1}{10}}^{k-1}} \\
+                    &= r \cdot eps \cdot 10 \sum{k=1}{r-1}{\frac{1}{k!} \p{\frac{1}{10}}^{k}}
+                    \intertext{This expression is certainly less than extending
+                        the sum to infinity because all of the terms are postive.
+                        Also this sum is the Taylor series for $e^x - 1$.}
+                    &< r \cdot eps \cdot 10 \sum{k=1}{\infty}{\frac{1}{k!} \p{\frac{1}{10}}^{k}} \\
+                    &= r \cdot eps \cdot 10 \p{e^{1/10} - 1} \\
+                    &\approx 1.05171 r \cdot eps \\
+                    &< 1.06 r \cdot eps
+                \end{align*}
+                This result can now be used to simplify the result of part (a).
+                Now if $n$ is not too large, then $\abs{E} < 1.06 (n-1)eps$.
+        \end{enumerate}
+
+    \item % #2
+    \item % #3
+    \item % #4
+    \item % #5
+\end{enumerate}
+\end{document}
