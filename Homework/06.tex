@@ -89,8 +89,64 @@ Final Assignment
         \end{enumerate}
 
     \item % #2
+
     \item % #3
+
     \item % #4
+        Let $a = x_0 < x_1 < \cdots < x_n = b$ be a partition of $[a, b]$.
+        Consider a function $f \in C^{\infty}[a, b]$.
+        \begin{enumerate}
+            \item[(a)]
+                Define what it means for a function $S$ to be a linear spline
+                that interpolates $f$ at all the points $x_i$ for
+                $i = 0, 1, \ldots, n$.
+                Give a formula for $S$ in terms of the point values of $f$.
+
+                In order to define the linear spline, I will first define a set of
+                linear basis functions.
+                Let $B_i$ for $i = 1, 2, \ldots, n-1$ be defined on $[a, b]$ as follows.
+                \begin{align*}
+                    B_i(x) = 
+                    \begin{cases}
+                        \frac{x - x_{i-1}}{x_i - x_{i-1}} & x_{i-1} \le x \le x_i \\
+                        \frac{x_{i+1} - x}{x_{i+1} - x_i} & x_i < x \le x_{i+1} \\
+                        0 & \text{otherwise}
+                    \end{cases}
+                \end{align*}
+                Also let $B_1$ and $B_n$ be defined as follows
+                \begin{align*}
+                    B_1(x) &=
+                    \begin{cases}
+                        \frac{x - x_{n-1}}{x_n - x_{n-1}}& a = x_{0} \le x \le x_1 \\
+                        0 & x > x_1
+                    \end{cases} \\
+                    B_n(x) &=
+                    \begin{cases}
+                        \frac{x_1 - x}{x_1 - x_0}  & x_{n-1} \le x \le x_n = b \\
+                        0 & x < x_{n-1}
+                    \end{cases}
+                \end{align*}
+
+                A linear spline on $[a, b]$ that interpolates $f$ on the
+                partition $\set{x_i}_{i=0}^{n}$ is a function $S(x)$ that is a
+                linear combination of the basis functions $B_i$ such that
+                $S(x_i) = f(x_i)$ for $i = 0, 1, \ldots, n$.
+
+                Thus a formula for $S(x)$ could be written as
+                $S(x) = \sum{i=0}{n}{f(x_i)B_i(x)}$.
+
+            \item[(b)]
+                Let $h = \max*_{0 \le i \le n-1}(x_{i+1} - x_i)$.
+                Derive an upper bound on $\abs{f(x) - S(x)}$ on $x \in [a, b]$.
+                Use this to prove that $\lim{h \to 0}{\abs{f(x) - S(x)}} = 0$
+                for $x \in [a, b]$ and state the rate of convergence.
+
+            \item[(c)]
+                Define what it means for $S$ to be a clamped cubic spline that
+                interpolates $f$ at all the points $x_i$, for $i = 0, 1, \ldots, n$.
+
+        \end{enumerate}
+
     \item % #5
 \end{enumerate}
 \end{document}
