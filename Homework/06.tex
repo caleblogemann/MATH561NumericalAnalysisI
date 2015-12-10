@@ -5,6 +5,7 @@
 \usepackage{Derivative}
 \usepackage{Vector}
 \usepackage{Complex}
+\usepackage{amsbsy}
 \allowdisplaybreaks
 
 
@@ -88,7 +89,7 @@ Final Assignment
                 Now if $n$ is not too large, then $\abs{E} < 1.06 (n-1)eps$.
         \end{enumerate}
 
-    \item % #2
+    \item % #2 Done
         \begin{enumerate}
             \item[(a)] % Done
                 Determine
@@ -163,39 +164,225 @@ Final Assignment
                     all $p \in \PP_n^a$.
                 \end{proof}
 
-            \item[(c)]
+            \item[(c)] % Done
                 Let $f$ be a positive function defined on $[a, b]$ and assume
                 \begin{align*}
                     \min*_{a \le x \le b} \abs{f(x)} &= m_0 \\
-                    \max*_{a \le x \le b} \abs{f^{(k)}(x)} &= M_k, k = 0, 1, 2
+                    \max*_{a \le x \le b} \abs{f^{(k)}(x)} &= M_k, k = 0, 1, 2 \ldots
                 \end{align*}
                 \begin{enumerate}
-                    \item[(c.1)]
+                    \item[(c.1)] % Done
                         Let $p_{n-1}(x)$ denote the polynomial of degree at most
                         $n - 1$ interpolating $f$ at the $n$ Chebyshev points on
                         $[a, b]$.
                         Estimate the maximum relative error
                         $r_n = \max*_{a \le x \le b} \abs{\frac{f(x) - p_{n-1}(x)}{f(x)}}$.
 
-                    \item[(c.2)]
+                        First from the error formula for an interpolating
+                        polynomial we know that
+                        \[
+                            f(x) - p_{n-1}(x) = \frac{f^{(n)}(\xi(x))}{n!}\prod{i=1}{n}{x - x_i}
+                        \]
+                        where $x_i$ for $i = 1, 2, \ldots, n$ are the
+                        Chebyshev nodes on $[a, b]$.
+                        By transforming to the interval $[-1, 1]$, a better
+                        approximation can be made.
+                        Let $x = \frac{b-a}{2}t + \frac{b + a}{2}$, then
+                        $x_i = \frac{b-a}{2}t_i + \frac{b + a}{2}$ where
+                        $t_i$ are the Chebyshev nodes on $[-1, 1]$.
+                        More specifically $t_i = \cos{\frac{2i-1}{2n}\pi}$.
+                        Now we note that
+                        \begin{align*}
+                            \prod{i=1}{n}{x - x_i} &= \prod{i=1}{n}{\frac{b-a}{2}t + \frac{b + a}{2} - \p{\frac{b-a}{2}t_i + \frac{b + a}{2}}} \\
+                            &= \prod{i=1}{n}{\frac{b-a}{2}t - \frac{b-a}{2}t_i} \\
+                            &= \p{\frac{b-a}{2}}^n\prod{i=1}{n}{t-t_i}
+                        \end{align*}
+                        Note that $\prod{i=1}{n}{t-t_i}$ is the monic Chebyshev polynomial of
+                        degree $n$, that is $\prod{i=1}{n}{t-t_i} = \mathring{T}_{n}(t)$.
+                        From Chebyshev's Theorem we know that
+                        $\norm[\infty]{\mathring{T}_{n}(t)} = \frac{1}{2^{n-1}}$.
+                        Therefore we know that
+                        \begin{align*}
+                            \abs{\prod{i=1}{n}{x - x_i}} &\le \p{\frac{b-a}{2}}^n \frac{1}{2^{n-1}} \\
+                            &= 2 \p{\frac{b-a}{4}}^n
+                            \intertext{Also we have bound on $f^{(n)}(\xi(x))$,
+                                that is $f^{(n)}(\xi(x)) \le M_n$.
+                                Therefore we can bound the absolute error as}
+                            \abs{f(x) - p_{n-1}(x)} &= \abs{\frac{f^{(n)}(\xi(x))}{n!}\prod{i=1}{n}{x - x_i}} \\
+                            &\le 2\frac{M_n}{n!}\p{\frac{b-a}{4}}^n \\
+                            \intertext{Lastly the relative error can be bounded
+                                because $\abs{f(x)}$ has a lower bound, that is $\abs{f(x)} > m_0$}
+                            \abs{\frac{f(x) - p_{n-1}(x)}{f(x)}} &\le 2\frac{M_n}{m_0 n!}\p{\frac{b-a}{4}}^n
+                        \end{align*}
+                        Thus the maximum relative error is $2\frac{M_n}{m_0 n!}\p{\frac{b-a}{4}}^n$.
+
+                    \item[(c.2)] % Done
                         Apply the result of (c.1) to $f(x) = \ln{x}$ on
                         $I_r = [e^r, e^{r+1}]$, for an integer $r \ge 1$.
                         In particular, show that $r_n \le \alpha(r, n) c^n$,
                         where $0 < c < 1$ and $\alpha$ is slowly varying.
                         Exhibit c.
+
+                        First we must find bounds for $f(x)$ and its derivatives.
+                        \begin{align*}
+                            f^{(n)}(x) &= (-1)^{n+1} (n-1)! \frac{1}{x^n}
+                            \intertext{Therefore on the inteval $[e^r, e^{r+1}]$}
+                            \abs{f^{(n)}(x)} &\le (n-1)! e^{-rn}
+                        \end{align*}
+                        Also $\abs{f(x)} < \ln{e^r} = r$ on $[e^r, e^{r+1}]$.
+                        Thus $m_0 = r$ and $M_n = (n-1)! e^{-rn}$.
+                        We can now construct an upper bound on the relative error
+                        \begin{align*}
+                            \abs{\frac{f(x) - p_{n-1}(x)}{f(x)}} &\le 2\frac{M_n}{m_0 n!}\p{\frac{b-a}{4}}^n \\
+                            &= 2\frac{(n-1)! e^{-rn}}{r n!}\p{\frac{e^{r+1} - e^r}{4}}^n \\
+                            &= 2\frac{e^{-rn}}{r n} \p{\frac{e^{r+1} - e^r}{4}}^n \\
+                            &= \frac{2}{r n} \p{\frac{e^{-r}\p{e^{r+1} - e^r}}{4}}^n \\
+                            &= \frac{2}{r n} \p{\frac{e - 1}{4}}^n \\
+                        \end{align*}
+                        Thus $r_n \le \alpha(r, n) c^n$, where
+                        $\alpha(r, n) = \frac{2}{rn}$ and $c = \frac{e-1}{4}$.
                 \end{enumerate}
         \end{enumerate}
 
-    \item % #3
+    \item % #3 Done
+        Let $f:\RR \to \RR$ be a function defined and integrable on $[-1, 1]$.
+        Let $-1 = x_0 < x_1 < \cdots < x_n = 1$ be a partition of $[-1, 1]$.
+        Consider the following numerical quadrature
+        \[
+            I(f) = \dintt{-1}{1}{f(x)}{x} \approx \sum{i=0}{n}{w_i f(x_i)} = I_n(f)
+        \]
+        where
+        \[
+            w_i = \dintt{-1}{1}{L_i(x)}{x} \text{ with }
+            L_i(x) = \prod{k=0, k \neq i}{n}{\frac{x - x_k}{x_i - x_k}}
+        \]
+        for $i = 0, 1, 2, \ldots, n$.
         \begin{enumerate}
-            \item[(a)]
-                Prove that is $n$ is even and the quadrature points are evenly
+            \item[(a)] % Done
+                Prove that if $n$ is even and the quadrature points are evenly
                 spaced: $x_i = -1 + ih$ and $h = 2/n$, then the numerical
                 quadrature is exact for polynomials of degree $n + 1$.
 
-            \item[(b)]
-                Let $n = 2$
-            \item[(c)]
+                \begin{proof}
+                    First note that this numerical quadrature is equivalent to
+                    $I_n(f) = \dintt{-1}{1}{p(x)}{x}$, where $p(x)$ is the unique
+                    interpolating polynomial of $f$ on the points $x_i$ for
+                    $i = 0, 1, \ldots, n$.
+                    Thus the error of the numerical quadrature is equal to
+                    the integral of the error of the interpolating polynomial.
+                    \begin{align*}
+                        E(f) &= \dintt{-1}{1}{\frac{f^{(n+1)}(\xi(x))}{(n+1)!}\prod{i=0}{n}{x - x_i}}{x}
+                    \end{align*}
+                    If $f$ is a polynomial of degree $n$ or less than
+                    $f^{(n+1)}(\xi(x)) = 0$ for any $x$.
+                    Thus the error is zero for $f \in \PP_n$, and so the numerical
+                    quadrature is exact for polynomials of degree at most $n$.
+                    If $f$ is a polynomial of degree $n+1$, then
+                    $f^{(n+1)}(\xi(x))$ is constant for all $x$.
+                    Thus the error becomes
+                    \[
+                        E(f) = \frac{f^{(n+1)}(\xi)}{(n+1)!} \dintt{-1}{1}{\prod{i=0}{n}{x - x_i}}{x}
+                    \]
+                    Now consider the polynomial $p(x) = \prod{i=0}{n}{x - x_i}$.
+                    Note that since the set of interpolating points are spaced evenly
+                    around zero, if the point $x \in \set{x_i}$, then
+                    $-x \in \set{x_i}$.
+                    Since $n$ is even, then $n/2$ is an integer and $x_{n/2} = 0$.
+                    Also for any $k$ such that $-n/2 \le k \le n/2$, 
+                    \begin{align*}
+                        x_{n/2 - k} &= -1 + \p{n/2 - k}h \\
+                                    &= -1 + 1 - kh \\
+                                    &= -\p{1 - 1 + kh} \\
+                                    &= -\p{-1 + \p{n/2 + k}h} \\
+                                    &= -x_{n/2+k}
+                    \end{align*}
+                    Similarly $x_{i} = -x_{n-i}$.
+                    Now consider $p(-x)$
+                    \begin{align*}
+                        p(-x) &= \prod{i=0}{n}{-x - x_i} \\
+                        &= (-1)^{n+1} \prod{i=0}{n}{x + x_i}
+                        \intertext{Since $n$ is even $(-1)^{n+1} = -1$}
+                        &= -\prod{i=0}{n}{x + x_i}
+                        \intertext{Since $x_i = -x_{n-i}$}
+                        &= -\prod{i=0}{n}{x - x_{n-i}}
+                        \intertext{This product is multiplying the same terms as
+                            $p(x)$, so this product is equivalent to $p(x)$.}
+                        &= -p(x)
+                    \end{align*}
+                    Therefore $p(x) = \prod{i=0}{n}{x - x_i}$ is an odd function,
+                    and so the integral $\dintt{-1}{1}{p(x)}{x} = 0$.
+                    Therefore $E(f) = 0$ for $f \in \PP_{n+1}$, and
+                    so this numerical quadrature is exact for all polynomials
+                    whose degree is at most $n+1$.
+                \end{proof}
+
+            \item[(b)] % Done
+                Let $n = 2$ and let $x_0 = -1$, $x_1 = 0$, $x_2 = 1$.
+                Compute $w_0$, $w_1$, and $w_2$, and explicitly write out the
+                numerical quadrature formula in this case.
+
+                First I will compute $L_i(x)$ for $i = 0, 1, 2$.
+                \begin{align*}
+                    L_0(x) &= \frac{x - 0}{-1 - 0} \cdot \frac{x-1}{-1-1} \\
+                    &= \frac{x(x-1)}{2}
+                    &= \frac{1}{2}\p{x^2 - x}
+                    L_1(x) &= \frac{x - -1}{0 - -1} \cdot \frac{x - 1}{0 - 1} \\
+                    &= \frac{(x + 1)(x - 1)}{-1} \\
+                    &= -x^2 + 1
+                    L_2(x) &= \frac{x - -1}{1 - -1} \cdot \frac{x - 0}{1 - 0} \\
+                    &= \frac{(x + 1)x}{2} \\
+                    &= \frac{1}{2}\p{x^2 + x}
+                \end{align*}
+                Now the values of $w_0$, $w_1$, and $w_2$ can be found by computing
+                the integrals over $[-1, 1]$ for these functions.
+
+                \begin{align*}
+                    w_0 &= \dintt{-1}{1}{L_0(x)}{x} \\
+                    &= \frac{1}{2}\dintt{-1}{1}{x^2 - x}{x} \\
+                    &= \frac{1}{2} \eval{\p{\frac{1}{3}x^3 - \frac{1}{2}x^2}}{x=-1}{1} \\
+                    &= \frac{1}{2} \p{\p{\frac{1}{3} - \frac{1}{2}} - \p{-\frac{1}{3} - \frac{1}{2}}} \\
+                    &= \frac{1}{2} \frac{2}{3} \\
+                    &= \frac{1}{3} \\
+                    w_1 &= \dintt{-1}{1}{L_1(x)}{x} \\
+                    &= \dintt{-1}{1}{-x^2 + 1}{x} \\
+                    &= \eval{-\frac{1}{3}x^3 + x}{x =-1}{1} \\
+                    &= \p{-\frac{1}{3} + 1} - \p{\frac{1}{3} - 1} \\
+                    &= 2 - \frac{2}{3} \\
+                    &= \frac{4}{3} \\
+                    w_2 &= \dintt{-1}{1}{L_2(x)}{x} \\
+                    &= \frac{1}{2} \dintt{-1}{1}{x^2 + x}{x} \\
+                    &= \frac{1}{2} \eval{\p{\frac{1}{3}x^3 + \frac{1}{2}x^2}}{x=-1}{1} \\
+                    &= \frac{1}{2} \p{\p{\frac{1}{3} + \frac{1}{2}} - \p{-\frac{1}{3} + \frac{1}{2}}} \\
+                    &= \frac{1}{2} \frac{2}{3} \\
+                    &= \frac{1}{3} \\
+                \end{align*}
+                Thus the numerical quadrature can be written explicitly as
+                \begin{align*}
+                    I_n(f) &= \frac{1}{3}f(-1) + \frac{4}{3}f(0) + \frac{1}{3}f(1) \\
+                    I_n(f) &= \frac{1}{3}\p{f(-1) + 4f(0) + f(1)}
+                \end{align*}
+
+            \item[(c)] % Done
+                When $n = 2$ and $x_0 = -1$, $x_1 = 0$, $x_2 = 1$, what is the
+                degree of precision of the numerical quadrature formula?
+
+                We have shown in part (a) that this numerical quadrature is
+                exact for polynomials of degree $n + 1 = 3$ or less.
+                If the quadrature formula is not exact for polynomials
+                of degree 4, then the degree of precision is 3.
+                Consider $f(x) = x^4$, then
+                \begin{align*}
+                    E(f) &= \dintt{-1}{1}{f(x)}{x} - \frac{1}{3}\p{f(-1) + 4f(0) + f(1)} \\
+                    &= \dintt{-1}{1}{x^4}{x} - \frac{1}{3}\p{1 + 4\times0 + 1} \\
+                    &= \eval{\frac{1}{5}x^5}{x = -1}{1} - \frac{2}{3} \\
+                    &= \frac{1}{5} - -\frac{1}{5} - \frac{2}{3} \\
+                    &= \frac{2}{5} - \frac{2}{3} \\
+                    &= -\frac{4}{15}
+                \end{align*}
+                Since the error does not equal 0, the quadrature formula is
+                not exact for polynomials of degree $4$.
+                Therefore the degree of precision is $3$ for this quadrature
+                formula.
         \end{enumerate}
 
     \item % #4
@@ -247,14 +434,38 @@ Final Assignment
                 Use this to prove that $\lim{h \to 0}{\abs{f(x) - S(x)}} = 0$
                 for $x \in [a, b]$ and state the rate of convergence.
 
-            \item[(c)]
-                Define what it means for $S$ to be a clamped cubic spline that
+
+
+            \item[(c)] % Done
+                Define what it means for $S$ to be a clamped cubic spline tat
                 interpolates $f$ at all the points $x_i$, for $i = 0, 1, \ldots, n$.
+
+                A function $S(x)$ is a clamped cubic spline that interpolates $f$
+                at the points $x_i$ for $i = 0, 1, \ldots, n$ if $S(x)$ is piecewise
+                cubic.
+                $S(x)$ can be expressed as $a_3 x^3 + a_2 x^2 + a_1 x + a_0$ on each
+                interval $[x_i, x_{i+1}]$ for $i = 0, 1, \ldots, n-1$.
+                I will denote each of these pieces as $S_i(x)$.
+                Furthermore $S(x)$ must satisfy some other properties.
+                $S(x)$ must be match the function values of $f$ at each $x_i$,
+                that is $S_i(x_i) = f(x_i)$ and $S_i(x_{i+1}) = f(x_{i+1})$
+                for $i = 0, 1, \ldots, n-1$.
+                Furthermore $S(x)$ must have a continuous
+                first and second derivative, this can be written at
+                $S_i^{(k)}(x_{i+1}) = S_{i+1}^{(k)}(x_{i+1})$ for $k = 1, 2$ and
+                $i = 0, 1, \ldots, n - 2$.
+                Lastly for $S(x)$ to be clamped we require that the first
+                derivatives of $S(x)$ match the derivatives of $f$ at the
+                endpoints, that is $S_0'(x_0) = f'(x_0)$ and
+                $S_{n-1}(x_n) = f'(x_n)$.
+                These conditions provide $4n$ equations for the $4n$ coefficients
+                of the cubic pieces.
+                Thus these conditions fully define the clamped cubic spline.
         \end{enumerate}
 
-    \item % #5
+    \item % #5 Done
         \begin{enumerate}
-            \item[(a)]
+            \item[(a)] % Done
                 Prove the following theorem: Consider the system of initial
                 value problems:
                 \[
@@ -267,17 +478,18 @@ Final Assignment
                 Then
                 \begin{itemize}
                     \item
-                        $\v{\alpha}$ is a fixed point of the Euler method,
-                        that is $F(\v{\alpha}) = \v{\alpha}$ if and only if
-                        $\v{\alpha}$ is a fixed point of the initial value
-                        problem, that is $f(\v{\alpha}) = \v{0}$.
+                        $\pmb{\alpha}$ is a fixed point of the Euler method,
+                        that is $F(\pmb{\alpha}) = \pmb{\alpha}$ if and only if
+                        $\pmb{\alpha}$ is a fixed point of the initial value
+                        problem, that is $f(\pmb{\alpha}) = \v{0}$.
 
                     \item 
-                        If $\v{\alpha}$ is a linearly stable fixed point of the
-                        initial value problem (i.e. ) and if
+                        If $\pmb{\alpha}$ is a linearly stable fixed point of the
+                        initial value problem (i.e. all the eigenvalues of the matrix
+                        $\pd{f}{\v{y}}(\pmb{\alpha})$ have negative real parts) and if
                         $\abs{1 + h \lambda_p} < 1$ for each eigenvalue
-                        $\lambda_p$ of $\pd{f}{\v{y}}(\v{\alpha})$, then
-                        $\v{\alpha}$ is also a linearly stable fixed point of
+                        $\lambda_p$ of $\pd{f}{\v{y}}(\pmb{\alpha})$, then
+                        $\pmb{\alpha}$ is also a linearly stable fixed point of
                         the Euler method.
                 \end{itemize}
 
@@ -285,20 +497,53 @@ Final Assignment
                     To prove the first point, suppose $\v{\alpha}$ is a fixed point
                     of the Euler method, then
                     \begin{align*}
-                        F(\v{alpha}) &= \v{\alpha} \\
-                        \v{\alpha} + f(\v{\alpha}) =  \v{\alpha} \\
-                        f(\v{\alpha}) &= \v{0}
+                        F(\pmb{\alpha}) &= \pmb{\alpha} \\
+                        \pmb{\alpha} + f(\pmb{\alpha}) =  \pmb{\alpha} \\
+                        f(\pmb{\alpha}) &= \v{0}
                     \end{align*}
-                    Thus $\v{\alpha}$ is also a fixed point the initial value
+                    Thus $\pmb{\alpha}$ is also a fixed point the initial value
                     problem.
-                    Reversing this procedure shows that is $\v{\alpha}$ is
+                    Reversing this procedure shows that is $\pmb{\alpha}$ is
                     a fixed point of the initial value problem it is also
                     a fixed point of the Euler method.
-                    Therefore $\v{\alpha}$ is a fixed point for the Euler method
-                    if and only if $\v{\alpha}$ is a fixed point for the initial
+                    Therefore $\pmb{\alpha}$ is a fixed point for the Euler method
+                    if and only if $\pmb{\alpha}$ is a fixed point for the initial
                     value problem.
 
-                    To prove the second point, 
+                    To prove the second point, suppose $\pmb{\alpha}$ is a
+                    linearly fixed point of the initial value problem.
+                    This implies that $f(\pmb{\alpha}) = 0$ and the
+                    eigenvalues of $\pd{f}{\v{y}}(\pmb{\alpha})$ have negative
+                    real parts.
+                    In order for $\pmb{\alpha}$ to be a linearly stable fixed
+                    point of the Euler method $F$, then the magnitude of the
+                    eigenvalues of $\pd{F}{\v{u}}(\pmb{\alpha})$ must be less
+                    than 1.
+                    Note that $\pd{F}{\v{u}}(\pmb{\alpha}) = I + h\pd{f}{\v{u}}(\pmb{\alpha})$,
+                    where $I$ is the identity matrix.
+                    Suppose $\lambda_p$ is an eigenvalue of
+                    $\pd{f}{\v{y}}(\pmb{\alpha})$ with eigenvector $\v{x}$.
+                    Now consider $\pd{F}{\v{u}}(\pmb{\alpha}) \v{x}$.
+                    \begin{align*}
+                        \pd{F}{\v{u}}(\pmb{\alpha}) \v{x} &= \p{I + h\pd{f}{\v{u}}(\pmb{\alpha})} \v{x} \\
+                        &= \v{x} + h\pd{f}{\v{y}}(\pmb{\alpha}) \v{x}
+                        \intertext{Since $\v{x}$ is an eigenvector of $\pd{f}{\v{u}}(\pmb{\alpha})$}
+                        &= \v{x} + h \lambda_p \v{x} \\
+                        &= \p{1 + h \lambda_p} \v{x}
+                    \end{align*}
+                    Thus $1 + h \lambda_p$ is an eigenvalue of
+                    $\pd{F}{\v{u}}(\pmb{\alpha})$.
+                    Therefore for all eigenvalues $\lambda_p$ of
+                    $\pd{f}{\v{y}}(\pmb{\alpha})$, $1 + h \lambda_p$ is
+                    an eigenvalue of $\pd{F}{\v{u}}(\pmb{\alpha})$.
+                    Also any eigenvalue of $\pd{F}{\v{u}}(\pmb{\alpha})$ must
+                    be of this form.
+                    Now since all eigenvalues of $\pd{f}{\v{y}}(\pmb{\alpha})$
+                    have negative real parts and satisfy $\abs{1 + h \lambda_p} < 1$,
+                    the eigenvalues $\lambda_F$ of $\pd{F}{\v{u}}(\pmb{\alpha})$
+                    must satisfy $\abs{\lamba_F} = \abs{1 + h \lambda_p} < 1$.
+                    Therefore $\pmb{\alpha}$ is a linearly stable fixed point
+                    of the Euler method.
                 \end{proof}
 
             \item[(b)] % Done
