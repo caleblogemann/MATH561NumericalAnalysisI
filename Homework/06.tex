@@ -89,14 +89,120 @@ Final Assignment
         \end{enumerate}
 
     \item % #2
+        \begin{enumerate}
+            \item[(a)] % Done
+                Determine
+                \[
+                    \min* \max*_{a \le x \le b} \abs{a_0 x^n + a_1 x^{n-1} + \cdots + a_n}
+                \]
+                for $n \ge 1$ where the minimum is taken over the coefficients
+                $a_0, a_1, \ldots, a_n$ with $a_0 \neq 0$.
+
+                First lets apply a linear transformation from the interval
+                $[a, b]$ to $[-1, 1]$, by letting
+                $x = \frac{b - a}{2} t + \frac{b + a}{2}$.
+                This is then equivalent to
+                \begin{align*}
+                    &\min* \max*_{-1 \le t \le 1} \abs{a_0 \p{\frac{b - a}{2} t + \frac{b + a}{2}} + a_1 \p{\frac{b - a}{2} t + \frac{b + a}{2}}^{n-1} + \cdots + a_n} \\
+                    &= \min* \max*_{-1 \le t \le 1} \abs{a_0 \p{\frac{b - a}{2}}^n t^n + b_1 t^{n-1} + \cdots + b_n} \\
+                    &= \abs{a_0} \p{\frac{b - a}{2}}^n \min* \max*{-1 \le t \le 1} \abs{t^n + b_1 t^{n-1} + \cdots + b_n}
+                    \intertext{From Chebychev's Theorem the monic polynomial
+                        with minimum maximum value over $[-1, 1]$ is the monic
+                        Chebychev polynomial}
+                    &= \abs{a_0} \p{\frac{b - a}{2}}^n \max*{-1 \le t \le 1} \abs{\mathring{T}_n(x)}
+                    \intertext{Also from Chebyshev's Theorem, $\max*{-1 \le t \le 1} \abs{\mathring{T}_n(x)} = \frac{1}{2^{n-1}}$}
+                    &= \abs{a_0} \p{\frac{b - a}{2}}^n \frac{1}{2^{n-1}} \\
+                    &= 2\abs{a_0}\p{\frac{b - a}{4}}^n
+                \end{align*}
+                Thus given an arbitrary choice of $a_0 \neq 0$, 
+                \[
+                    \min* \max*_{a \le x \le b} \abs{a_0 x^n + a_1 x^{n-1} + \cdots + a_n} = 2\abs{a_0}\p{\frac{b - a}{4}}^n
+                \]
+
+            \item[(b)] % Done
+                Let $a > 1$ and $\PP_n^a = \set{p \in \PP_n | p(a) = 1}$.
+                Define $\hat{p}_n \in \PP_n^a$ by $\hat{p}_n = T_n(x)/T_n(a)$,
+                where $T_n(x)$ is the Chebyshev polynomial of degree $n$.
+                Prove that $\norm[\infty]{\hat{p}_n} \le \norm[\infty]{p}$ for
+                all $p \in \PP_n^a$.
+
+                \begin{proof}
+                    Assume to the contrary that there exists $p \in \PP_n^a$
+                    such that $\norm[\infty]{p} < \norm[\infty]{\hat{p}_n}$.
+                    Define the polynomial $d(x) = \hat{p}_n(x) - p(x)$.
+                    Since $d$ is the difference of two degree $n$ polynomials,
+                    the degree of $d$ can be at most $n$.
+
+                    Let $\set{y_k}_{k=0}^{n}$ denote the $n + 1$ extrema points
+                    for the Chebyshev polynomial $T_n(x)$, that is
+                    $T_n(y_k) = (-1)^k$.
+                    Obviously $\hat{p}_n$ is just a scaling of $T_n(x)$, so
+                    $\norm[\infty]{\hat{p}_n} = \norm[\infty]{T_n(x)}/\abs{T_n(a)}
+                    = \abs{T_n(y_k)/T_n(a)} = \abs{\hat{p}_n(y_k)}$.
+                    Also since $\norm[\infty]{p} < \norm[\infty]{\hat{p}_n}$, 
+                    then $\abs{p(y_k)} < \abs{\hat{p}_n(y_k)}$.
+
+                    Now consider $d(y_k) = \hat{p}_n(y_k) - p(y_k)$.
+                    Since the magnitude of $p(y_k)$ is less than the magnitude
+                    of $\hat{p}_n(y_k)$, $d(y_k)$ has the same sign as
+                    $\hat{p}_n(y_k)$.
+                    Also as previously noted the sign of $\hat{p}_n(y_k)$
+                    alternates for $k = 0, 1, \ldots, n$.
+                    Therefore since $d$ is polynomial and continuous and
+                    alternates sign $n + 1$ times, $d$ must have at least $n$
+                    zeros.
+                    Note that these occur in the interval $[-1, 1]$ as all
+                    the extreme values of $T_n(x)$ are in $[-1, 1]$.
+                    Now consider $d(a) =\hat{p}_n(a)  - p(a) = 1 - 1 = 0$.
+                    Therefore $d$ also has a zero at $x = a$.
+                    This totals $n + 1$ zeros as $a > 1$.
+                    This contradicts the fact that $d$ is at most
+                    a degree n polynomial.
+                    Therefore our initial assumption must be incorrect, and in
+                    fact $\norm[\infty]{p} \ge \norm[\infty]{\hat{p}_n(y_k)}$ for
+                    all $p \in \PP_n^a$.
+                \end{proof}
+
+            \item[(c)]
+                Let $f$ be a positive function defined on $[a, b]$ and assume
+                \begin{align*}
+                    \min*_{a \le x \le b} \abs{f(x)} &= m_0 \\
+                    \max*_{a \le x \le b} \abs{f^{(k)}(x)} &= M_k, k = 0, 1, 2
+                \end{align*}
+                \begin{enumerate}
+                    \item[(c.1)]
+                        Let $p_{n-1}(x)$ denote the polynomial of degree at most
+                        $n - 1$ interpolating $f$ at the $n$ Chebyshev points on
+                        $[a, b]$.
+                        Estimate the maximum relative error
+                        $r_n = \max*_{a \le x \le b} \abs{\frac{f(x) - p_{n-1}(x)}{f(x)}}$.
+
+                    \item[(c.2)]
+                        Apply the result of (c.1) to $f(x) = \ln{x}$ on
+                        $I_r = [e^r, e^{r+1}]$, for an integer $r \ge 1$.
+                        In particular, show that $r_n \le \alpha(r, n) c^n$,
+                        where $0 < c < 1$ and $\alpha$ is slowly varying.
+                        Exhibit c.
+                \end{enumerate}
+        \end{enumerate}
 
     \item % #3
+        \begin{enumerate}
+            \item[(a)]
+                Prove that is $n$ is even and the quadrature points are evenly
+                spaced: $x_i = -1 + ih$ and $h = 2/n$, then the numerical
+                quadrature is exact for polynomials of degree $n + 1$.
+
+            \item[(b)]
+                Let $n = 2$
+            \item[(c)]
+        \end{enumerate}
 
     \item % #4
         Let $a = x_0 < x_1 < \cdots < x_n = b$ be a partition of $[a, b]$.
         Consider a function $f \in C^{\infty}[a, b]$.
         \begin{enumerate}
-            \item[(a)]
+            \item[(a)] % Done
                 Define what it means for a function $S$ to be a linear spline
                 that interpolates $f$ at all the points $x_i$ for
                 $i = 0, 1, \ldots, n$.
@@ -144,9 +250,86 @@ Final Assignment
             \item[(c)]
                 Define what it means for $S$ to be a clamped cubic spline that
                 interpolates $f$ at all the points $x_i$, for $i = 0, 1, \ldots, n$.
-
         \end{enumerate}
 
     \item % #5
+        \begin{enumerate}
+            \item[(a)]
+                Prove the following theorem: Consider the system of initial
+                value problems:
+                \[
+                    \v{y}' = f(\v{y})
+                \]
+                and apply it to the forward Euler method:
+                \[
+                    \v{u}_{n+1} = F(\v{u}_n) = \v{u}_n + h f(\v{u}_n)
+                \]
+                Then
+                \begin{itemize}
+                    \item
+                        $\v{\alpha}$ is a fixed point of the Euler method,
+                        that is $F(\v{\alpha}) = \v{\alpha}$ if and only if
+                        $\v{\alpha}$ is a fixed point of the initial value
+                        problem, that is $f(\v{\alpha}) = \v{0}$.
+
+                    \item 
+                        If $\v{\alpha}$ is a linearly stable fixed point of the
+                        initial value problem (i.e. ) and if
+                        $\abs{1 + h \lambda_p} < 1$ for each eigenvalue
+                        $\lambda_p$ of $\pd{f}{\v{y}}(\v{\alpha})$, then
+                        $\v{\alpha}$ is also a linearly stable fixed point of
+                        the Euler method.
+                \end{itemize}
+
+                \begin{proof}
+                    To prove the first point, suppose $\v{\alpha}$ is a fixed point
+                    of the Euler method, then
+                    \begin{align*}
+                        F(\v{alpha}) &= \v{\alpha} \\
+                        \v{\alpha} + f(\v{\alpha}) =  \v{\alpha} \\
+                        f(\v{\alpha}) &= \v{0}
+                    \end{align*}
+                    Thus $\v{\alpha}$ is also a fixed point the initial value
+                    problem.
+                    Reversing this procedure shows that is $\v{\alpha}$ is
+                    a fixed point of the initial value problem it is also
+                    a fixed point of the Euler method.
+                    Therefore $\v{\alpha}$ is a fixed point for the Euler method
+                    if and only if $\v{\alpha}$ is a fixed point for the initial
+                    value problem.
+
+                    To prove the second point, 
+                \end{proof}
+
+            \item[(b)] % Done
+                The fixed points of the Logistic growth equation
+                \[
+                    y' = f(y) = 2y(1 - y)
+                \]
+                are $y = 0$ (unstable since $f'(0) = 2$) and $y = 1$ (stable
+                since $f'(1) = -2$).
+                Apply the Euler method to this equation and find and classify all
+                fixed points of the Euler method as a function of the time step
+                parameter $h$.
+
+                According to the previous theorem the fixed points of the Euler
+                method must also be fixed points of the initial value problems.
+                We can see that $f(y) = 0$ for $y = 0$ and $y = 1$.
+                Therefore the fixed points of the Euler method are $y = 0$ and
+                $y = 1$.
+                If the eigenvalues, $\lambda_p$, of $\pd{f}{\v{y}}(\v{\alpha})$ are negative and
+                satisfy $\abs{1 + h\lambda_p} < 1$, then the fixed point
+                $\alpha$ of the Euler method is linearly stable.
+                In this one-dimensional case, the eigenvalues of
+                $\pd{f}{\v{y}}(\v{\alpha})$ are simply $f'(\alpha)$.
+                The derivative of $f$ is $f'(y) = 2(1-y) - 2y$.
+                For $\alpha = 0$, $f'(0) = 2$, therefore this fixed point is
+                unstable in both the initial value problem and the Euler method,
+                for all values of $h$.
+                For $\alpha = 1$, $f'(1) = -2$, and if $\abs{1 + -2h} < 1$, then
+                this fixed point will be linearly stable for the Euler method.
+                If $0 < h < 1$, then $\abs{1 - 2h} < 1$.
+                Therefore this fixed point is linearly stable for $h \in (0, 1)$.
+        \end{enumerate}
 \end{enumerate}
 \end{document}
