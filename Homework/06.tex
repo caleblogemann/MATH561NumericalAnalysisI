@@ -94,7 +94,7 @@ Final Assignment
             \item[(a)] % Done
                 Determine
                 \[
-                    \min* \max*_{a \le x \le b} \abs{a_0 x^n + a_1 x^{n-1} + \cdots + a_n}
+                    \min* \max_{a \le x \le b} \abs{a_0 x^n + a_1 x^{n-1} + \cdots + a_n}
                 \]
                 for $n \ge 1$ where the minimum is taken over the coefficients
                 $a_0, a_1, \ldots, a_n$ with $a_0 \neq 0$.
@@ -104,20 +104,20 @@ Final Assignment
                 $x = \frac{b - a}{2} t + \frac{b + a}{2}$.
                 This is then equivalent to
                 \begin{align*}
-                    &\min* \max*_{-1 \le t \le 1} \abs{a_0 \p{\frac{b - a}{2} t + \frac{b + a}{2}} + a_1 \p{\frac{b - a}{2} t + \frac{b + a}{2}}^{n-1} + \cdots + a_n} \\
-                    &= \min* \max*_{-1 \le t \le 1} \abs{a_0 \p{\frac{b - a}{2}}^n t^n + b_1 t^{n-1} + \cdots + b_n} \\
-                    &= \abs{a_0} \p{\frac{b - a}{2}}^n \min* \max*{-1 \le t \le 1} \abs{t^n + b_1 t^{n-1} + \cdots + b_n}
+                    &\min* \max_{-1 \le t \le 1} \abs{a_0 \p{\frac{b - a}{2} t + \frac{b + a}{2}} + a_1 \p{\frac{b - a}{2} t + \frac{b + a}{2}}^{n-1} + \cdots + a_n} \\
+                    &= \min* \max_{-1 \le t \le 1} \abs{a_0 \p{\frac{b - a}{2}}^n t^n + b_1 t^{n-1} + \cdots + b_n} \\
+                    &= \abs{a_0} \p{\frac{b - a}{2}}^n \min* \max_{-1 \le t \le 1} \abs{t^n + b_1 t^{n-1} + \cdots + b_n}
                     \intertext{From Chebychev's Theorem the monic polynomial
                         with minimum maximum value over $[-1, 1]$ is the monic
                         Chebychev polynomial}
-                    &= \abs{a_0} \p{\frac{b - a}{2}}^n \max*{-1 \le t \le 1} \abs{\mathring{T}_n(x)}
-                    \intertext{Also from Chebyshev's Theorem, $\max*{-1 \le t \le 1} \abs{\mathring{T}_n(x)} = \frac{1}{2^{n-1}}$}
+                    &= \abs{a_0} \p{\frac{b - a}{2}}^n \max_{-1 \le t \le 1} \abs{\mathring{T}_n(x)}
+                    \intertext{Also from Chebyshev's Theorem, $\max_{-1 \le t \le 1} \abs{\mathring{T}_n(x)} = \frac{1}{2^{n-1}}$}
                     &= \abs{a_0} \p{\frac{b - a}{2}}^n \frac{1}{2^{n-1}} \\
                     &= 2\abs{a_0}\p{\frac{b - a}{4}}^n
                 \end{align*}
                 Thus given an arbitrary choice of $a_0 \neq 0$, 
                 \[
-                    \min* \max*_{a \le x \le b} \abs{a_0 x^n + a_1 x^{n-1} + \cdots + a_n} = 2\abs{a_0}\p{\frac{b - a}{4}}^n
+                    \min* \max_{a \le x \le b} \abs{a_0 x^n + a_1 x^{n-1} + \cdots + a_n} = 2\abs{a_0}\p{\frac{b - a}{4}}^n
                 \]
 
             \item[(b)] % Done
@@ -168,7 +168,7 @@ Final Assignment
                 Let $f$ be a positive function defined on $[a, b]$ and assume
                 \begin{align*}
                     \min*_{a \le x \le b} \abs{f(x)} &= m_0 \\
-                    \max*_{a \le x \le b} \abs{f^{(k)}(x)} &= M_k, k = 0, 1, 2 \ldots
+                    \max_{a \le x \le b} \abs{f^{(k)}(x)} &= M_k, k = 0, 1, 2 \ldots
                 \end{align*}
                 \begin{enumerate}
                     \item[(c.1)] % Done
@@ -176,7 +176,7 @@ Final Assignment
                         $n - 1$ interpolating $f$ at the $n$ Chebyshev points on
                         $[a, b]$.
                         Estimate the maximum relative error
-                        $r_n = \max*_{a \le x \le b} \abs{\frac{f(x) - p_{n-1}(x)}{f(x)}}$.
+                        $r_n = \max_{a \le x \le b} \abs{\frac{f(x) - p_{n-1}(x)}{f(x)}}$.
 
                         First from the error formula for an interpolating
                         polynomial we know that
@@ -429,12 +429,35 @@ Final Assignment
                 $S(x) = \sum{i=0}{n}{f(x_i)B_i(x)}$.
 
             \item[(b)]
-                Let $h = \max*_{0 \le i \le n-1}(x_{i+1} - x_i)$.
+                Let $h = \max_{0 \le i \le n-1}(x_{i+1} - x_i)$.
                 Derive an upper bound on $\abs{f(x) - S(x)}$ on $x \in [a, b]$.
                 Use this to prove that $\lim{h \to 0}{\abs{f(x) - S(x)}} = 0$
                 for $x \in [a, b]$ and state the rate of convergence.
 
+                On each interval $[x_i, x_{i+1}]$, the error $f(x) - S(x)$ is
+                given by the error for an interpolating polynomial,
+                $\frac{f''(\xi)}{2!}(x - x_i)(x - x_{i+1})$.
+                Note that since $h = \max_{0 \le i \le n-1}(x_{i+1} - x_i)$, 
+                $\abs{(x - x_i)} \le h$ and $\abs{(x - x_{i+1})} < h$.
+                Also since $f(x) \in C^{\infty}[a, b]$ $f''(x)$ is bounded,
+                that is there exists $M \in \RR$, such that $\abs{f''(x)} < M$.
+                The error $\abs{f(x) - S(x)}$ on $[a, b]$ is less than or equal
+                to $\max_{0 \le i \le n}\abs{f(x) - S(x)}$ on $[x_i, x_{i+1}]$, where the max
+                is taken over all the intervals.
 
+                \begin{align*}
+                    \max_{0 \le i \le n}\abs{f(x) - S(x)} &= \abs{\frac{f''(\xi)}{2!}(x - x_i)(x - x_{i+1})} \\
+                    &\le \frac{M}{2} h^2
+                \end{align*}
+
+                We can now consider the limit $\lim{h \to 0}{\abs{f(x) - S(x)}}$.
+                \begin{align*}
+                    \lim{h \to 0}{\abs{f(x) - S(x)}} &\le \lim{h \to 0}{\frac{M}{2} h^2} \\
+                    &= 0
+                \end{align*}
+
+                Also we can see that the error converges to $0$ with $h^2$.
+                In other words the rate of convergence is $h^2$.
 
             \item[(c)] % Done
                 Define what it means for $S$ to be a clamped cubic spline tat
