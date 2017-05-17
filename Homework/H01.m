@@ -31,3 +31,5 @@ for n=1:8
     end
 end
 hold off
+
+x = 2;
